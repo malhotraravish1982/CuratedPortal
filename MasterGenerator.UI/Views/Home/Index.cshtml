@@ -1,0 +1,48 @@
+﻿@{
+    ViewData["Title"] = "Home";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="app-main__outer">
+    <div class="app-main__inner">
+        <div class="app-page-title">
+            <div class="page-title-wrapper">
+                <div class="page-title-heading">
+                    <div class="page-title-icon">
+                        <i class="pe-7s-graph text-success"></i>
+                    </div>
+                    <div>
+                        Scs Records
+                        <div class="page-title-subheading">All imported Scs Excel file records.</div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="tab-content">
+            <div class="tab-pane tabs-animation fade show active" id="tab-content-0" role="tabpanel">
+                <div class="main-card mb-3 card">
+                    <div class="card-body">
+                        <h5 class="card-title">Scs Records</h5>
+                        <form class="">
+                            <ejs-grid id="Grid" dataSource="@ViewBag.DataSource" allowPaging="true" allowSorting="true" allowFiltering="true"
+                                      toolbar="@(new List<string>() { "Add", "Edit", "Delete", "Cancel", "Update" })">
+                                <e-grid-editSettings allowAdding="true" allowDeleting="true" allowEditing="true" mode="Normal"></e-grid-editSettings>
+                                <e-grid-filterSettings type="Excel"></e-grid-filterSettings>
+                                <e-grid-columns>
+                                    <e-grid-column field="MasterScsId" hidden headerText="Order ID" textAlign="Right" width="0"></e-grid-column>
+                                    <e-grid-column field="Category" headerText="Category" width="100"></e-grid-column>
+                                    <e-grid-column field="SubCategory" headerText="Sub Category" width="100"></e-grid-column>
+                                    <e-grid-column field="ProductName" headerText="Product Name" width="150"></e-grid-column>
+                                </e-grid-columns>
+                            </ejs-grid>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,46 @@
+﻿    @model MasterGenerator.Model.Model.UserModel
+
+@{
+    ViewData["Title"] = "Login";
+    Layout = "~/Views/Shared/_LayoutOuter.cshtml";
+}
+
+<div class="modal-dialog w-100 mx-auto">
+                                <div class="modal-content">
+                                     <form asp-action="Login" >
+                                          <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                    <div class="modal-body">
+                                        <div class="h5 modal-title text-center">
+                                            <h4 class="mt-2">
+                                                <div>Master Generator</div>
+                                                <span>Please sign in to your account below.</span>
+                                            </h4>
+                                        </div>                                       
+                                            <div class="form-row">
+                                                <div class="col-md-12">
+                                                    <div class="position-relative form-group">
+                                                        <input asp-for="Email" required type="email" class="form-control" placeholder="Email"/>
+                                                        <span asp-validation-for="Email" class="text-danger"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="position-relative form-group">
+                                                        <input asp-for="Password" required class="form-control" type="password" placeholder="Password" />
+                                                        <span asp-validation-for="Password" class="text-danger"></span>
+                                                    </div>
+                                                </div>
+                                            </div>                                       
+                                        <div class="divider"></div>
+                                    </div>
+                                    <div class="modal-footer clearfix">
+                                        <div class="float-right">
+                                             <input type="submit" value="Login to Dashboard" class="btn btn-primary btn-lgy" />
+                                        </div>
+                                    </div>
+                                     </form>
+                                </div>
+                            </div>
+
+
+
+

@@ -1,0 +1,110 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="UserSeedData.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="UserSeedData.json" />
+    <None Include="wwwroot\images\ajax-loader.gif" />
+    <None Include="wwwroot\images\avatars\1.jpg" />
+    <None Include="wwwroot\images\avatars\10.jpg" />
+    <None Include="wwwroot\images\avatars\11.jpg" />
+    <None Include="wwwroot\images\avatars\12.jpg" />
+    <None Include="wwwroot\images\avatars\2.jpg" />
+    <None Include="wwwroot\images\avatars\3.jpg" />
+    <None Include="wwwroot\images\avatars\4.jpg" />
+    <None Include="wwwroot\images\avatars\5.jpg" />
+    <None Include="wwwroot\images\avatars\6.jpg" />
+    <None Include="wwwroot\images\avatars\7.jpg" />
+    <None Include="wwwroot\images\avatars\8.jpg" />
+    <None Include="wwwroot\images\avatars\9.jpg" />
+    <None Include="wwwroot\images\dropdown-header\abstract1.jpg" />
+    <None Include="wwwroot\images\dropdown-header\abstract10.jpg" />
+    <None Include="wwwroot\images\dropdown-header\abstract2.jpg" />
+    <None Include="wwwroot\images\dropdown-header\abstract3.jpg" />
+    <None Include="wwwroot\images\dropdown-header\abstract4.jpg" />
+    <None Include="wwwroot\images\dropdown-header\abstract5.jpg" />
+    <None Include="wwwroot\images\dropdown-header\abstract6.jpg" />
+    <None Include="wwwroot\images\dropdown-header\abstract7.jpg" />
+    <None Include="wwwroot\images\dropdown-header\abstract8.jpg" />
+    <None Include="wwwroot\images\dropdown-header\abstract9.jpg" />
+    <None Include="wwwroot\images\dropdown-header\city1.jpg" />
+    <None Include="wwwroot\images\dropdown-header\city2.jpg" />
+    <None Include="wwwroot\images\dropdown-header\city3.jpg" />
+    <None Include="wwwroot\images\dropdown-header\city4.jpg" />
+    <None Include="wwwroot\images\dropdown-header\city5.jpg" />
+    <None Include="wwwroot\images\icons-rtl.gif" />
+    <None Include="wwwroot\images\icons.gif" />
+    <None Include="wwwroot\images\loading.gif" />
+    <None Include="wwwroot\images\logo-inverse.png" />
+    <None Include="wwwroot\images\logo.png" />
+    <None Include="wwwroot\images\originals\abstract.jpg" />
+    <None Include="wwwroot\images\originals\abstract2.jpg" />
+    <None Include="wwwroot\images\originals\abstract3.jpg" />
+    <None Include="wwwroot\images\originals\abstract4.jpg" />
+    <None Include="wwwroot\images\originals\abstract5.jpg" />
+    <None Include="wwwroot\images\originals\abstract6.jpg" />
+    <None Include="wwwroot\images\originals\buildings.jpg" />
+    <None Include="wwwroot\images\originals\city.jpg" />
+    <None Include="wwwroot\images\originals\citydark.jpg" />
+    <None Include="wwwroot\images\originals\citynights.jpg" />
+    <None Include="wwwroot\images\originals\colors.jpg" />
+    <None Include="wwwroot\images\originals\fence-small.jpg" />
+    <None Include="wwwroot\images\originals\fence.jpg" />
+    <None Include="wwwroot\images\originals\interconnected.jpg" />
+    <None Include="wwwroot\images\originals\nightcolors.jpg" />
+    <None Include="wwwroot\images\originals\water.jpg" />
+    <None Include="wwwroot\images\sidebar\abstract1.jpg" />
+    <None Include="wwwroot\images\sidebar\abstract10.jpg" />
+    <None Include="wwwroot\images\sidebar\abstract2.jpg" />
+    <None Include="wwwroot\images\sidebar\abstract3.jpg" />
+    <None Include="wwwroot\images\sidebar\abstract4.jpg" />
+    <None Include="wwwroot\images\sidebar\abstract5.jpg" />
+    <None Include="wwwroot\images\sidebar\abstract6.jpg" />
+    <None Include="wwwroot\images\sidebar\abstract7.jpg" />
+    <None Include="wwwroot\images\sidebar\abstract8.jpg" />
+    <None Include="wwwroot\images\sidebar\abstract9.jpg" />
+    <None Include="wwwroot\images\sidebar\city1.jpg" />
+    <None Include="wwwroot\images\sidebar\city2.jpg" />
+    <None Include="wwwroot\images\sidebar\city3.jpg" />
+    <None Include="wwwroot\images\sidebar\city4.jpg" />
+    <None Include="wwwroot\images\sidebar\city5.jpg" />
+    <None Include="wwwroot\images\vline-rtl.gif" />
+    <None Include="wwwroot\images\vline.gif" />
+  </ItemGroup>
+  
+  <ItemGroup>
+         <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+         <PackageReference Include="EPPlus" Version="5.8.6" />
+         <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.1" />
+         <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.1" />
+         <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.1">
+           <PrivateAssets>all</PrivateAssets>
+           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+         </PackageReference>
+         <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.1" />
+         <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.1">
+           <PrivateAssets>all</PrivateAssets>
+           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+         </PackageReference>
+         <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.1" />
+         <PackageReference Include="Syncfusion.EJ2.AspNet.Core" Version="19.4.0.38" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\MasterGenerator.Data\MasterGenerator.Data.csproj" />
+    <ProjectReference Include="..\MasterGenerator.Model\MasterGenerator.Model.csproj" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Folder Include="wwwroot\ExcelFiles\" />
+  </ItemGroup>
+
+</Project>
