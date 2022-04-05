@@ -9,13 +9,19 @@ using MasterGenerator.Data.Helper;
 using Microsoft.AspNetCore.Identity;
 using MasterGenerator.Data.Entity;
 using MasterGenerator.UI.Extensions;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddApplicationServices(builder.Configuration);
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews().AddNewtonsoftJson(options =>
+{
+    options.SerializerSettings.ContractResolver = new DefaultContractResolver();
+}); 
 builder.Services.AddIdentityServices(builder.Configuration);
+
 
 if (Directory.Exists(Path.Combine(Directory.GetCurrentDirectory(), @"node_modules", @"@syncfusion")))
 {
@@ -38,6 +44,7 @@ if (Directory.Exists(Path.Combine(Directory.GetCurrentDirectory(), @"node_module
     }
 }
 var app = builder.Build();
+Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("NjAwMDIxQDMxMzkyZTM0MmUzMEt4Z0ZFMEE5R0pibmN0ZnFCbmZiNUJKUHpmYUwvZlRqMW9DeXJIVFFyN0U9");
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

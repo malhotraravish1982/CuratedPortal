@@ -17,12 +17,12 @@ namespace MasterGenerator.Data.Repository
             _context = context;
             _mapper = mapper;
         }
-
+        public IProjectRepository IProjectRepository => new ProjectRepository(_context, _mapper);
         public async Task<bool> Complete()
         {
             return await _context.SaveChangesAsync() > 0;
         }
-
+        
         public bool HasChanges()
         {
             _context.ChangeTracker.DetectChanges();

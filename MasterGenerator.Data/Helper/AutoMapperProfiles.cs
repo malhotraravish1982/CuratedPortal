@@ -13,7 +13,8 @@ namespace MasterGenerator.Data.Helper
 {
     public AutoMapperProfiles()
     {
-        //CreateMap<AppUser, UserModel>();
-    }
+            //CreateMap<AppUser, UserModel>();
+            CreateMap<Project, ProjectModel>().ReverseMap();
+        }
 }
 }

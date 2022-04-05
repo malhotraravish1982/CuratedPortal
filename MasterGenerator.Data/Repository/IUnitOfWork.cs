@@ -8,6 +8,7 @@ namespace MasterGenerator.Data.Repository
 {
     public interface IUnitOfWork
     {
+        IProjectRepository IProjectRepository { get; }
         Task<bool> Complete();
         bool HasChanges();
     }

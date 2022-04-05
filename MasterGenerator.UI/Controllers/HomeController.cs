@@ -7,7 +7,10 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using OfficeOpenXml;
+using Syncfusion.EJ2.Base;
+using System.Collections;
 using System.Diagnostics;
 using System.Net.Http.Headers;
 
@@ -30,9 +33,61 @@ namespace MasterGenerator.UI.Controllers
 
         public async Task<IActionResult> Index()
         {
-            return View();
+            return View(); 
         }
 
+        public async Task<IActionResult> CSListView()
+        {
+            return View(); 
+        }
+        public IActionResult UrlDatasource([FromBody] Extensions.DataManagerRequestExtension dm)
+        {
+            string? scfFileId = dm.Table;
+            IEnumerable<ProjectModel> scsRecords = null;
+            scsRecords = _unitOfWork.IProjectRepository.GetProjects();
+            if (!string.IsNullOrEmpty(scfFileId))
+            {
+                scsRecords = scsRecords.Where(x => x.ProjectId == Convert.ToDecimal(scfFileId));
+            }
+
+            if (!string.IsNullOrEmpty(dm.ProjectName))
+            {
+                System.Text.RegularExpressions.Regex regEx = new System.Text.RegularExpressions.Regex(dm.ProjectName.ToLower());
+                scsRecords = scsRecords.Where(x => x.ProjectName != null && regEx.IsMatch(x.ProjectName.ToLower()));
+            }
+            if (!string.IsNullOrEmpty(dm.PODate))
+            {
+                System.Text.RegularExpressions.Regex regEx = new System.Text.RegularExpressions.Regex(dm.PODate.ToLower());
+                scsRecords = scsRecords.Where(x => x.PODate != null && regEx.IsMatch(x.PODate.ToLower()));
+            }
+
+
+            IEnumerable DataSource = scsRecords;
+            DataOperations operation = new DataOperations();
+            if (dm.Sorted != null && dm.Sorted.Count > 0) //Sorting   
+            {
+                DataSource = operation.PerformSorting(DataSource, dm.Sorted);
+            }
+            else
+            {
+                
+            }
+            if (dm.Where != null && dm.Where.Count > 0) //Filtering   
+            {
+                DataSource = operation.PerformFiltering(DataSource, dm.Where, dm.Where[0].Operator);
+            }
+            int count = DataSource.Cast<ProjectModel>().Count();
+            if (dm.Skip != 0)
+            {
+                DataSource = operation.PerformSkip(DataSource, dm.Skip);   //Paging
+            }
+            if (dm.Take != 0)
+            {
+                DataSource = operation.PerformTake(DataSource, dm.Take);
+            }
+            return dm.RequiresCounts ? Json(new { result = DataSource, count = count }) : Json(DataSource);
+            //return new JsonResult(new { result = DataSource, count = count }, new JsonSerializerSettings());
+        }
         public IActionResult Privacy()
         {
             return View();
