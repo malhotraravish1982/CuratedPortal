@@ -83,6 +83,7 @@
   <ItemGroup>
          <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
          <PackageReference Include="EPPlus" Version="5.8.6" />
+         <PackageReference Include="Google.Apis.Sheets.v4" Version="1.57.0.2637" />
          <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.1" />
          <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.3" />
          <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.3" />

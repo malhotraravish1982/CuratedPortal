@@ -3,10 +3,11 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - MasterGenerator.UI</title>
+    <title>@ViewData["Title"] - CuratedPortal</title>
+    <link rel="stylesheet" href="~/vendors/pixeden-stroke-7-icon-master/pe-icon-7-stroke/dist/pe-icon-7-stroke.css">
     <script src="~/js/ej2/ej2.min.js"></script>
     <link href="~/css/base.css" rel="stylesheet">
-<link href="~/css/ej2/bootstrap5.css" rel="stylesheet">
+    <link href="~/css/ej2/bootstrap5.css" rel="stylesheet">
 </head>
     <body>
         <div class="app-container app-theme-white body-tabs-shadow fixed-header fixed-sidebar">
@@ -141,8 +142,8 @@
                         </div>
                     </div>
                 </div>
-            @RenderBody()
-       </div>
+                @RenderBody()
+            </div>
         </div>
         <div class="app-drawer-wrapper">
             <div class="drawer-nav-btn">
@@ -595,10 +596,10 @@
         <script type="text/javascript" src="~/js/treeview.js"></script>
         <script type="text/javascript" src="~/js/form-components/toggle-switch.js"></script>
         <script type="text/javascript" src="~/js/form-components/form-wizard.js"></script>
-      <script type="text/javascript" src="~/js/app.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-	<ejs-scripts></ejs-scripts>
-    @await RenderSectionAsync("Scripts", required: false)
+        <script type="text/javascript" src="~/js/app.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+	    <ejs-scripts></ejs-scripts>
+        @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
     

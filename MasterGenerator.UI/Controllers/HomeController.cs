@@ -1,7 +1,10 @@
 ﻿using AutoMapper;
+using Google.Apis.Sheets.v4;
 using MasterGenerator.Data.Entity;
 using MasterGenerator.Data.Repository;
 using MasterGenerator.Model.Model;
+using MasterGenerator.UI.Helper;
+using MasterGenerator.UI.Mapper;
 using MasterGenerator.UI.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.Features;
@@ -23,12 +26,24 @@ namespace MasterGenerator.UI.Controllers
         private readonly IUnitOfWork _unitOfWork;
         private IWebHostEnvironment _hostingEnv;
 
-        public HomeController(ILogger<HomeController> logger, IUnitOfWork unitOfWork, IMapper mapper, IWebHostEnvironment env)
+        #region google properties
+        private const string SpreadsheetId = "1yJRNyvwJJr-QJaflsTLeMZdw6cUMEMNLsUf_501FTJk";
+        private const string GoogleCredentialsFileName = "google-credentials.json";
+        private const string ReadRange = "Portal Data!A:R";
+        SpreadsheetsResource.ValuesResource _googleSheetValues;
+        #endregion
+
+        public HomeController(ILogger<HomeController> logger,
+            IUnitOfWork unitOfWork,
+            IMapper mapper,
+            IWebHostEnvironment env,
+            GoogleSheetsHelper googleSheetsHelper)
         {
             _logger = logger;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _hostingEnv = env;
+            _googleSheetValues = googleSheetsHelper.Service.Spreadsheets.Values;
         }
 
         public async Task<IActionResult> Index()
@@ -97,6 +112,21 @@ namespace MasterGenerator.UI.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+        public IActionResult ReadFile()
+        {
+            var request = _googleSheetValues.Get(SpreadsheetId, ReadRange);
+            var response = request.Execute();
+            if (response != null)
+            {
+                var values = response.Values;
+                if (values.Count > 0)
+                {
+                    ViewBag.Projects = ProjectMapper.MapFromRangeData(values.Skip(1).ToList());
+                    return View();
+                }
+            }
+            return View();
         }
     }
 }

@@ -9,7 +9,7 @@ using MasterGenerator.Data.Helper;
 using Microsoft.AspNetCore.Identity;
 using MasterGenerator.Data.Entity;
 using MasterGenerator.UI.Extensions;
-using Newtonsoft.Json;
+using MasterGenerator.UI.Helper;
 using Newtonsoft.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,6 +22,11 @@ builder.Services.AddControllersWithViews().AddNewtonsoftJson(options =>
 }); 
 builder.Services.AddIdentityServices(builder.Configuration);
 
+//add refernce to the GoogleSheetHelper
+builder.Services.AddSingleton(typeof(GoogleSheetsHelper));
+
+builder.Services.AddRazorPages()
+    .AddRazorRuntimeCompilation();
 
 if (Directory.Exists(Path.Combine(Directory.GetCurrentDirectory(), @"node_modules", @"@syncfusion")))
 {
