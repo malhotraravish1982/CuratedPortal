@@ -11,5 +11,6 @@ namespace MasterGenerator.Data.Repository
     public interface IProjectRepository
     {
         IEnumerable<ProjectModel> GetProjects();
+        IEnumerable<DealDetailsModel> GetDealDetails();
     }
 }

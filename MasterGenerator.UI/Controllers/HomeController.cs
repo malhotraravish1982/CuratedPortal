@@ -51,33 +51,34 @@ namespace MasterGenerator.UI.Controllers
             return View(); 
         }
 
-        public async Task<IActionResult> CSListView()
+        public async Task<IActionResult> CSView()
         {
-            return View(); 
+            ViewBag.DataSource = _unitOfWork.IProjectRepository.GetDealDetails();
+            return View();
         }
         public IActionResult UrlDatasource([FromBody] Extensions.DataManagerRequestExtension dm)
         {
             string? scfFileId = dm.Table;
-            IEnumerable<ProjectModel> scsRecords = null;
-            scsRecords = _unitOfWork.IProjectRepository.GetProjects();
+            IEnumerable<ProjectModel> projectRecords = null;
+            projectRecords = _unitOfWork.IProjectRepository.GetProjects();
             if (!string.IsNullOrEmpty(scfFileId))
             {
-                scsRecords = scsRecords.Where(x => x.ProjectId == Convert.ToDecimal(scfFileId));
+                projectRecords = projectRecords.Where(x => x.ProjectId == Convert.ToDecimal(scfFileId));
             }
 
             if (!string.IsNullOrEmpty(dm.ProjectName))
             {
                 System.Text.RegularExpressions.Regex regEx = new System.Text.RegularExpressions.Regex(dm.ProjectName.ToLower());
-                scsRecords = scsRecords.Where(x => x.ProjectName != null && regEx.IsMatch(x.ProjectName.ToLower()));
+                projectRecords = projectRecords.Where(x => x.ProjectName != null && regEx.IsMatch(x.ProjectName.ToLower()));
             }
             if (!string.IsNullOrEmpty(dm.PODate))
             {
                 System.Text.RegularExpressions.Regex regEx = new System.Text.RegularExpressions.Regex(dm.PODate.ToLower());
-                scsRecords = scsRecords.Where(x => x.PODate != null && regEx.IsMatch(x.PODate.ToLower()));
+                projectRecords = projectRecords.Where(x => x.PODate != null && regEx.IsMatch(x.PODate.ToLower()));
             }
 
 
-            IEnumerable DataSource = scsRecords;
+            IEnumerable DataSource = projectRecords;
             DataOperations operation = new DataOperations();
             if (dm.Sorted != null && dm.Sorted.Count > 0) //Sorting   
             {
@@ -85,7 +86,7 @@ namespace MasterGenerator.UI.Controllers
             }
             else
             {
-                
+
             }
             if (dm.Where != null && dm.Where.Count > 0) //Filtering   
             {
