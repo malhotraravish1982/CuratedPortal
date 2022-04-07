@@ -102,7 +102,7 @@
   
   <ItemGroup>
     <ProjectReference Include="..\MasterGenerator.Data\MasterGenerator.Data.csproj" />
-    <ProjectReference Include="..\MasterGenerator.Model\MasterGenerator.Model.csproj" />
+    <ProjectReference Include="..\MasterGenerator.Model\add.csproj" />
   </ItemGroup>
   
   <ItemGroup>

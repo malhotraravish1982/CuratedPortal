@@ -21,7 +21,8 @@ builder.Services.AddControllersWithViews().AddNewtonsoftJson(options =>
     options.SerializerSettings.ContractResolver = new DefaultContractResolver();
 }); 
 builder.Services.AddIdentityServices(builder.Configuration);
-
+builder.Services.AddRazorPages()
+    .AddRazorRuntimeCompilation();
 
 if (Directory.Exists(Path.Combine(Directory.GetCurrentDirectory(), @"node_modules", @"@syncfusion")))
 {
@@ -74,6 +75,7 @@ try
     var userManager = services.GetRequiredService<UserManager<AppUser>>();
     var roleManager = services.GetRequiredService<RoleManager<AppRole>>();
     await context.Database.MigrateAsync();
+    await Seed.SeedRoles(userManager, roleManager);
 }
 catch (Exception ex)
 {

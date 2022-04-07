@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MasterGenerator.Model\MasterGenerator.Model.csproj" />
+    <ProjectReference Include="..\MasterGenerator.Model\add.csproj" />
   </ItemGroup>
 
 </Project>

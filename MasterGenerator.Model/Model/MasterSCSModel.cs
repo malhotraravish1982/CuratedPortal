@@ -10,36 +10,36 @@ namespace MasterGenerator.Model.Model
     {      
         public Guid MasterScsId { get; set; }
       
-        public string Ref { get; set; }
+        public string? Ref { get; set; }
        
-        public string ImageRef { get; set; }
+        public string? ImageRef { get; set; }
        
-        public string Category { get; set; }
+        public string? Category { get; set; }
     
-        public string SubCategory { get; set; }
+        public string? SubCategory { get; set; }
        
-        public string ProductName { get; set; }
+        public string? ProductName { get; set; }
         public double? Quantity { get; set; }
        
-        public string DisplayUnit { get; set; }
+        public string? DisplayUnit { get; set; }
        
-        public string FactoryName { get; set; }
+        public string? FactoryName { get; set; }
         public double? CartonL { get; set; }
         public double? CartonW { get; set; }
         public double? CartonH { get; set; }
         public double? UnitsPerCarton { get; set; }
         public double? CartonGW { get; set; }
         
-        public string Currency { get; set; }
+        public string? Currency { get; set; }
         public decimal? UnitCostPriceInCurrency { get; set; }
         public decimal? UnitPackagingCasePriceInCurrency { get; set; }
         public decimal? TotalCostPriceInCurrency { get; set; }
        
-        public string ProductDesc { get; set; }
+        public string? ProductDesc { get; set; }
         
-        public string Certification { get; set; }
+        public string? Certification { get; set; }
        
-        public string ProductionLeadTime { get; set; }
+        public string? ProductionLeadTime { get; set; }
         public double? ProductL { get; set; }
         public double? ProductW { get; set; }
         public double? ProductH { get; set; }
