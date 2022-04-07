@@ -21,6 +21,8 @@ builder.Services.AddControllersWithViews().AddNewtonsoftJson(options =>
     options.SerializerSettings.ContractResolver = new DefaultContractResolver();
 }); 
 builder.Services.AddIdentityServices(builder.Configuration);
+builder.Services.AddRazorPages()
+    .AddRazorRuntimeCompilation();
 
 //add refernce to the GoogleSheetHelper
 builder.Services.AddSingleton(typeof(GoogleSheetsHelper));
@@ -79,6 +81,7 @@ try
     var userManager = services.GetRequiredService<UserManager<AppUser>>();
     var roleManager = services.GetRequiredService<RoleManager<AppRole>>();
     await context.Database.MigrateAsync();
+    await Seed.SeedRoles(userManager, roleManager);
 }
 catch (Exception ex)
 {

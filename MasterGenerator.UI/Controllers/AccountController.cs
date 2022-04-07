@@ -20,14 +20,19 @@ namespace MasterGenerator.UI.Controllers
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
         private readonly UserManager<AppUser> _userManager;
+        private readonly RoleManager<AppRole> _roleManager;
         private readonly SignInManager<AppUser> _signInManager;
-        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager,ILogger<HomeController> logger, IUnitOfWork unitOfWork, IMapper mapper)
+        public AccountController(UserManager<AppUser> userManager, 
+            SignInManager<AppUser> signInManager,ILogger<HomeController> logger, 
+            IUnitOfWork unitOfWork, IMapper mapper,
+            RoleManager<AppRole> roleManager)
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _logger = logger;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _roleManager = roleManager;
         }
 
         public IActionResult Login()
@@ -79,34 +84,79 @@ namespace MasterGenerator.UI.Controllers
         /// <param name="firstName"></param>
         /// <param name="lastName"></param>
         /// <returns></returns>
-        public async Task<IActionResult> Register(string email,string password,string firstName,string lastName)
+        public async Task<IActionResult> Register()
         {
-            
-            if (await UserExists(email)) return BadRequest("Email is taken");
+            var colAllRoles = _roleManager.Roles.Select(x => x.Name).ToList();
+            ViewBag.Roles = colAllRoles;
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> Register(UserModel userModel)
+        {
+            var colAllRoles = _roleManager.Roles.Select(x => x.Name).ToList();
+            ViewBag.Roles = colAllRoles;
+            if (ModelState.IsValid)
+            {
+                if (await UserExists(userModel.Email))
+                {
+                    ModelState.AddModelError("", "Email already taken.");
+                    return View(userModel);
+                }
 
-            var user = new AppUser();
+                if (await VAsync(userModel.Username))
+                {
+                    ModelState.AddModelError("", "User Name already taken.");
+                    return View(userModel);
+                }
 
-            user.Email = email.ToLower();
-            user.UserName = email.ToLower();
+                var user = new AppUser();
 
-            var result = await _userManager.CreateAsync(user, password);
+                user.FirstName = userModel.FirstName;
+                user.LastName = userModel.LastName;
+                user.Address = userModel.Address;
+                user.Email = userModel.Email.ToLower();
+                user.UserName = userModel.Username.ToLower();
+                user.PhoneNumber = userModel.PhoneNumber;
 
-            if (!result.Succeeded) return BadRequest(result.Errors);
+                var result = await _userManager.CreateAsync(user, userModel.Password);
 
-            var roleResult = await _userManager.AddToRoleAsync(user, "Admin");
-
-            if (!roleResult.Succeeded) return BadRequest(result.Errors);
-
+                if (!result.Succeeded)
+                {
+                    string errors = string.Empty;
+                    foreach (var error in result.Errors)
+                    {
+                        errors += error.Description + Environment.NewLine;
+                    }
+                    ModelState.AddModelError("", errors);
+                    return View(userModel);
+                } 
+                var roleResult = await _userManager.AddToRoleAsync(user, "Admin");
+               
+                if (!roleResult.Succeeded)
+                {
+                    string errors = string.Empty;
+                    foreach (var error in result.Errors)
+                    {
+                        errors += error.Description + Environment.NewLine;
+                    }
+                    ModelState.AddModelError("", errors);
+                    return View(userModel);
+                }
+            }
             return View();
         }
         public IActionResult Index()
         {
             return View();
         }
-
         private async Task<bool> UserExists(string email)
         {
             return await _userManager.Users.AnyAsync(x => x.Email == email.ToLower());
         }
+        private async Task<bool> VAsync(string username)
+        {
+            return await _userManager.Users.AnyAsync(x => x.UserName == username.ToLower());
+        }
+
     }
 }
