@@ -31,6 +31,7 @@ namespace MasterGenerator.Data.Repository
             .ProjectTo<ProjectModel>(_mapper.ConfigurationProvider).AsQueryable();
 
         }
+
         public IEnumerable<DealDetailsModel> GetDealDetails()
         {
             return _context.DealDetails

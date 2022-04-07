@@ -53,6 +53,7 @@
                             </div>
                             <button class="close"></button>
                         </div>
+
                         <ul class="header-megamenu nav">
                             <li class="dropdown nav-item">
                                 <a aria-haspopup="true" data-toggle="dropdown" class="nav-link" aria-expanded="false">
@@ -115,6 +116,33 @@
                     </div>
                     <div class="scrollbar-sidebar">
                         <div class="app-sidebar__inner">
+                             @if (User.IsInRole(MasterGenerator.Model.Model.AdminEnum.Admin.ToString()))
+                        {
+                            <ul class="vertical-nav-menu">
+                                <li class="app-sidebar__heading">Admin</li>
+                                <li>
+                                    <a href="\Admin\Users">
+                                        <i class="metismenu-icon pe-7s-browser"></i>
+                                        View Users
+                                        <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                                    </a>                             
+                                </li>        
+                                <li>
+                                    <a href="\Admin\Register">
+                                        <i class="metismenu-icon pe-7s-plugin"></i>
+                                        Add User
+                                        <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                                    </a>                                  
+                                </li>   
+                                <li>
+                                    <a href="\Admin\UploadTemplate">
+                                        <i class="metismenu-icon pe-7s-plugin"></i>
+                                        Upload Template
+                                        <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                                    </a>                                  
+                                </li>  
+                            </ul>
+                        }
                             <ul class="vertical-nav-menu">
                                 <li class="app-sidebar__heading">Menu</li>
                                 <li>

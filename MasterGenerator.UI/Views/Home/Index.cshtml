@@ -1,12 +1,30 @@
-﻿@{
+﻿@model IEnumerable<MasterGenerator.Model.Model.ProjectModel>
+@{
     ViewData["Title"] = "Home";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<<<<<<< Updated upstream
 <link href="~/css/index.css" rel="stylesheet" />
 
 
 
 
+=======
+<style>
+    .table th, .table td {
+     border-top: 0px!important; 
+     padding: 0.55rem;
+    vertical-align: top;
+}
+.item{
+    width:150px;
+}
+p{
+    margin-top: 0;
+    margin-bottom: 2px;
+}
+</style>
+>>>>>>> Stashed changes
 
 <div class="app-main__outer">
     <div class="app-main__inner">
@@ -58,7 +76,7 @@
             </div>
             <div class="tab-pane tabs-animation fade" id="tab-content-1" role="tabpanel">
                 <div class="row">
-                    <div class="col-lg-10">
+                    <div class="col-lg-5">
                         <div class="main-card mb-3 card" style="background-color: transparent;box-shadow: none;">
                             <div class="card-body">
                                 <div class="table-responsive">
@@ -72,28 +90,42 @@
                                                     <div id="exampleAccordion" data-children=".item">
                                                         <div class="item">
                                                             <button type="button" onclick="btnToggle()" aria-expanded="false" aria-controls="exampleAccordion1" data-toggle="collapse" href="#collapseExample" class="m-0 p-0 btn btn-link collapsed">
-                                                                Toggle item
+                                                                Project 1
                                                             </button>
                                                             <div data-parent="#exampleAccordion" id="collapseExample" class="collapse" style="">
-                                                                <p class="mb-3">
-                                                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                                                                    pretium lorem non vestibulum scelerisque. Proin a
-                                                                    vestibulum sem, eget tristique massa. Aliquam lacinia rhoncus nibh quis
-                                                                    ornare.
-                                                                </p>
+                                                               
+                                                               @foreach(var item in @ViewBag.data )
+                                                                {
+                                                                 <div>
+                                                                 <p> <b>Project Name. </b> <span> @item.ProjectName</span> </p>
+                                                                 <p> <b>PO Number. </b> <span> @item.PONumber</span> </p>
+                                                                 <p> <b>PO Date. </b> <span> @item.PODate</span> </p>
+                                                                 <p> <b>EstimatedDeliveryDate. </b> <span> @item.EstimatedDeliveryDate</span> </p>
+                                                                 <p> <b>Currency. </b> <span> @item.Currency</span> </p>
+                                                                 <p> <b>PO Amount. </b> <span> @item.POAmount</span> </p>
+                                                                  
+                                                                 </div>
+                                                                }
                                                             </div>
                                                         </div>
                                                         <div class="item">
                                                             <button type="button" aria-expanded="false" aria-controls="exampleAccordion2" data-toggle="collapse" href="#collapseExample2" class="m-0 p-0 btn btn-link collapsed">
-                                                                Toggle item 2
+                                                                Project  2
                                                             </button>
                                                             <div data-parent="#exampleAccordion" id="collapseExample2" class="collapse" style="">
                                                                 <p class="mb-3">
-                                                                    Donec at ipsum dignissim, rutrum turpis scelerisque, tristique
-                                                                    lectus. Pellentesque habitant morbi tristique senectus
-                                                                    et netus et malesuada fames ac turpis egestas. Vivamus nec dui turpis. Orci
-                                                                    varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus
-                                                                    mus.
+                                                                   @foreach(var item in @ViewBag.data )
+                                                                {
+                                                                 <div>
+                                                                 <p> <b>Project Name. </b> <span> @item.ProjectName</span> </p>
+                                                                 <p> <b>PO Number. </b> <span> @item.PONumber</span> </p>
+                                                                 <p> <b>PO Date. </b> <span> @item.PODate</span> </p>
+                                                                 <p> <b>EstimatedDeliveryDate. </b> <span> @item.EstimatedDeliveryDate</span> </p>
+                                                                 <p> <b>Currency. </b> <span> @item.Currency</span> </p>
+                                                                 <p> <b>PO Amount. </b> <span> @item.POAmount</span> </p>
+                                                                  
+                                                                 </div>
+                                                                }
                                                                 </p>
                                                             </div>
                                                         </div>
@@ -108,28 +140,43 @@
                                                     <div id="exampleAccordion" data-children=".item">
                                                         <div class="item">
                                                             <button type="button" aria-expanded="false" aria-controls="exampleAccordion1" data-toggle="collapse" href="#collapseExample3" class="m-0 p-0 btn btn-link collapsed">
-                                                                Toggle item
+                                                                Project 3
                                                             </button>
                                                             <div data-parent="#exampleAccordion" id="collapseExample3" class="collapse" style="">
                                                                 <p class="mb-3">
-                                                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                                                                    pretium lorem non vestibulum scelerisque. Proin a
-                                                                    vestibulum sem, eget tristique massa. Aliquam lacinia rhoncus nibh quis
-                                                                    ornare.
+                                                                  @foreach(var item in @ViewBag.data )
+                                                                {
+                                                                 <div>
+                                                                 <p> <b>Project Name. </b> <span> @item.ProjectName</span> </p>
+                                                                 <p> <b>PO Number. </b> <span> @item.PONumber</span> </p>
+                                                                 <p> <b>PO Date. </b> <span> @item.PODate</span> </p>
+                                                                 <p> <b>EstimatedDeliveryDate. </b> <span> @item.EstimatedDeliveryDate</span> </p>
+                                                                 <p> <b>Currency. </b> <span> @item.Currency</span> </p>
+                                                                 <p> <b>PO Amount. </b> <span> @item.POAmount</span> </p>
+                                                                  
+                                                                 </div>
+                                                                }
                                                                 </p>
                                                             </div>
                                                         </div>
                                                         <div class="item">
                                                             <button type="button" aria-expanded="false" aria-controls="exampleAccordion2" data-toggle="collapse" href="#collapseExample4" class="m-0 p-0 btn btn-link collapsed">
-                                                                Toggle item 2
+                                                                Project 4
                                                             </button>
                                                             <div data-parent="#exampleAccordion" id="collapseExample4" class="collapse" style="">
                                                                 <p class="mb-3">
-                                                                    Donec at ipsum dignissim, rutrum turpis scelerisque, tristique
-                                                                    lectus. Pellentesque habitant morbi tristique senectus
-                                                                    et netus et malesuada fames ac turpis egestas. Vivamus nec dui turpis. Orci
-                                                                    varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus
-                                                                    mus.
+                                                                  @foreach(var item in @ViewBag.data )
+                                                                {
+                                                                 <div>
+                                                                 <p> <b>Project Name. </b> <span> @item.ProjectName</span> </p>
+                                                                 <p> <b>PO Number. </b> <span> @item.PONumber</span> </p>
+                                                                 <p> <b>PO Date. </b> <span> @item.PODate</span> </p>
+                                                                 <p> <b>EstimatedDeliveryDate. </b> <span> @item.EstimatedDeliveryDate</span> </p>
+                                                                 <p> <b>Currency. </b> <span> @item.Currency</span> </p>
+                                                                 <p> <b>PO Amount. </b> <span> @item.POAmount</span> </p>
+                                                                  
+                                                                 </div>
+                                                                }
                                                                 </p>
                                                             </div>
                                                         </div>
@@ -144,28 +191,43 @@
                                                     <div id="exampleAccordion" data-children=".item">
                                                         <div class="item">
                                                             <button type="button" aria-expanded="false" aria-controls="exampleAccordion1" data-toggle="collapse" href="#collapseExample5" class="m-0 p-0 btn btn-link collapsed">
-                                                                Toggle item
+                                                                Project 5
                                                             </button>
                                                             <div data-parent="#exampleAccordion" id="collapseExample5" class="collapse" style="">
                                                                 <p class="mb-3">
-                                                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                                                                    pretium lorem non vestibulum scelerisque. Proin a
-                                                                    vestibulum sem, eget tristique massa. Aliquam lacinia rhoncus nibh quis
-                                                                    ornare.
+                                                                  @foreach(var item in @ViewBag.data )
+                                                                {
+                                                                 <div>
+                                                                 <p> <b>Project Name. </b> <span> @item.ProjectName</span> </p>
+                                                                 <p> <b>PO Number. </b> <span> @item.PONumber</span> </p>
+                                                                 <p> <b>PO Date. </b> <span> @item.PODate</span> </p>
+                                                                 <p> <b>EstimatedDeliveryDate. </b> <span> @item.EstimatedDeliveryDate</span> </p>
+                                                                 <p> <b>Currency. </b> <span> @item.Currency</span> </p>
+                                                                 <p> <b>PO Amount. </b> <span> @item.POAmount</span> </p>
+                                                                  
+                                                                 </div>
+                                                                }
                                                                 </p>
                                                             </div>
                                                         </div>
                                                         <div class="item">
                                                             <button type="button" aria-expanded="false" aria-controls="exampleAccordion2" data-toggle="collapse" href="#collapseExample6" class="m-0 p-0 btn btn-link collapsed">
-                                                                Toggle item 2
+                                                               Project 6
                                                             </button>
                                                             <div data-parent="#exampleAccordion" id="collapseExample6" class="collapse" style="">
                                                                 <p class="mb-3">
-                                                                    Donec at ipsum dignissim, rutrum turpis scelerisque, tristique
-                                                                    lectus. Pellentesque habitant morbi tristique senectus
-                                                                    et netus et malesuada fames ac turpis egestas. Vivamus nec dui turpis. Orci
-                                                                    varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus
-                                                                    mus.
+                                                                   @foreach(var item in @ViewBag.data )
+                                                                {
+                                                                 <div>
+                                                                 <p> <b>Project Name. </b> <span> @item.ProjectName</span> </p>
+                                                                 <p> <b>PO Number. </b> <span> @item.PONumber</span> </p>
+                                                                 <p> <b>PO Date. </b> <span> @item.PODate</span> </p>
+                                                                 <p> <b>EstimatedDeliveryDate. </b> <span> @item.EstimatedDeliveryDate</span> </p>
+                                                                 <p> <b>Currency. </b> <span> @item.Currency</span> </p>
+                                                                 <p> <b>PO Amount. </b> <span> @item.POAmount</span> </p>
+                                                                  
+                                                                 </div>
+                                                                }
                                                                 </p>
                                                             </div>
                                                         </div>
@@ -180,28 +242,43 @@
                                                     <div id="exampleAccordion" data-children=".item">
                                                         <div class="item">
                                                             <button type="button" aria-expanded="false" aria-controls="exampleAccordion1" data-toggle="collapse" href="#collapseExample7" class="m-0 p-0 btn btn-link collapsed">
-                                                                Toggle item
+                                                                Project 7
                                                             </button>
                                                             <div data-parent="#exampleAccordion" id="collapseExample7" class="collapse" style="">
                                                                 <p class="mb-3">
-                                                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                                                                    pretium lorem non vestibulum scelerisque. Proin a
-                                                                    vestibulum sem, eget tristique massa. Aliquam lacinia rhoncus nibh quis
-                                                                    ornare.
+                                                                   @foreach(var item in @ViewBag.data )
+                                                                {
+                                                                 <div>
+                                                                 <p> <b>Project Name. </b> <span> @item.ProjectName</span> </p>
+                                                                 <p> <b>PO Number. </b> <span> @item.PONumber</span> </p>
+                                                                 <p> <b>PO Date. </b> <span> @item.PODate</span> </p>
+                                                                 <p> <b>EstimatedDeliveryDate. </b> <span> @item.EstimatedDeliveryDate</span> </p>
+                                                                 <p> <b>Currency. </b> <span> @item.Currency</span> </p>
+                                                                 <p> <b>PO Amount. </b> <span> @item.POAmount</span> </p>
+                                                                  
+                                                                 </div>
+                                                                }
                                                                 </p>
                                                             </div>
                                                         </div>
                                                         <div class="item">
                                                             <button type="button" aria-expanded="false" aria-controls="exampleAccordion2" data-toggle="collapse" href="#collapseExample8" class="m-0 p-0 btn btn-link collapsed">
-                                                                Toggle item 2
+                                                                Project 8
                                                             </button>
                                                             <div data-parent="#exampleAccordion" id="collapseExample8" class="collapse" style="">
                                                                 <p class="mb-3">
-                                                                    Donec at ipsum dignissim, rutrum turpis scelerisque, tristique
-                                                                    lectus. Pellentesque habitant morbi tristique senectus
-                                                                    et netus et malesuada fames ac turpis egestas. Vivamus nec dui turpis. Orci
-                                                                    varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus
-                                                                    mus.
+                                                                   @foreach(var item in @ViewBag.data )
+                                                                {
+                                                                 <div>
+                                                                 <p> <b>Project Name. </b> <span> @item.ProjectName</span> </p>
+                                                                 <p> <b>PO Number. </b> <span> @item.PONumber</span> </p>
+                                                                 <p> <b>PO Date. </b> <span> @item.PODate</span> </p>
+                                                                 <p> <b>EstimatedDeliveryDate. </b> <span> @item.EstimatedDeliveryDate</span> </p>
+                                                                 <p> <b>Currency. </b> <span> @item.Currency</span> </p>
+                                                                 <p> <b>PO Amount. </b> <span> @item.POAmount</span> </p>
+                                                                  
+                                                                 </div>
+                                                                }
                                                                 </p>
                                                             </div>
                                                         </div>
@@ -216,28 +293,43 @@
                                                     <div id="exampleAccordion" data-children=".item">
                                                         <div class="item">
                                                             <button type="button" aria-expanded="false" aria-controls="exampleAccordion1" data-toggle="collapse" href="#collapseExample9" class="m-0 p-0 btn btn-link collapsed">
-                                                                Toggle item
+                                                               Project 9
                                                             </button>
                                                             <div data-parent="#exampleAccordion" id="collapseExample9" class="collapse" style="">
                                                                 <p class="mb-3">
-                                                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                                                                    pretium lorem non vestibulum scelerisque. Proin a
-                                                                    vestibulum sem, eget tristique massa. Aliquam lacinia rhoncus nibh quis
-                                                                    ornare.
+                                                                  @foreach(var item in @ViewBag.data )
+                                                                {
+                                                                 <div>
+                                                                 <p> <b>Project Name. </b> <span> @item.ProjectName</span> </p>
+                                                                 <p> <b>PO Number. </b> <span> @item.PONumber</span> </p>
+                                                                 <p> <b>PO Date. </b> <span> @item.PODate</span> </p>
+                                                                 <p> <b>EstimatedDeliveryDate. </b> <span> @item.EstimatedDeliveryDate</span> </p>
+                                                                 <p> <b>Currency. </b> <span> @item.Currency</span> </p>
+                                                                 <p> <b>PO Amount. </b> <span> @item.POAmount</span> </p>
+                                                                  
+                                                                 </div>
+                                                                }
                                                                 </p>
                                                             </div>
                                                         </div>
                                                         <div class="item">
                                                             <button type="button" aria-expanded="false" aria-controls="exampleAccordion2" data-toggle="collapse" href="#collapseExample10" class="m-0 p-0 btn btn-link collapsed">
-                                                                Toggle item 2
+                                                               Project 10
                                                             </button>
                                                             <div data-parent="#exampleAccordion" id="collapseExample10" class="collapse" style="">
                                                                 <p class="mb-3">
-                                                                    Donec at ipsum dignissim, rutrum turpis scelerisque, tristique
-                                                                    lectus. Pellentesque habitant morbi tristique senectus
-                                                                    et netus et malesuada fames ac turpis egestas. Vivamus nec dui turpis. Orci
-                                                                    varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus
-                                                                    mus.
+                                                                  @foreach(var item in @ViewBag.data )
+                                                                {
+                                                                 <div>
+                                                                 <p> <b>Project Name. </b> <span> @item.ProjectName</span> </p>
+                                                                 <p> <b>PO Number. </b> <span> @item.PONumber</span> </p>
+                                                                 <p> <b>PO Date. </b> <span> @item.PODate</span> </p>
+                                                                 <p> <b>EstimatedDeliveryDate. </b> <span> @item.EstimatedDeliveryDate</span> </p>
+                                                                 <p> <b>Currency. </b> <span> @item.Currency</span> </p>
+                                                                 <p> <b>PO Amount. </b> <span> @item.POAmount</span> </p>
+                                                                  
+                                                                 </div>
+                                                                }
                                                                 </p>
                                                             </div>
                                                         </div>
@@ -252,28 +344,43 @@
                                                     <div id="exampleAccordion" data-children=".item">
                                                         <div class="item">
                                                             <button type="button" aria-expanded="false" aria-controls="exampleAccordion1" data-toggle="collapse" href="#collapseExample11" class="m-0 p-0 btn btn-link collapsed">
-                                                                Toggle item
+                                                               Project 11
                                                             </button>
                                                             <div data-parent="#exampleAccordion" id="collapseExample11" class="collapse" style="">
                                                                 <p class="mb-3">
-                                                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                                                                    pretium lorem non vestibulum scelerisque. Proin a
-                                                                    vestibulum sem, eget tristique massa. Aliquam lacinia rhoncus nibh quis
-                                                                    ornare.
+                                                                 @foreach(var item in @ViewBag.data )
+                                                                {
+                                                                 <div>
+                                                                 <p> <b>Project Name. </b> <span> @item.ProjectName</span> </p>
+                                                                 <p> <b>PO Number. </b> <span> @item.PONumber</span> </p>
+                                                                 <p> <b>PO Date. </b> <span> @item.PODate</span> </p>
+                                                                 <p> <b>EstimatedDeliveryDate. </b> <span> @item.EstimatedDeliveryDate</span> </p>
+                                                                 <p> <b>Currency. </b> <span> @item.Currency</span> </p>
+                                                                 <p> <b>PO Amount. </b> <span> @item.POAmount</span> </p>
+                                                                  
+                                                                 </div>
+                                                                }
                                                                 </p>
                                                             </div>
                                                         </div>
                                                         <div class="item">
                                                             <button type="button" aria-expanded="false" aria-controls="exampleAccordion2" data-toggle="collapse" href="#collapseExample12" class="m-0 p-0 btn btn-link collapsed">
-                                                                Toggle item 2
+                                                               Project 12
                                                             </button>
                                                             <div data-parent="#exampleAccordion" id="collapseExample12" class="collapse" style="">
                                                                 <p class="mb-3">
-                                                                    Donec at ipsum dignissim, rutrum turpis scelerisque, tristique
-                                                                    lectus. Pellentesque habitant morbi tristique senectus
-                                                                    et netus et malesuada fames ac turpis egestas. Vivamus nec dui turpis. Orci
-                                                                    varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus
-                                                                    mus.
+                                                                   @foreach(var item in @ViewBag.data )
+                                                                {
+                                                                 <div>
+                                                                 <p> <b>Project Name. </b> <span> @item.ProjectName</span> </p>
+                                                                 <p> <b>PO Number. </b> <span> @item.PONumber</span> </p>
+                                                                 <p> <b>PO Date. </b> <span> @item.PODate</span> </p>
+                                                                 <p> <b>EstimatedDeliveryDate. </b> <span> @item.EstimatedDeliveryDate</span> </p>
+                                                                 <p> <b>Currency. </b> <span> @item.Currency</span> </p>
+                                                                 <p> <b>PO Amount. </b> <span> @item.POAmount</span> </p>
+                                                                  
+                                                                 </div>
+                                                                }
                                                                 </p>
                                                             </div>
                                                         </div>
@@ -288,28 +395,42 @@
                                                     <div id="exampleAccordion" data-children=".item">
                                                         <div class="item">
                                                             <button type="button" aria-expanded="false" aria-controls="exampleAccordion1" data-toggle="collapse" href="#collapseExample13" class="m-0 p-0 btn btn-link collapsed">
-                                                                Toggle item
+                                                               Project 13
                                                             </button>
                                                             <div data-parent="#exampleAccordion" id="collapseExample13" class="collapse" style="">
-                                                                <p class="mb-3">
-                                                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                                                                    pretium lorem non vestibulum scelerisque. Proin a
-                                                                    vestibulum sem, eget tristique massa. Aliquam lacinia rhoncus nibh quis
-                                                                    ornare.
-                                                                </p>
+                                                           
+                                                                   @foreach(var item in @ViewBag.data )
+                                                                {
+                                                                 <div style="">
+                                                                 <p> <b>Project Name. </b> <span> @item.ProjectName</span> </p>
+                                                                 <p> <b>PO Number. </b> <span> @item.PONumber</span> </p>
+                                                                 <p> <b>PO Date. </b> <span> @item.PODate</span> </p>
+                                                                 <p> <b>EstimatedDeliveryDate. </b> <span> @item.EstimatedDeliveryDate</span> </p>
+                                                                 <p> <b>Currency. </b> <span> @item.Currency</span> </p>
+                                                                 <p> <b>PO Amount. </b> <span> @item.POAmount</span> </p>
+                                                                  
+                                                                 </div>
+                                                                }
                                                             </div>
                                                         </div>
                                                         <div class="item">
                                                             <button type="button" aria-expanded="false" aria-controls="exampleAccordion2" data-toggle="collapse" href="#collapseExample14" class="m-0 p-0 btn btn-link collapsed">
-                                                                Toggle item 2
+                                                               Project 14
                                                             </button>
                                                             <div data-parent="#exampleAccordion" id="collapseExample14" class="collapse" style="">
                                                                 <p class="mb-3">
-                                                                    Donec at ipsum dignissim, rutrum turpis scelerisque, tristique
-                                                                    lectus. Pellentesque habitant morbi tristique senectus
-                                                                    et netus et malesuada fames ac turpis egestas. Vivamus nec dui turpis. Orci
-                                                                    varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus
-                                                                    mus.
+                                                                  @foreach(var item in @ViewBag.data )
+                                                                {
+                                                                 <div>
+                                                                 <p> <b>Project Name. </b> <span> @item.ProjectName</span> </p>
+                                                                 <p> <b>PO Number. </b> <span> @item.PONumber</span> </p>
+                                                                 <p> <b>PO Date. </b> <span> @item.PODate</span> </p>
+                                                                 <p> <b>EstimatedDeliveryDate. </b> <span> @item.EstimatedDeliveryDate</span> </p>
+                                                                 <p> <b>Currency. </b> <span> @item.Currency</span> </p>
+                                                                 <p> <b>PO Amount. </b> <span> @item.POAmount</span> </p>
+                                                                  
+                                                                 </div>
+                                                                }
                                                                 </p>
                                                             </div>
                                                         </div>
@@ -324,28 +445,43 @@
                                                     <div id="exampleAccordion" data-children=".item">
                                                         <div class="item">
                                                             <button type="button" aria-expanded="false" aria-controls="exampleAccordion1" data-toggle="collapse" href="#collapseExample15" class="m-0 p-0 btn btn-link collapsed">
-                                                                Toggle item
+                                                               Project 15
                                                             </button>
                                                             <div data-parent="#exampleAccordion" id="collapseExample15" class="collapse" style="">
                                                                 <p class="mb-3">
-                                                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                                                                    pretium lorem non vestibulum scelerisque. Proin a
-                                                                    vestibulum sem, eget tristique massa. Aliquam lacinia rhoncus nibh quis
-                                                                    ornare.
+                                                                  @foreach(var item in @ViewBag.data )
+                                                                {
+                                                                 <div>
+                                                                 <p> <b>Project Name. </b> <span> @item.ProjectName</span> </p>
+                                                                 <p> <b>PO Number. </b> <span> @item.PONumber</span> </p>
+                                                                 <p> <b>PO Date. </b> <span> @item.PODate</span> </p>
+                                                                 <p> <b>EstimatedDeliveryDate. </b> <span> @item.EstimatedDeliveryDate</span> </p>
+                                                                 <p> <b>Currency. </b> <span> @item.Currency</span> </p>
+                                                                 <p> <b>PO Amount. </b> <span> @item.POAmount</span> </p>
+                                                                  
+                                                                 </div>
+                                                                }
                                                                 </p>
                                                             </div>
                                                         </div>
                                                         <div class="item">
                                                             <button type="button" aria-expanded="false" aria-controls="exampleAccordion2" data-toggle="collapse" href="#collapseExample16" class="m-0 p-0 btn btn-link collapsed">
-                                                                Toggle item 2
+                                                               Project 16
                                                             </button>
                                                             <div data-parent="#exampleAccordion" id="collapseExample16" class="collapse" style="">
                                                                 <p class="mb-3">
-                                                                    Donec at ipsum dignissim, rutrum turpis scelerisque, tristique
-                                                                    lectus. Pellentesque habitant morbi tristique senectus
-                                                                    et netus et malesuada fames ac turpis egestas. Vivamus nec dui turpis. Orci
-                                                                    varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus
-                                                                    mus.
+                                                                   @foreach(var item in @ViewBag.data )
+                                                                {
+                                                                 <div>
+                                                                 <p> <b>Project Name. </b> <span> @item.ProjectName</span> </p>
+                                                                 <p> <b>PO Number. </b> <span> @item.PONumber</span> </p>
+                                                                 <p> <b>PO Date. </b> <span> @item.PODate</span> </p>
+                                                                 <p> <b>EstimatedDeliveryDate. </b> <span> @item.EstimatedDeliveryDate</span> </p>
+                                                                 <p> <b>Currency. </b> <span> @item.Currency</span> </p>
+                                                                 <p> <b>PO Amount. </b> <span> @item.POAmount</span> </p>
+                                                                  
+                                                                 </div>
+                                                                }
                                                                 </p>
                                                             </div>
                                                         </div>
@@ -360,28 +496,43 @@
                                                     <div id="exampleAccordion" data-children=".item">
                                                         <div class="item">
                                                             <button type="button" aria-expanded="false" aria-controls="exampleAccordion1" data-toggle="collapse" href="#collapseExample17" class="m-0 p-0 btn btn-link collapsed">
-                                                                Toggle item
+                                                               Project 17
                                                             </button>
                                                             <div data-parent="#exampleAccordion" id="collapseExample17" class="collapse" style="">
                                                                 <p class="mb-3">
-                                                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                                                                    pretium lorem non vestibulum scelerisque. Proin a
-                                                                    vestibulum sem, eget tristique massa. Aliquam lacinia rhoncus nibh quis
-                                                                    ornare.
+                                                                   @foreach(var item in @ViewBag.data )
+                                                                {
+                                                                 <div>
+                                                                 <p> <b>Project Name. </b> <span> @item.ProjectName</span> </p>
+                                                                 <p> <b>PO Number. </b> <span> @item.PONumber</span> </p>
+                                                                 <p> <b>PO Date. </b> <span> @item.PODate</span> </p>
+                                                                 <p> <b>EstimatedDeliveryDate. </b> <span> @item.EstimatedDeliveryDate</span> </p>
+                                                                 <p> <b>Currency. </b> <span> @item.Currency</span> </p>
+                                                                 <p> <b>PO Amount. </b> <span> @item.POAmount</span> </p>
+                                                                  
+                                                                 </div>
+                                                                }
                                                                 </p>
                                                             </div>
                                                         </div>
                                                         <div class="item">
                                                             <button type="button" aria-expanded="false" aria-controls="exampleAccordion2" data-toggle="collapse" href="#collapseExample18" class="m-0 p-0 btn btn-link collapsed">
-                                                                Toggle item 2
+                                                               Project 18
                                                             </button>
                                                             <div data-parent="#exampleAccordion" id="collapseExample18" class="collapse" style="">
                                                                 <p class="mb-3">
-                                                                    Donec at ipsum dignissim, rutrum turpis scelerisque, tristique
-                                                                    lectus. Pellentesque habitant morbi tristique senectus
-                                                                    et netus et malesuada fames ac turpis egestas. Vivamus nec dui turpis. Orci
-                                                                    varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus
-                                                                    mus.
+                                                                  @foreach(var item in @ViewBag.data )
+                                                                {
+                                                                 <div>
+                                                                 <p> <b>Project Name. </b> <span> @item.ProjectName</span> </p>
+                                                                 <p> <b>PO Number. </b> <span> @item.PONumber</span> </p>
+                                                                 <p> <b>PO Date. </b> <span> @item.PODate</span> </p>
+                                                                 <p> <b>EstimatedDeliveryDate. </b> <span> @item.EstimatedDeliveryDate</span> </p>
+                                                                 <p> <b>Currency. </b> <span> @item.Currency</span> </p>
+                                                                 <p> <b>PO Amount. </b> <span> @item.POAmount</span> </p>
+                                                                  
+                                                                 </div>
+                                                                }
                                                                 </p>
                                                             </div>
                                                         </div>

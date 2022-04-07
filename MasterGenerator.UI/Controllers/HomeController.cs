@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Google.Apis.Sheets.v4;
+using MasterGenerator.Data.Context;
 using MasterGenerator.Data.Entity;
 using MasterGenerator.Data.Repository;
 using MasterGenerator.Model.Model;
@@ -48,7 +49,8 @@ namespace MasterGenerator.UI.Controllers
 
         public async Task<IActionResult> Index()
         {
-            return View(); 
+            ViewBag.data = _unitOfWork.IProjectRepository.GetProjects();
+            return View();
         }
 
         public async Task<IActionResult> CSView()
