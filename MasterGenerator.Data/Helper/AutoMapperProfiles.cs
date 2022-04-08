@@ -7,15 +7,15 @@ using AutoMapper;
 using MasterGenerator.Data.Entity;
 using MasterGenerator.Model.Model;
 
-namespace MasterGenerator.Data.Helper  
+namespace MasterGenerator.Data.Helper
 {
-     public class AutoMapperProfiles : Profile
-{
-    public AutoMapperProfiles()
+    public class AutoMapperProfiles : Profile
     {
-            //CreateMap<AppUser, UserModel>();
+        public AutoMapperProfiles()
+        {
             CreateMap<Project, ProjectModel>().ReverseMap();
             CreateMap<DealDetails, DealDetailsModel>().ReverseMap();
+            CreateMap<UserModel, AppUser>().ReverseMap();
         }
-}
+    }
 }

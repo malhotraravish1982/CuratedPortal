@@ -76,25 +76,15 @@ namespace MasterGenerator.UI.Controllers
             return RedirectToAction("Login", "Account");
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="email"></param>
-        /// <param name="password"></param>
-        /// <param name="firstName"></param>
-        /// <param name="lastName"></param>
-        /// <returns></returns>
         public async Task<IActionResult> Register()
         {
-            var colAllRoles = _roleManager.Roles.Select(x => x.Name).ToList();
-            ViewBag.Roles = colAllRoles;
+            ViewBag.Roles = await _roleManager.Roles.Select(x => x.Name).ToListAsync();
             return View();
         }
         [HttpPost]
         public async Task<IActionResult> Register(UserModel userModel)
         {
-            var colAllRoles = _roleManager.Roles.Select(x => x.Name).ToList();
-            ViewBag.Roles = colAllRoles;
+            ViewBag.Roles = await _roleManager.Roles.Select(x => x.Name).ToListAsync();
             if (ModelState.IsValid)
             {
                 if (await UserExists(userModel.Email))
@@ -103,14 +93,13 @@ namespace MasterGenerator.UI.Controllers
                     return View(userModel);
                 }
 
-                if (await VAsync(userModel.Username))
+                if (await UserNameExists(userModel.Username))
                 {
                     ModelState.AddModelError("", "User Name already taken.");
                     return View(userModel);
                 }
 
                 var user = new AppUser();
-
                 user.FirstName = userModel.FirstName;
                 user.LastName = userModel.LastName;
                 user.Address = userModel.Address;
@@ -140,7 +129,7 @@ namespace MasterGenerator.UI.Controllers
                         errors += error.Description + Environment.NewLine;
                     }
                     ModelState.AddModelError("", errors);
-                    return View(userModel);
+                    return RedirectToAction("Login");
                 }
             }
             return View();
@@ -149,14 +138,15 @@ namespace MasterGenerator.UI.Controllers
         {
             return View();
         }
+        #region "private Methods"
         private async Task<bool> UserExists(string email)
         {
             return await _userManager.Users.AnyAsync(x => x.Email == email.ToLower());
         }
-        private async Task<bool> VAsync(string username)
+        private async Task<bool> UserNameExists(string username)
         {
             return await _userManager.Users.AnyAsync(x => x.UserName == username.ToLower());
         }
-
+        #endregion
     }
 }
