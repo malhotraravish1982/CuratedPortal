@@ -4,47 +4,49 @@ namespace MasterGenerator.UI.Mapper
 {
     public static class ProjectMapper
     {
-
         public static List<Project> MapFromRangeData(IList<IList<object>> values)
         {
             var projects = new List<Project>();
             foreach (var value in values)
             {
-                Project project = new()
+                if (!string.IsNullOrEmpty(value[0].ToString()))
                 {
-                    ProjectId = Convert.ToInt32(value[0]),
-                    CustomerName = value[1].ToString(),
-                    ProjectName = value[2].ToString(),
-                    PONumber = value[3].ToString(),
-                    PODate = value[4].ToString(),
-                    TotalQuantity = value[5].ToString(),
-                    Currency = value[6].ToString(),
-                    POAmount = value[7].ToString(),
-                    CSStatus = value[8].ToString(),
-                    DisplayStatus = value[9].ToString(),
-                    ShipmentMethod = value[10].ToString(),
-                    ProductionCompletion = value[11].ToString(),
-                    VesselETA = value[12].ToString(),
-                    VesselETD = value[13].ToString(),
-                    EstimatedDeliveryDate = value[14].ToString(),
-                    ActualDeliveryDate = value[15].ToString(),
-                    PreProductionManager = value[16].ToString(),
-                    OnTimeStatus = value[17].ToString()
-                };
-                projects.Add(project);
+                    Project project = new()
+                    {
+                        ProjectId = value.Count >= 1 ? Convert.ToInt32(value[0]) : 0,
+                        CustomerName = value.Count >= 2 ? value[1].ToString().Trim() : String.Empty,
+                        ProjectName = value.Count >= 3 ? value[2].ToString().Trim() : String.Empty,
+                        PONumber = value.Count >= 4 ? value[3].ToString().Trim() : String.Empty,
+                        PODate = value.Count >= 5 ? value[4].ToString().Trim() : String.Empty,
+                        TotalQuantity = value.Count >= 6 ? value[5].ToString().Trim() : String.Empty,
+                        Currency = value.Count >= 7 ? value[6].ToString().Trim() : String.Empty,
+                        POAmount = value.Count >= 8 ? value[7].ToString().Trim() : String.Empty,
+                        CSStatus = value.Count >= 9 ? value[8].ToString().Trim() : String.Empty,
+                        DisplayStatus = value.Count >= 10 ? value[9].ToString().Trim() : String.Empty,
+                        ShipmentMethod = value.Count >= 11 ? value[10].ToString().Trim() : String.Empty,
+                        ProductionCompletion = value.Count >= 12 ? value[11].ToString().Trim() : String.Empty,
+                        VesselETA = value.Count >= 13 ? value[12].ToString().Trim() : String.Empty,
+                        VesselETD = value.Count >= 14 ? value[13].ToString().Trim() : String.Empty,
+                        EstimatedDeliveryDate = value.Count >= 15 ? value[14].ToString().Trim() : String.Empty,
+                        ActualDeliveryDate = value.Count >= 16 ? value[15].ToString().Trim() : String.Empty,
+                        PreProductionManager = value.Count >= 17 ? value[16].ToString().Trim() : String.Empty,
+                        OnTimeStatus = value.Count >= 18 ? value[17].ToString().Trim() : String.Empty
+                    };
+                    projects.Add(project);
+                }
             }
             return projects;
         }
         public static IList<IList<object>> MapToRangeData(Project project)
         {
-            var objectList = new List<object>() { 
-                project.ProjectId, 
-                project.CustomerName, 
-                project.ProjectName, 
-                project.PONumber, 
-                project.PODate, 
-                project.TotalQuantity, 
-                project.Currency, 
+            var objectList = new List<object>() {
+                project.ProjectId,
+                project.CustomerName,
+                project.ProjectName,
+                project.PONumber,
+                project.PODate,
+                project.TotalQuantity,
+                project.Currency,
                 project.POAmount,
                 project.CSStatus,
                 project.DisplayStatus,

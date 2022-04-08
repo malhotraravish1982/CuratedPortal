@@ -35,7 +35,20 @@ namespace MasterGenerator.Data.Repository
         {
             return _context.DealDetails
             .ProjectTo<DealDetailsModel>(_mapper.ConfigurationProvider).AsQueryable();
+        }
 
+        public async Task<bool> AddProjectRange(List<Project> projects)
+        {
+            try
+            {
+                await _context.Project.AddRangeAsync(projects);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
     }
 }

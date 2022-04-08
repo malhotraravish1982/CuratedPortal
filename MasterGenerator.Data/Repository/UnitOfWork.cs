@@ -18,6 +18,7 @@ namespace MasterGenerator.Data.Repository
             _mapper = mapper;
         }
         public IProjectRepository IProjectRepository => new ProjectRepository(_context, _mapper);
+        public IDealDetailsRepository IDealDetailsRepository => new DealDetailsRepository(_context, _mapper);
         public async Task<bool> Complete()
         {
             return await _context.SaveChangesAsync() > 0;

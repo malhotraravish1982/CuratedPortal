@@ -29,7 +29,8 @@ namespace MasterGenerator.UI.Controllers
         #region google properties
         private const string SpreadsheetId = "1yJRNyvwJJr-QJaflsTLeMZdw6cUMEMNLsUf_501FTJk";
         private const string GoogleCredentialsFileName = "google-credentials.json";
-        private const string ReadRange = "Portal Data!A:R";
+        private const string ReadRangeForPortalData = "Portal Data!A:R";
+        private const string ReadRangeForDealDetails = "Deal Details!A:R";
         SpreadsheetsResource.ValuesResource _googleSheetValues;
         #endregion
 
@@ -48,6 +49,7 @@ namespace MasterGenerator.UI.Controllers
 
         public async Task<IActionResult> Index()
         {
+            ViewBag.DataSource = _unitOfWork.IProjectRepository.GetDealDetails();
             return View(); 
         }
 
@@ -114,20 +116,46 @@ namespace MasterGenerator.UI.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-        public IActionResult ReadFile()
+        public async Task<IActionResult> ReadFile()
         {
-            var request = _googleSheetValues.Get(SpreadsheetId, ReadRange);
+            //read data from Portal data sheet
+            var portalDataResult = ReadDataFromGoogleSpreadSheet(ReadRangeForPortalData);
+            if (portalDataResult != null)
+            {
+                var projects = ProjectMapper.MapFromRangeData(portalDataResult);
+                if (projects.Count > 0)
+                {
+                    await _unitOfWork.IProjectRepository.AddProjectRange(projects);
+                }
+            }
+
+            //read data from deal details sheet
+            var dealDetailsResult = ReadDataFromGoogleSpreadSheet(ReadRangeForDealDetails);
+            if (dealDetailsResult != null)
+            {
+                var dealDetails = DealDetailsMapper.MapFromRangeData(dealDetailsResult);
+                if (dealDetails.Count > 0)
+                {
+                    await _unitOfWork.IDealDetailsRepository.AddDealDetailsRange(dealDetails);
+                }
+            }
+            return View();
+        }
+        #region Read Data from google spreadsheet
+        private IList<IList<object>> ReadDataFromGoogleSpreadSheet(string readRange)
+        {
+            var request = _googleSheetValues.Get(SpreadsheetId, readRange);
             var response = request.Execute();
             if (response != null)
             {
                 var values = response.Values;
                 if (values.Count > 0)
                 {
-                    ViewBag.Projects = ProjectMapper.MapFromRangeData(values.Skip(1).ToList());
-                    return View();
+                    return values.Skip(1).ToList();
                 }
             }
-            return View();
+            return null;
         }
+        #endregion
     }
 }

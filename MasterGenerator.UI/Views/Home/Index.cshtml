@@ -12,7 +12,23 @@
 
     }
 </script>
+@{
+    var ChildGrid = new Syncfusion.EJ2.Grids.Grid() {
+        DataSource =  (IEnumerable<object>)ViewBag.DataSource,
 
+        QueryString = "ProjectId",
+        HierarchyPrintMode = Syncfusion.EJ2.Grids.HierarchyGridPrintMode.All,
+
+        Columns = new List<Syncfusion.EJ2.Grids.GridColumn> {
+                new Syncfusion.EJ2.Grids.GridColumn(){ Field="ProjectId", HeaderText="CS ID", Width="120" },
+                new Syncfusion.EJ2.Grids.GridColumn(){ Field="CustomerSKU", HeaderText="Customer SKU", Width="120", Format="C2", },
+                new Syncfusion.EJ2.Grids.GridColumn(){ Field="ItemName", HeaderText="Item Name", Width="150" },
+                new Syncfusion.EJ2.Grids.GridColumn(){ Field="Qty", HeaderText="Quantity", Width="120" },
+                new Syncfusion.EJ2.Grids.GridColumn(){ Field="Currency", HeaderText="Currency", Width="120" },
+                new Syncfusion.EJ2.Grids.GridColumn(){ Field="ApproxSellPriceExVAT", HeaderText="Only For Primary Good", Width="120" },
+        }
+    };
+}
 <div class="app-main__outer">
     <div class="app-main__inner">
         <div class="app-page-title">
@@ -46,15 +62,30 @@
                     <div class="card-body">
                         <h5 class="card-title">Scs Records</h5>
                         <form class="">
-                            <ejs-grid id="Grid" dataSource="@ViewBag.DataSource" allowPaging="true" allowSorting="true" allowFiltering="true"
-                                      toolbar="@(new List<string>() { "Add", "Edit", "Delete", "Cancel", "Update" })">
+                            <ejs-grid id="Grid" width="900" childGrid="ChildGrid"   allowPaging="true"  allowTextWrap="false" hierarchyPrintMode="All" allowSorting="true" allowFiltering="true"
+                              >
                                 <e-grid-editSettings allowAdding="true" allowDeleting="true" allowEditing="true" mode="Normal"></e-grid-editSettings>
                                 <e-grid-filterSettings type="Excel"></e-grid-filterSettings>
+                                <e-data-manager url="/Home/UrlDataSource" crudUrl="/Home/CrudUpdate" adaptor="UrlAdaptor" ></e-data-manager>
                                 <e-grid-columns>
-                                    <e-grid-column field="MasterScsId" hidden headerText="Order ID" textAlign="Right" width="0"></e-grid-column>
-                                    <e-grid-column field="Category" headerText="Category" width="100"></e-grid-column>
-                                    <e-grid-column field="SubCategory" headerText="Sub Category" width="100"></e-grid-column>
-                                    <e-grid-column field="ProductName" headerText="Product Name" width="150"></e-grid-column>
+                                    <e-grid-column field="ProjectId" hidden headerText="Project Id"  width="0"></e-grid-column>
+                                    <e-grid-column field="CustomerName" headerText="Customer Name"  width="100"></e-grid-column>
+                                    <e-grid-column field="ProjectName" headerText="Project Name" width="100"></e-grid-column>
+                                    <e-grid-column field="PONumber" headerText="PO Number" width="150"></e-grid-column>
+                                    <e-grid-column field="PODate" headerText="PO Date" width="150"></e-grid-column>
+                                    <e-grid-column field="TotalQuantity" headerText="Total Quantity" width="150"></e-grid-column>
+                                    <e-grid-column field="Currency" headerText="Currency" width="150"></e-grid-column>
+                                    <e-grid-column field="POAmount" headerText="PO Amount" width="150"></e-grid-column>
+                                    <e-grid-column field="CSStatus" headerText="CS Status" width="150"></e-grid-column>
+                                    <e-grid-column field="DisplayStatus" headerText="Display Status" width="150"></e-grid-column>
+                                    <e-grid-column field="ShipmentMethod" headerText="Shipment Method" width="150"></e-grid-column>
+                                    <e-grid-column field="ProductionCompletion" headerText="Production Completion" width="150"></e-grid-column>
+                                    <e-grid-column field="VesselETA" headerText="Vessel ETA" width="150"></e-grid-column>
+                                    <e-grid-column field="VesselETD" headerText="Vessel ETD" width="150"></e-grid-column>
+                                    <e-grid-column field="EstimatedDeliveryDate" headerText="Estimated Delivery Date" width="150"></e-grid-column>
+                                    <e-grid-column field="ActualDeliveryDate" headerText="Actual Delivery Date" width="150"></e-grid-column>
+                                    <e-grid-column field="PreProductionManager" headerText="Pre Production Manager" width="150"></e-grid-column>
+                                    <e-grid-column field="OnTimeStatus" headerText="On Time Status" width="150"></e-grid-column>
                                 </e-grid-columns>
                             </ejs-grid>
                         </form>
