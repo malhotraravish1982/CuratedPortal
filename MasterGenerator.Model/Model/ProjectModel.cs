@@ -10,7 +10,7 @@ namespace MasterGenerator.Model.Model
     {
         public int Id { get; set; }
         public int ProjectId { get; set; }
-        public string? CustomerName { get; set; }
+        public string? CustomerName { get; set  ; }
         public string? ProjectName { get; set; }
         public string? PONumber { get; set; }
         public string? PODate { get; set; }
