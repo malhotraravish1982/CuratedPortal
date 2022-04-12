@@ -48,5 +48,13 @@ namespace MasterGenerator.Data.Repository
             }
 
         }
+        public async Task<List<string?>> GetProjectStatus()
+        {
+            return await _context.Project.Where(x => !string.IsNullOrEmpty(x.DisplayStatus)).Select(x => x.DisplayStatus).Distinct().ToListAsync();
+        }
+        public async Task<Project?> GetProjectByProjectId(int projectId)
+        {
+            return await _context.Project.Where(x => x.ProjectId == projectId).AsNoTracking().FirstOrDefaultAsync();
+        }
     }
 }

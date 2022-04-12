@@ -38,5 +38,10 @@ namespace MasterGenerator.Data.Repository
                 return false;
             }
         }
+        public IEnumerable<DealDetailsModel> GetDealDetails()
+        {
+            return _context.DealDetails
+            .ProjectTo<DealDetailsModel>(_mapper.ConfigurationProvider).AsQueryable();
+        }
     }
 }

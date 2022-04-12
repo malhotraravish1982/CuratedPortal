@@ -1,9 +1,15 @@
 ﻿using MasterGenerator.Data.Entity;
+using MasterGenerator.Data.Repository;
 
 namespace MasterGenerator.UI.Mapper
 {
-    public static class ProjectMapper
+    public class ProjectMapper
     {
+        //private readonly IUnitOfWork _unitOfWork;
+        //public ProjectMapper(IUnitOfWork unitOfWork)
+        //{
+        //    _unitOfWork = unitOfWork;
+        //}
         public static List<Project> MapFromRangeData(IList<IList<object>> values)
         {
             var projects = new List<Project>();
@@ -11,9 +17,13 @@ namespace MasterGenerator.UI.Mapper
             {
                 if (!string.IsNullOrEmpty(value[0].ToString()))
                 {
+                    var projectId = value[0].ToString();
+                    //var existingProject = await _unitOfWork.IProjectRepository.GetProjectByProjectId(Convert.ToInt32(projectId));
+
                     Project project = new()
                     {
-                        ProjectId = value.Count >= 1 ? Convert.ToInt32(value[0]) : 0,
+                        //Id = existingProject != null ? existingProject.Id : 0,
+                        ProjectId = value.Count >= 1 ? Convert.ToInt32(projectId) : 0,
                         CustomerName = value.Count >= 2 ? value[1].ToString().Trim() : String.Empty,
                         ProjectName = value.Count >= 3 ? value[2].ToString().Trim() : String.Empty,
                         PONumber = value.Count >= 4 ? value[3].ToString().Trim() : String.Empty,

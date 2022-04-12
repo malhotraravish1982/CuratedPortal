@@ -30,6 +30,9 @@ namespace MasterGenerator.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Created = table.Column<DateTime>(type: "datetime2", nullable: false),
                     LastActive = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -50,6 +53,55 @@ namespace MasterGenerator.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CustomerMap",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    CustomerId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CustomerMap", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Customers",
+                columns: table => new
+                {
+                    CustomerId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CustomerName = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Customers", x => x.CustomerId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DealDetails",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ProjectId = table.Column<int>(type: "int", nullable: false),
+                    CustomerName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ProjectName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ItemSKU = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    BatchNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CustomerSKU = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ItemName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Qty = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Currency = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ApproxSellPriceExVAT = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DealDetails", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -188,34 +240,6 @@ namespace MasterGenerator.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "DealDetails",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ProjectId = table.Column<int>(type: "int", nullable: false),
-                    CustomerName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ProjectName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ItemSKU = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    BatchNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CustomerSKU = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ItemName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Qty = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Currency = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ApproxSellPriceExVAT = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_DealDetails", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_DealDetails_Project_ProjectId",
-                        column: x => x.ProjectId,
-                        principalTable: "Project",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -256,11 +280,6 @@ namespace MasterGenerator.Data.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_DealDetails_ProjectId",
-                table: "DealDetails",
-                column: "ProjectId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Project_ProjectId",
                 table: "Project",
                 column: "ProjectId",
@@ -285,16 +304,22 @@ namespace MasterGenerator.Data.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "CustomerMap");
+
+            migrationBuilder.DropTable(
+                name: "Customers");
+
+            migrationBuilder.DropTable(
                 name: "DealDetails");
+
+            migrationBuilder.DropTable(
+                name: "Project");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
-                name: "Project");
         }
     }
 }

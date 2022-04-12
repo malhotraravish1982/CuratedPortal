@@ -48,16 +48,15 @@ namespace MasterGenerator.UI.Controllers
             _googleSheetValues = googleSheetsHelper.Service.Spreadsheets.Values;
         }
         public async Task<IActionResult> Index()
+        
         {
-            ViewBag.DataSource = _unitOfWork.IProjectRepository.GetDealDetails();
+            ViewBag.DataSource = _unitOfWork.IDealDetailsRepository.GetDealDetails();
+            ViewBag.statusList = await _unitOfWork.IProjectRepository.GetProjectStatus();
+            ViewBag.Project =  _unitOfWork.IProjectRepository.GetProjects();
             return View(); 
         }
 
-        public async Task<IActionResult> CSView()
-        {
-            ViewBag.DataSource = _unitOfWork.IProjectRepository.GetDealDetails();
-            return View();
-        }
+        
         public IActionResult UrlDatasource([FromBody] Extensions.DataManagerRequestExtension dm)
         {
             string? scfFileId = dm.Table;
@@ -104,7 +103,6 @@ namespace MasterGenerator.UI.Controllers
                 DataSource = operation.PerformTake(DataSource, dm.Take);
             }
             return dm.RequiresCounts ? Json(new { result = DataSource, count = count }) : Json(DataSource);
-            //return new JsonResult(new { result = DataSource, count = count }, new JsonSerializerSettings());
         }
         public IActionResult Privacy()
         {
@@ -125,7 +123,16 @@ namespace MasterGenerator.UI.Controllers
                 var projects = ProjectMapper.MapFromRangeData(portalDataResult);
                 if (projects.Count > 0)
                 {
-                    await _unitOfWork.IProjectRepository.AddProjectRange(projects);
+                    var result=await _unitOfWork.IProjectRepository.AddProjectRange(projects);
+                    if (result == true)
+                    {
+                        //get all customers
+                        var customers = projects.Where(x => !string.IsNullOrEmpty(x.CustomerName)).Select(x => x.CustomerName).Distinct().ToList();
+                        if (customers.Count > 0)
+                        {
+                            await _unitOfWork.CustomerRepository.AddCustomerRange(customers);
+                        }
+                    }
                 }
             }
 
@@ -139,7 +146,7 @@ namespace MasterGenerator.UI.Controllers
                     await _unitOfWork.IDealDetailsRepository.AddDealDetailsRange(dealDetails);
                 }
             }
-            return View();
+            return Ok();
         }
         #region Read Data from google spreadsheet
         private IList<IList<object>> ReadDataFromGoogleSpreadSheet(string readRange)
