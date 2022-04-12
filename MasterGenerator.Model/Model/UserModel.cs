@@ -32,7 +32,7 @@ namespace MasterGenerator.Model.Model
         [Required(ErrorMessage = "Phone Number Required!")]
         [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$",
                    ErrorMessage = "Entered phone format is not valid.")]
-        public string PhoneNumber { get; set; }
+        public string? PhoneNumber { get; set; }
         [Required]
         [StringLength(maximumLength: 50, ErrorMessage = "User name contain at least one symbol (!,@,#,etc) or (0-9),(A-Z),(a-z)")]
         public string? Username { get; set; }

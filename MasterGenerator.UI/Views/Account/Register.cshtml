@@ -30,10 +30,13 @@
                                 <div class="col-sm-10">                                     
                                     <select asp-for="UserType" class="form-control">
                                        <option disabled selected>Select User Type</option>
-                                          @foreach(var user in ViewBag.Roles)
+                                       @if(ViewBag.Roles!=null)
+                                       {
+                                          foreach(var user in ViewBag.Roles)
                                            {
                                             <option> @user </option>
                                            }
+                                       }
                                     </select>
                                     <span asp-validation-for="UserType" class="text-danger"></span>
                                 </div>

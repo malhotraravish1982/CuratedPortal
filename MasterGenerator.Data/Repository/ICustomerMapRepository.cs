@@ -1,5 +1,4 @@
 ﻿using MasterGenerator.Data.Entity;
-using MasterGenerator.Model.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace MasterGenerator.Data.Repository
 {
-    public interface IDealDetailsRepository
+    public interface ICustomerMapRepository
     {
-        IEnumerable<string> GetAllCustomers();
-        Task<bool> AddDealDetailsRange(List<DealDetails> dealDetails);
+        Task AddCustomerMap(CustomerMap customerMap);
     }
 }

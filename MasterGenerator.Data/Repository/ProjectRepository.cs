@@ -12,8 +12,8 @@ using System.Threading.Tasks;
 
 namespace MasterGenerator.Data.Repository
 {
-    
-    public class ProjectRepository :IProjectRepository
+
+    public class ProjectRepository : IProjectRepository
     {
         private readonly DataContext _context;
         private readonly IMapper _mapper;
@@ -23,21 +23,17 @@ namespace MasterGenerator.Data.Repository
             _mapper = mapper;
             _context = context;
         }
-        
-
         public IEnumerable<ProjectModel> GetProjects()
         {
             return _context.Project
             .ProjectTo<ProjectModel>(_mapper.ConfigurationProvider).AsQueryable();
 
-        }
-
+        }      
         public IEnumerable<DealDetailsModel> GetDealDetails()
         {
             return _context.DealDetails
             .ProjectTo<DealDetailsModel>(_mapper.ConfigurationProvider).AsQueryable();
         }
-
         public async Task<bool> AddProjectRange(List<Project> projects)
         {
             try
@@ -50,6 +46,7 @@ namespace MasterGenerator.Data.Repository
             {
                 return false;
             }
+
         }
     }
 }

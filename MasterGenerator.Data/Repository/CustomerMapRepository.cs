@@ -11,32 +11,35 @@ using System.Threading.Tasks;
 
 namespace MasterGenerator.Data.Repository
 {
-    public class DealDetailsRepository: IDealDetailsRepository
+    public class CustomerMapRepository: ICustomerMapRepository
     {
         private readonly DataContext _context;
         private readonly IMapper _mapper;
 
-        public DealDetailsRepository(DataContext context, IMapper mapper)
+        public CustomerMapRepository(DataContext context, IMapper mapper)
         {
             _mapper = mapper;
             _context = context;
         }
-        public IEnumerable<string> GetAllCustomers()
+        public IEnumerable<CustomerModel> CustomerMap()
         {
-            return _context.DealDetails.Select(x=>x.CustomerName).Distinct().AsQueryable();
-        }       
-        public async Task<bool> AddDealDetailsRange(List<DealDetails> dealDetails)
+            return _context.CustomerMap
+            .ProjectTo<CustomerModel>(_mapper.ConfigurationProvider).AsQueryable();
+
+        }
+        public async Task AddCustomerMap(CustomerMap customerMap)
         {
             try
             {
-                await _context.DealDetails.AddRangeAsync(dealDetails);
+                await _context.CustomerMap.AddRangeAsync(customerMap);
                 await _context.SaveChangesAsync();
-                return true;
+                return;
             }
             catch (Exception ex)
             {
-                return false;
+                return;
             }
         }
+
     }
 }
