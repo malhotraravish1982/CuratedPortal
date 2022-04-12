@@ -51,7 +51,8 @@ namespace MasterGenerator.UI.Controllers
         public async Task<IActionResult> Index()
         {
             ViewBag.DataSource = _unitOfWork.IProjectRepository.GetDealDetails();
-            return View(); 
+            var statusList = await _unitOfWork.IProjectRepository.GetProjectStatus();
+            return View();
         }
 
         public async Task<IActionResult> CSView()
@@ -126,7 +127,16 @@ namespace MasterGenerator.UI.Controllers
                 var projects = ProjectMapper.MapFromRangeData(portalDataResult);
                 if (projects.Count > 0)
                 {
-                    await _unitOfWork.IProjectRepository.AddProjectRange(projects);
+                    var result=await _unitOfWork.IProjectRepository.AddProjectRange(projects);
+                    if (result == true)
+                    {
+                        //get all customers
+                        var customers = projects.Where(x => !string.IsNullOrEmpty(x.CustomerName)).Select(x => x.CustomerName).Distinct().ToList();
+                        if (customers.Count > 0)
+                        {
+                            await _unitOfWork.CustomerRepository.AddCustomerRange(customers);
+                        }
+                    }
                 }
             }
 
@@ -140,7 +150,7 @@ namespace MasterGenerator.UI.Controllers
                     await _unitOfWork.IDealDetailsRepository.AddDealDetailsRange(dealDetails);
                 }
             }
-            return View();
+            return Ok();
         }
         #region Read Data from google spreadsheet
         private IList<IList<object>> ReadDataFromGoogleSpreadSheet(string readRange)
