@@ -12,8 +12,8 @@ using System.Threading.Tasks;
 
 namespace MasterGenerator.Data.Repository
 {
-    
-    public class ProjectRepository :IProjectRepository
+
+    public class ProjectRepository : IProjectRepository
     {
         private readonly DataContext _context;
         private readonly IMapper _mapper;
@@ -23,18 +23,16 @@ namespace MasterGenerator.Data.Repository
             _mapper = mapper;
             _context = context;
         }
-        
+
 
         public IEnumerable<ProjectModel> GetProjects()
         {
             return _context.Project
             .ProjectTo<ProjectModel>(_mapper.ConfigurationProvider).AsQueryable();
         }
-
-        public IEnumerable<DealDetailsModel> GetDealDetails()
+        public async Task<List<string?>> GetProjectStatus()
         {
-            return _context.DealDetails
-            .ProjectTo<DealDetailsModel>(_mapper.ConfigurationProvider).AsQueryable();
+            return await _context.Project.Where(x => !string.IsNullOrEmpty(x.DisplayStatus)).Select(x => x.DisplayStatus).Distinct().ToListAsync();
         }
 
         public async Task<bool> AddProjectRange(List<Project> projects)

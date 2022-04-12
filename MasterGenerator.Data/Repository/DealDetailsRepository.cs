@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using MasterGenerator.Data.Context;
 using MasterGenerator.Data.Entity;
+using MasterGenerator.Model.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +20,11 @@ namespace MasterGenerator.Data.Repository
         {
             _mapper = mapper;
             _context = context;
+        }
+        public IEnumerable<DealDetailsModel> GetDealDetails()
+        {
+            return _context.DealDetails
+            .ProjectTo<DealDetailsModel>(_mapper.ConfigurationProvider).AsQueryable();
         }
         public async Task<bool> AddDealDetailsRange(List<DealDetails> dealDetails)
         {

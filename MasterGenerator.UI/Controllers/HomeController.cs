@@ -49,17 +49,15 @@ namespace MasterGenerator.UI.Controllers
         }
 
         public async Task<IActionResult> Index()
+        
         {
-            ViewBag.DataSource = _unitOfWork.IProjectRepository.GetDealDetails();
-            var statusList = await _unitOfWork.IProjectRepository.GetProjectStatus();
-            return View();
+            ViewBag.DataSource = _unitOfWork.IDealDetailsRepository.GetDealDetails();
+            ViewBag.statusList = await _unitOfWork.IProjectRepository.GetProjectStatus();
+            ViewBag.Project =  _unitOfWork.IProjectRepository.GetProjects();
+            return View(); 
         }
 
-        public async Task<IActionResult> CSView()
-        {
-            ViewBag.DataSource = _unitOfWork.IProjectRepository.GetDealDetails();
-            return View();
-        }
+        
         public IActionResult UrlDatasource([FromBody] Extensions.DataManagerRequestExtension dm)
         {
             string? scfFileId = dm.Table;
@@ -106,7 +104,6 @@ namespace MasterGenerator.UI.Controllers
                 DataSource = operation.PerformTake(DataSource, dm.Take);
             }
             return dm.RequiresCounts ? Json(new { result = DataSource, count = count }) : Json(DataSource);
-            //return new JsonResult(new { result = DataSource, count = count }, new JsonSerializerSettings());
         }
         public IActionResult Privacy()
         {

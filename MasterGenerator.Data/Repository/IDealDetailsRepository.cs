@@ -1,4 +1,5 @@
 ﻿using MasterGenerator.Data.Entity;
+using MasterGenerator.Model.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,6 @@ namespace MasterGenerator.Data.Repository
     public interface IDealDetailsRepository
     {
         Task<bool> AddDealDetailsRange(List<DealDetails> dealDetails);
+        IEnumerable<DealDetailsModel> GetDealDetails();
     }
 }

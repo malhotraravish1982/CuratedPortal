@@ -11,7 +11,7 @@ namespace MasterGenerator.Data.Repository
     public interface IProjectRepository
     {
         IEnumerable<ProjectModel> GetProjects();
-        IEnumerable<DealDetailsModel> GetDealDetails();
+        Task<List<string>> GetProjectStatus();
         Task<bool> AddProjectRange(List<Project> projects);
         Task<List<string?>> GetProjectStatus();
         Task<Project?> GetProjectByProjectId(int projectId);
