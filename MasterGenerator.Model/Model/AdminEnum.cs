@@ -8,8 +8,8 @@ namespace MasterGenerator.Model.Model
 {
     public enum AdminEnum
     {
-        Member = 1,
-        Admin = 2,
-        Moderator = 3
+        Admin = 1,
+        CS_User = 2,
+        Customer_User = 3
     }
 }

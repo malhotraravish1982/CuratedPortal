@@ -21,11 +21,10 @@ namespace MasterGenerator.Data.Repository
             _mapper = mapper;
             _context = context;
         }
-        public IEnumerable<DealDetailsModel> GetDealDetails()
+        public IEnumerable<string> GetAllCustomers()
         {
-            return _context.DealDetails
-            .ProjectTo<DealDetailsModel>(_mapper.ConfigurationProvider).AsQueryable();
-        }
+            return _context.DealDetails.Select(x=>x.CustomerName).Distinct().AsQueryable();
+        }       
         public async Task<bool> AddDealDetailsRange(List<DealDetails> dealDetails)
         {
             try
@@ -38,6 +37,11 @@ namespace MasterGenerator.Data.Repository
             {
                 return false;
             }
+        }
+        public IEnumerable<DealDetailsModel> GetDealDetails()
+        {
+            return _context.DealDetails
+            .ProjectTo<DealDetailsModel>(_mapper.ConfigurationProvider).AsQueryable();
         }
     }
 }

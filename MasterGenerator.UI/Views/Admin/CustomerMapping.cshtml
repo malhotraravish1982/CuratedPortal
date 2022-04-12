@@ -1,4 +1,4 @@
-﻿@model MasterGenerator.Model.Model.Customer
+﻿@model MasterGenerator.Model.Model.CustomerModel
 @{
     ViewData["Title"] = "CustomerMapping";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -22,35 +22,35 @@
                 <div class="main-card mb-3 card">
                     <div class="card-body">
                         <h5 class="card-title">Customer Mapping</h5>
-                        <form>
+                        <form asp-action="CustomerMapping">
                             <div class="position-relative row form-group">
-                                <label asp-for="UserName"  class="col-sm-2 col-form-label">User</label>
+                                <label asp-for="UserId"  class="col-sm-2 col-form-label">User</label>
                                 <div class="col-sm-10">
-                                    <select asp-for="UserName"  class="form-control">
+                                    <select asp-for="UserId"  class="form-control">
                                         @if (ViewBag.users != null)
                                         {
                                             @foreach (var user in ViewBag.users)
                                             {
-                                                <option> @user.FirstName </option>
+                                                <option value="@user.Id"> @user.FirstName </option>
                                             }
                                         }
                                     </select>
-                                    <span asp-validation-for="UserName" class="text-danger"></span>
+                                    <span asp-validation-for="UserId" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="position-relative row form-group">
-                                <label asp-for="CustomerName" class="col-sm-2 col-form-label">Customer</label>
+                                <label asp-for="CustomerId" class="col-sm-2 col-form-label">Customer</label>
                                 <div class="col-sm-10">
-                                    <select asp-for="CustomerName" class="form-control">
-                                        @if (ViewBag.users != null)
+                                    <select asp-for="CustomerId" class="form-control">
+                                        @if (ViewBag.customers != null)
                                         {
-                                            @foreach (var user in ViewBag.users)
+                                            @foreach (var customer in ViewBag.customers)
                                             {
-                                                <option> @user.FirstName </option>
+                                                <option value="1"> @customer </option>       
                                             }
                                         }
                                     </select>
-                                    <span asp-validation-for="CustomerName" class="text-danger"></span>
+                                    <span asp-validation-for="CustomerId" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="position-relative row form-check">

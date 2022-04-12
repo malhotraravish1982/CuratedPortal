@@ -23,18 +23,17 @@ namespace MasterGenerator.Data.Repository
             _mapper = mapper;
             _context = context;
         }
-
-
         public IEnumerable<ProjectModel> GetProjects()
         {
             return _context.Project
             .ProjectTo<ProjectModel>(_mapper.ConfigurationProvider).AsQueryable();
-        }
-        public async Task<List<string?>> GetProjectStatus()
-        {
-            return await _context.Project.Where(x => !string.IsNullOrEmpty(x.DisplayStatus)).Select(x => x.DisplayStatus).Distinct().ToListAsync();
-        }
 
+        }      
+        public IEnumerable<DealDetailsModel> GetDealDetails()
+        {
+            return _context.DealDetails
+            .ProjectTo<DealDetailsModel>(_mapper.ConfigurationProvider).AsQueryable();
+        }
         public async Task<bool> AddProjectRange(List<Project> projects)
         {
             try
@@ -47,14 +46,15 @@ namespace MasterGenerator.Data.Repository
             {
                 return false;
             }
+
         }
         public async Task<List<string?>> GetProjectStatus()
         {
-            return await _context.Project.Where(x=>!string.IsNullOrEmpty(x.DisplayStatus)).Select(x=>x.DisplayStatus).Distinct().ToListAsync();
+            return await _context.Project.Where(x => !string.IsNullOrEmpty(x.DisplayStatus)).Select(x => x.DisplayStatus).Distinct().ToListAsync();
         }
         public async Task<Project?> GetProjectByProjectId(int projectId)
         {
-            return await _context.Project.Where(x => x.ProjectId==projectId).AsNoTracking().FirstOrDefaultAsync();
+            return await _context.Project.Where(x => x.ProjectId == projectId).AsNoTracking().FirstOrDefaultAsync();
         }
     }
 }

@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace MasterGenerator.Model.Model
 {
-    public class Customer
+    public class CustomerModel
     {
-        public string UserName { get; set; }
-        public string CustomerName { get; set; }
+        public int Id { get; set; }
+        public int UserId { get; set; }
+        public int CustomerId { get; set; }
     }
 }

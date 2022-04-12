@@ -10,6 +10,7 @@ namespace MasterGenerator.Data.Repository
 {
     public interface IDealDetailsRepository
     {
+        IEnumerable<string> GetAllCustomers();
         Task<bool> AddDealDetailsRange(List<DealDetails> dealDetails);
         IEnumerable<DealDetailsModel> GetDealDetails();
     }

@@ -4,6 +4,7 @@ using MasterGenerator.Data.Helper;
 using MasterGenerator.Data.Repository;
 using MasterGenerator.Model.Model;
 using MasterGenerator.UI.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -49,7 +50,6 @@ namespace MasterGenerator.UI.Controllers
         {
             var user = await _userManager.Users            
             .SingleOrDefaultAsync(x => x.Email == userModel.Email.ToLower());
-
                 if (user == null)
                 {
                     ModelState.AddModelError("Email", "Wrong email, please enter correct email.");
@@ -64,10 +64,10 @@ namespace MasterGenerator.UI.Controllers
                 ModelState.AddModelError("Password", "Wrong password, please enter correct password.");
                 return View(userModel);
             }
-
-            //Signin successfull//
+            
+            //Signin successfull
             await _signInManager.SignInAsync(user, isPersistent: false);
-            return RedirectToAction("Import", "Home");              
+            return RedirectToAction("Index", "Home");
         }
 
         public IActionResult Logout()
@@ -75,13 +75,14 @@ namespace MasterGenerator.UI.Controllers
            _signInManager.SignOutAsync();
             return RedirectToAction("Login", "Account");
         }
-
+        [Authorize(Roles ="Admin")]
         public async Task<IActionResult> Register()
         {
-            ViewBag.Roles = await _roleManager.Roles.Select(x => x.Name).ToListAsync();
+            ViewBag.Roles = await _roleManager.Roles.ToListAsync();
             return View();
         }
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Register(UserModel userModel)
         {
             ViewBag.Roles = await _roleManager.Roles.Select(x => x.Name).ToListAsync();

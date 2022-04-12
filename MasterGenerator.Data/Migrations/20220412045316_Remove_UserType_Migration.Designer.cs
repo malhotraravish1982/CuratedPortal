@@ -4,6 +4,7 @@ using MasterGenerator.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MasterGenerator.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20220412045316_Remove_UserType_Migration")]
+    partial class Remove_UserType_Migration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -388,22 +390,6 @@ namespace MasterGenerator.Data.Migrations
 
                     b.Navigation("User");
                 });
-
-            modelBuilder.Entity("MasterGenerator.Data.Entity.Customer", b =>
-            {
-                b.Property<int>("CustomerId")
-                    .ValueGeneratedOnAdd()
-                    .HasColumnType("int");
-
-                SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CustomerId"), 1L, 1);
-
-                b.Property<string>("CustomerName")
-                    .HasColumnType("nvarchar(max)");
-
-                b.HasKey("CustomerId");
-
-                b.ToTable("Customers");
-            });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
