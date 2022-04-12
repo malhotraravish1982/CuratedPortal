@@ -150,6 +150,22 @@ namespace MasterGenerator.Data.Migrations
                     b.ToTable("AspNetUserRoles", (string)null);
                 });
 
+            modelBuilder.Entity("MasterGenerator.Data.Entity.Customer", b =>
+                {
+                    b.Property<int>("CustomerId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CustomerId"), 1L, 1);
+
+                    b.Property<string>("CustomerName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("CustomerId");
+
+                    b.ToTable("Customers");
+                });
+
             modelBuilder.Entity("MasterGenerator.Data.Entity.CustomerMap", b =>
                 {
                     b.Property<int>("Id")
@@ -388,22 +404,6 @@ namespace MasterGenerator.Data.Migrations
 
                     b.Navigation("User");
                 });
-
-            modelBuilder.Entity("MasterGenerator.Data.Entity.Customer", b =>
-            {
-                b.Property<int>("CustomerId")
-                    .ValueGeneratedOnAdd()
-                    .HasColumnType("int");
-
-                SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CustomerId"), 1L, 1);
-
-                b.Property<string>("CustomerName")
-                    .HasColumnType("nvarchar(max)");
-
-                b.HasKey("CustomerId");
-
-                b.ToTable("Customers");
-            });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
