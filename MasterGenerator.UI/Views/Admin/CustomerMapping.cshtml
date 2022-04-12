@@ -46,7 +46,7 @@
                                         {
                                             @foreach (var customer in ViewBag.customers)
                                             {
-                                                <option value="1"> @customer </option>       
+                                                <option value="@customer.CustomerId"> @customer.CustomerName </option>       
                                             }
                                         }
                                     </select>

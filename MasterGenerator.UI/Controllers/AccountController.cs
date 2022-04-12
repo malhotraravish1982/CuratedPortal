@@ -120,7 +120,7 @@ namespace MasterGenerator.UI.Controllers
                     ModelState.AddModelError("", errors);
                     return View(userModel);
                 } 
-                var roleResult = await _userManager.AddToRoleAsync(user, "Admin");
+                var roleResult = await _userManager.AddToRoleAsync(user,userModel.UserType);
                
                 if (!roleResult.Succeeded)
                 {
@@ -130,10 +130,10 @@ namespace MasterGenerator.UI.Controllers
                         errors += error.Description + Environment.NewLine;
                     }
                     ModelState.AddModelError("", errors);
-                    return RedirectToAction("Login");
+                    return View(userModel);
                 }
             }
-            return View();
+            return RedirectToAction("Register", "Account");
         }
         public IActionResult Index()
         {

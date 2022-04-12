@@ -47,7 +47,6 @@ namespace MasterGenerator.UI.Controllers
             _hostingEnv = env;
             _googleSheetValues = googleSheetsHelper.Service.Spreadsheets.Values;
         }
-
         public async Task<IActionResult> Index()
         {
             ViewBag.DataSource = _unitOfWork.IProjectRepository.GetDealDetails();

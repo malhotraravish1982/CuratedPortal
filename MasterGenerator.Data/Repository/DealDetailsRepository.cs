@@ -21,7 +21,7 @@ namespace MasterGenerator.Data.Repository
             _mapper = mapper;
             _context = context;
         }
-        public IEnumerable<string> GetAllCustomers()
+        public IEnumerable<string> GetAllCustomerMap()
         {
             return _context.DealDetails.Select(x=>x.CustomerName).Distinct().AsQueryable();
         }       

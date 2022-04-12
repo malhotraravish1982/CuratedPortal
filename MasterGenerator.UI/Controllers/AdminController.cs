@@ -13,7 +13,7 @@ namespace MasterGenerator.UI.Controllers
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
         private IWebHostEnvironment _hostingEnv;
-        //private readonly CustomerManager<CustomerModel> _customerManager;
+        
         public AdminController(ILogger<HomeController> logger,
            IUnitOfWork unitOfWork,
            IMapper mapper,
@@ -27,16 +27,16 @@ namespace MasterGenerator.UI.Controllers
         public IActionResult CustomerMapping()
         {
             ViewBag.users = _unitOfWork.Userrepository.GetUsers();
-            ViewBag.customers = _unitOfWork.IDealDetailsRepository.GetAllCustomers();
+            ViewBag.customers = _unitOfWork.CustomerRepository.GetAllCustomers();
             return View();
         }
         [HttpPost]
         public async Task<IActionResult> CustomerMappingAsync(CustomerModel customerModel)
         {
             ViewBag.users = _unitOfWork.Userrepository.GetUsers();
-            ViewBag.customers = _unitOfWork.IDealDetailsRepository.GetAllCustomers(); 
-                        
-               var result = _mapper
+            ViewBag.customers = _unitOfWork.CustomerRepository.GetAllCustomers();
+
+            var result = _mapper
                     .Map<CustomerMap>(customerModel);
             if (result != null)
             { 
