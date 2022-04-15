@@ -1,0 +1,119 @@
+﻿@model MasterGenerator.Model.Model.UserModel
+@{
+    ViewData["Title"] = "Register";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="app-main__outer">
+    <div class="app-main__inner">
+        <div class="app-page-title">
+            <div class="page-title-wrapper">
+                <div class="page-title-heading">
+                    <div class="page-title-icon">
+                        <i class="pe-7s-graph text-success"></i>
+                    </div>
+                    <div>
+                        Add New User
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-content">
+            <div class="tab-pane tabs-animation fade active show" id="tab-content-1" role="tabpanel">
+                <div class="main-card mb-3 card">
+                    <div class="card-body">
+                        <h5 class="card-title">Add User</h5>
+                        <form asp-action="AddUser">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="position-relative row form-group">
+                                <label asp-for="UserType" class="col-sm-2 col-form-label">User Type</label>
+                                <div class="col-sm-10">
+                                    <select asp-for="UserType" class="form-control">
+                                        <option disabled selected>Select User Type</option>
+                                        @if (ViewBag.Roles != null)
+                                        {
+                                            foreach (var user in ViewBag.Roles)
+                                            {
+                                                <option> @user </option>
+                                            }
+                                        }
+                                    </select>
+                                    <span asp-validation-for="UserType" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="position-relative row form-group">
+                                <label asp-for="FirstName" class="col-sm-2 col-form-label">First Name</label>
+                                <div class="col-sm-10">
+                                    <input asp-for="FirstName" type="text" id="txtFirstName" autocomplete="off" class="form-control"
+                                           placeholder="Enter First Name" />
+                                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="position-relative row form-group">
+                                <label asp-for="LastName" class="col-sm-2 col-form-label">Last Name</label>
+                                <div class="col-sm-10">
+                                    <input asp-for="LastName" type="text" id="txtLastName" autocomplete="off" class="form-control"
+                                           placeholder="Enter Last Name" />
+                                    <span asp-validation-for="LastName" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="position-relative row form-group">
+                                <label asp-for="Username" class="col-sm-2 col-form-label">User Name</label>
+                                <div class="col-sm-10">
+                                    <input asp-for="Username" type="text" id="txtUserName" autocomplete="off" class="form-control"
+                                           placeholder="Enter User Name" />
+                                    <span asp-validation-for="Username" class="text-danger"></span>
+                                    <span id="UserStatus"></span>
+                                </div>
+                            </div>
+                            <div class="position-relative row form-group">
+                                <label asp-for="PhoneNumber" class="col-sm-2 col-form-label">Phone Number</label>
+                                <div class="col-sm-10">
+                                    <input asp-for="PhoneNumber" type="tel" maxlength=10 id="txtUserName" autocomplete="off" class="form-control"
+                                           placeholder="Enter Phone Number" />
+                                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="position-relative row form-group">
+                                <label asp-for="Email" class="col-sm-2 col-form-label">Email</label>
+                                <div class="col-sm-10">
+                                    <input asp-for="Email" type="email" autocomplete="off" id="txtEmail" class="form-control"
+                                           placeholder="Enter Email Address" />
+                                    <span asp-validation-for="Email" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="position-relative row form-group">
+                                <label asp-for="Password" class="col-sm-2 col-form-label">Password</label>
+                                <div class="col-sm-10">
+                                    <input asp-for="Password" type="password" autocomplete="off" id="txtPassword" class="form-control"
+                                           placeholder="Enter Password " />
+                                    <span asp-validation-for="Password" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="position-relative row form-group">
+                                <label asp-for="ConfirmPassword" class="col-sm-2 col-form-label">Confirm Password</label>
+                                <div class="col-sm-10">
+                                    <input asp-for="ConfirmPassword" type="password" id="txtConfirmPassword" autocomplete="off" class="form-control"
+                                           placeholder="Enter Confirm Password " />
+                                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="position-relative row form-group">
+                                <label asp-for="Address" class="col-sm-2 col-form-label">Address</label>
+                                <div class="col-sm-10">
+                                    <textarea asp-for="Address" type="text" id="txtAddress" autocomplete="off" class="form-control"
+                                              placeholder="Enter Address"></textarea>
+                                    <span asp-validation-for="Address" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="position-relative row form-check">
+                                <div class="col-sm-10 offset-sm-2">
+                                    <button type='submit' class="btn btn-primary">Save User</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

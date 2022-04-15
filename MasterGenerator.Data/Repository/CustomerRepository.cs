@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using MasterGenerator.Data.Context;
 using MasterGenerator.Data.Entity;
+using MasterGenerator.Model.Model;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -19,6 +21,11 @@ namespace MasterGenerator.Data.Repository
         {
             _mapper = mapper;
             _context = context;
+        }
+        public IEnumerable<Customer> GetAllCustomers()
+        {
+            return _context.Customers
+                .ProjectTo<Customer>(_mapper.ConfigurationProvider).AsQueryable();
         }
         public async Task<bool> AddCustomerRange(List<string> customers)
         {

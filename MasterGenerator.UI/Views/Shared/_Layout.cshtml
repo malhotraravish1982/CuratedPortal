@@ -121,7 +121,7 @@
                             <ul class="vertical-nav-menu">
                                 <li class="app-sidebar__heading">Admin</li>
                                 <li>
-                                    <a href="\Account\Register">
+                                    <a href="\Admin\AddUser">
                                         <i class="metismenu-icon pe-7s-browser"></i>
                                         Add User
                                         <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
@@ -134,14 +134,34 @@
                                         <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
                                     </a>
                                 </li>
+                                <li>
+                                    <a href="\Admin\ReadFile">
+                                        <i class="metismenu-icon pe-7s-plugin"></i>
+                                        Read File
+                                        <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                                    </a>
+                                </li>
                             </ul>
                         }
-                        else
+                        else if (User.IsInRole(MasterGenerator.Model.Model.AdminEnum.CS_User.ToString().Replace("_", " ")))
                         {
                             <ul class="vertical-nav-menu">
                             <li class="app-sidebar__heading"></li>
                             <li>
                                 <a href="\Home\Index">
+                                    <i class="metismenu-icon pe-7s-rocket"></i>
+                                    Dashboard
+                                    <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                                </a>
+                            </li>
+                            </ul>
+                        }
+                        else if (User.IsInRole(MasterGenerator.Model.Model.AdminEnum.Customer_User.ToString().Replace("_", " ")))
+                        {
+                            <ul class="vertical-nav-menu">
+                            <li class="app-sidebar__heading"></li>
+                            <li>
+                                <a href="\Home\MapedCustomer">
                                     <i class="metismenu-icon pe-7s-rocket"></i>
                                     Dashboard
                                     <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>

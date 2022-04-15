@@ -28,6 +28,15 @@ namespace MasterGenerator.Data.Context
             {
                 await roleManager.CreateAsync(role);
             }
+
+            var admin = new AppUser
+            {
+                UserName = "kunal",
+                Email = "kunal@curatedsourcing.com"
+            };
+
+            await userManager.CreateAsync(admin, "Pa$$w0rd");
+            await userManager.AddToRolesAsync(admin, new[] { "Admin" });
         }
     }
 }

@@ -25,7 +25,23 @@ namespace MasterGenerator.Data.Repository
         {
             return _context.Users
             .ProjectTo<UserModel>(_mapper.ConfigurationProvider).AsQueryable();
+        }
+        public IEnumerable<UserModel> GetUsersByRole(string roleName)
+        {
+            try
+            {
+                var users = (from usr in _context.Users
+                             join userRole in _context.UserRoles on usr.Id equals userRole.UserId
+                             join role in _context.Roles on userRole.RoleId equals role.Id //into roles
+                             where role.Name == roleName
+                             select usr).ProjectTo<UserModel>(_mapper.ConfigurationProvider).AsQueryable();
+                return users;
+            }
+            catch (Exception)
+            {
 
+                throw ;
+            }
         }
     }
 }

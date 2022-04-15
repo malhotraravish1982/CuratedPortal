@@ -10,5 +10,6 @@ namespace MasterGenerator.Data.Repository
     public interface IUserRepository
     {
       IEnumerable<UserModel> GetUsers();
+      IEnumerable<UserModel> GetUsersByRole(string roleName);
     }
 }

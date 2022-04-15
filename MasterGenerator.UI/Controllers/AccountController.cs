@@ -18,29 +18,21 @@ namespace MasterGenerator.UI.Controllers
     public class AccountController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly IMapper _mapper;
-        private readonly IUnitOfWork _unitOfWork;
         private readonly UserManager<AppUser> _userManager;
-        private readonly RoleManager<AppRole> _roleManager;
         private readonly SignInManager<AppUser> _signInManager;
-        public AccountController(UserManager<AppUser> userManager, 
-            SignInManager<AppUser> signInManager,ILogger<HomeController> logger, 
-            IUnitOfWork unitOfWork, IMapper mapper,
-            RoleManager<AppRole> roleManager)
+        public AccountController(ILogger<HomeController> logger,UserManager<AppUser> userManager, 
+            SignInManager<AppUser> signInManager )
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _logger = logger;
-            _unitOfWork = unitOfWork;
-            _mapper = mapper;
-            _roleManager = roleManager;
         }
 
         public IActionResult Login()
         {
             if (_signInManager.IsSignedIn(User))
             {
-                return RedirectToAction("Import", "Home");
+                return RedirectToAction("Index", "Home");
             }
             return View();
         }
@@ -64,90 +56,35 @@ namespace MasterGenerator.UI.Controllers
                 ModelState.AddModelError("Password", "Wrong password, please enter correct password.");
                 return View(userModel);
             }
-            
+
             //Signin successfull
             await _signInManager.SignInAsync(user, isPersistent: false);
-            return RedirectToAction("Index", "Home");
+            var userRoles=await _userManager.GetRolesAsync(user);
+            if((userRoles != null) && userRoles.Count > 0)
+            {
+                if(userRoles[0] == AdminEnum.Admin.ToString())
+                {
+                    return RedirectToAction("AddUser", "Admin");
+                }
+                else if(userRoles[0] == AdminEnum.CS_User.ToString().Replace("_"," "))
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+                else if(userRoles[0] == AdminEnum.Customer_User.ToString().Replace("_", " "))
+                {
+                    return RedirectToAction("MapedCustomer", "Home");
+                }
+            }
+            return View(userModel);
         }
-
         public IActionResult Logout()
         {
            _signInManager.SignOutAsync();
             return RedirectToAction("Login", "Account");
         }
-        [Authorize(Roles ="Admin")]
-        public async Task<IActionResult> Register()
-        {
-            ViewBag.Roles = await _roleManager.Roles.ToListAsync();
-            return View();
-        }
-        [HttpPost]
-        [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Register(UserModel userModel)
-        {
-            ViewBag.Roles = await _roleManager.Roles.Select(x => x.Name).ToListAsync();
-            if (ModelState.IsValid)
-            {
-                if (await UserExists(userModel.Email))
-                {
-                    ModelState.AddModelError("", "Email already taken.");
-                    return View(userModel);
-                }
-
-                if (await UserNameExists(userModel.Username))
-                {
-                    ModelState.AddModelError("", "User Name already taken.");
-                    return View(userModel);
-                }
-
-                var user = new AppUser();
-                user.FirstName = userModel.FirstName;
-                user.LastName = userModel.LastName;
-                user.Address = userModel.Address;
-                user.Email = userModel.Email.ToLower();
-                user.UserName = userModel.Username.ToLower();
-                user.PhoneNumber = userModel.PhoneNumber;
-
-                var result = await _userManager.CreateAsync(user, userModel.Password);
-
-                if (!result.Succeeded)
-                {
-                    string errors = string.Empty;
-                    foreach (var error in result.Errors)
-                    {
-                        errors += error.Description + Environment.NewLine;
-                    }
-                    ModelState.AddModelError("", errors);
-                    return View(userModel);
-                } 
-                var roleResult = await _userManager.AddToRoleAsync(user,userModel.UserType);
-               
-                if (!roleResult.Succeeded)
-                {
-                    string errors = string.Empty;
-                    foreach (var error in result.Errors)
-                    {
-                        errors += error.Description + Environment.NewLine;
-                    }
-                    ModelState.AddModelError("", errors);
-                    return View(userModel);
-                }
-            }
-            return RedirectToAction("Register", "Account");
-        }
         public IActionResult Index()
         {
             return View();
-        }
-        #region "private Methods"
-        private async Task<bool> UserExists(string email)
-        {
-            return await _userManager.Users.AnyAsync(x => x.Email == email.ToLower());
-        }
-        private async Task<bool> UserNameExists(string username)
-        {
-            return await _userManager.Users.AnyAsync(x => x.UserName == username.ToLower());
-        }
-        #endregion
+        }   
     }
 }

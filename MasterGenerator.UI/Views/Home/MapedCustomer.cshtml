@@ -1,0 +1,27 @@
+﻿@{
+    ViewData["Title"] = "MapedCustomer";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="app-main__outer">
+    <div class="app-main__inner">
+        <div class="main-card mb-3 card">
+            <div class="card-body">
+                <h5 class="card-title">@ViewData["Title"]</h5>
+                <form asp-action="Index" id=frmEGrid class="">
+                    <ejs-grid id="Grid" AllowSelection="true" ShowColumnChooser="true" allowPaging="true" allowSorting="true" allowFiltering="true">
+                        <e-grid-editSettings allowDeleting="true" mode="Normal" showDeleteConfirmDialog="true"></e-grid-editSettings>
+                        <e-grid-pagesettings pageSizes="@(new string[] { "20", "50", "100" , "All" })"></e-grid-pagesettings>
+                        <e-grid-filterSettings type="Excel"></e-grid-filterSettings>
+                        <e-data-manager url="/Admin/CustomerMapDataSource" crudUrl="/Admin/DeleteCustomerMapping" adaptor="UrlAdaptor"></e-data-manager>
+                        <e-grid-columns>
+                            <e-grid-column field="Id" isPrimaryKey="true" AllowEditing="true" headerText="Id" width="50"></e-grid-column>
+                            <e-grid-column field="UserName" AllowEditing="true" headerText="User Name" width="100"></e-grid-column>
+                            <e-grid-column field="CustomerName" AllowEditing="true" headerText="Customer Name" width="100"></e-grid-column>
+                        </e-grid-columns>
+                    </ejs-grid>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
