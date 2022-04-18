@@ -2,37 +2,13 @@
     ViewData["Title"] = "Home";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<<<<<<< Updated upstream
 <link href="~/css/index.css" rel="stylesheet" />
-
-
-
-
-=======
-<style>
-    .table th, .table td {
-     border-top: 0px!important; 
-     padding: 0.55rem;
-    vertical-align: top;
-}
-.item{
-    width:150px;
-}
-p{
-    margin-top: 0;
-    margin-bottom: 2px;
-}
-</style>
->>>>>>> stashed changes
-
-    }
-
 @{
     var valueAccessor = "valueAccessorFn";
 
     var ChildGrid = new Syncfusion.EJ2.Grids.Grid()
             {
-                DataSource = (IEnumerable<object>)ViewBag.DataSource,
+                DataSource = ViewBag.DataSource,
                 QueryString = "ProjectId",
                 HierarchyPrintMode = Syncfusion.EJ2.Grids.HierarchyGridPrintMode.All,
                 Columns = new List<Syncfusion.EJ2.Grids.GridColumn>
@@ -64,8 +40,8 @@ p{
                     <div class="card-body">
                         <h5 class="card-title">Scs Records</h5>
                         <form class="">
-                            <ejs-grid id="Grid" width="800" childGrid="ChildGrid" allowPaging="true" allowTextWrap="false" hierarchyPrintMode="All" allowSorting="true" allowFiltering="true">
-                                <e-grid-editSettings allowAdding="true" allowDeleting="true" allowEditing="true" mode="Normal"></e-grid-editSettings>
+                            <ejs-grid id="Grid"  width="800" childGrid="ChildGrid" allowPaging="true" allowTextWrap="false" hierarchyPrintMode="All" allowSorting="true" allowFiltering="true">
+                                <e-grid-editSettings allowAdding="false" allowDeleting="false" allowEditing="false" mode="Normal"></e-grid-editSettings>
                                 <e-grid-filterSettings type="Excel"></e-grid-filterSettings>
                                 <e-data-manager url="/Home/UrlDataSource" crudUrl="/Home/CrudUpdate" adaptor="UrlAdaptor"></e-data-manager>
                                 <e-grid-columns>
@@ -123,8 +99,8 @@ p{
                                                                                             <div class="item">
                                                                                                 <span> @project.ProjectName</span>
                                                                                                 <button type="button" id="btnicon" onclick="ChangeIcon(this)" aria-expanded="true" aria-controls="exampleAccordion1" data-toggle="collapse" href="#colapse_@project.ProjectId" class="m-0 p-0 btn btn-link">
-                                                                                                  
-                                                                                                    <i id="icon" class="metismenu-state-icon pe-7s-angle-up caret-left"></i>
+
+                                                                                                    <i id="icon_@project.ProjectId" class="metismenu-state-icon pe-7s-angle-up caret-left"></i>
                                                                                                 </button>
                                                                                                 <div data-parent="#exampleAccordion" id="colapse_@project.ProjectId" class="collapse" style="">
                                                                                                     <p><b> Customer Name -</b> @project.CustomerName</p>
@@ -170,7 +146,22 @@ p{
         value =  'CS ID- ' + value ;
         return value;
     }
+    function ChangeIcon(e)
+    {
+        var i = e.children[0];
+        var c = i.attributes['1']
+        var id= i.attributes['0'];
+        var btnid = "#"+id.ownerElement.id;
+        var className=c.ownerElement.className;
+        if(className == 'metismenu-state-icon pe-7s-angle-up caret-left')
+        {
+            $(btnid).removeClass("metismenu-state-icon pe-7s-angle-up caret-left").addClass("metismenu-state-icon pe-7s-angle-down caret-left");
+        }
+        else{
+             $(btnid).removeClass("metismenu-state-icon pe-7s-angle-down caret-left").addClass("metismenu-state-icon pe-7s-angle-up caret-left");
+        }
 
-      
+    }
+
 </script>
 }

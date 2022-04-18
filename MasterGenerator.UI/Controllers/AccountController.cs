@@ -44,17 +44,17 @@ namespace MasterGenerator.UI.Controllers
             }
             return View();
         }
-        
+
         [HttpPost]
         public async Task<IActionResult> Login(UserModel userModel)
         {
-            var user = await _userManager.Users            
+            var user = await _userManager.Users
             .SingleOrDefaultAsync(x => x.Email == userModel.Email.ToLower());
-                if (user == null)
-                {
-                    ModelState.AddModelError("Email", "Wrong email, please enter correct email.");
-                    return View(userModel);
-                }
+            if (user == null)
+            {
+                ModelState.AddModelError("Email", "Wrong email, please enter correct email.");
+                return View(userModel);
+            }
 
             var result = await _signInManager
                 .CheckPasswordSignInAsync(user, userModel.Password, false);
@@ -64,10 +64,26 @@ namespace MasterGenerator.UI.Controllers
                 ModelState.AddModelError("Password", "Wrong password, please enter correct password.");
                 return View(userModel);
             }
-            
+
             //Signin successfull
             await _signInManager.SignInAsync(user, isPersistent: false);
-            return RedirectToAction("Index", "Home");
+
+            var res = _unitOfWork.Userrepository.FindUserRoleById(user.Id);
+            if (res.Result != null)
+            {
+                int i = res.Result.RoleId;
+                if (i == 1)
+                    return RedirectToAction("GetAllCustomers", "Customer");
+                else if (i == 2)
+                    return RedirectToAction("GetAllCustomers", "Customer");
+                else
+                    return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            return View(userModel);
         }
 
         public IActionResult Logout()
@@ -75,66 +91,7 @@ namespace MasterGenerator.UI.Controllers
            _signInManager.SignOutAsync();
             return RedirectToAction("Login", "Account");
         }
-        [Authorize(Roles ="Admin")]
-        public async Task<IActionResult> Register()
-        {
-            ViewBag.Roles = await _roleManager.Roles.ToListAsync();
-            return View();
-        }
-        [HttpPost]
-        [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Register(UserModel userModel)
-        {
-            ViewBag.Roles = await _roleManager.Roles.Select(x => x.Name).ToListAsync();
-            if (ModelState.IsValid)
-            {
-                if (await UserExists(userModel.Email))
-                {
-                    ModelState.AddModelError("", "Email already taken.");
-                    return View(userModel);
-                }
-
-                if (await UserNameExists(userModel.Username))
-                {
-                    ModelState.AddModelError("", "User Name already taken.");
-                    return View(userModel);
-                }
-
-                var user = new AppUser();
-                user.FirstName = userModel.FirstName;
-                user.LastName = userModel.LastName;
-                user.Address = userModel.Address;
-                user.Email = userModel.Email.ToLower();
-                user.UserName = userModel.Username.ToLower();
-                user.PhoneNumber = userModel.PhoneNumber;
-
-                var result = await _userManager.CreateAsync(user, userModel.Password);
-
-                if (!result.Succeeded)
-                {
-                    string errors = string.Empty;
-                    foreach (var error in result.Errors)
-                    {
-                        errors += error.Description + Environment.NewLine;
-                    }
-                    ModelState.AddModelError("", errors);
-                    return View(userModel);
-                } 
-                var roleResult = await _userManager.AddToRoleAsync(user, "Admin");
-               
-                if (!roleResult.Succeeded)
-                {
-                    string errors = string.Empty;
-                    foreach (var error in result.Errors)
-                    {
-                        errors += error.Description + Environment.NewLine;
-                    }
-                    ModelState.AddModelError("", errors);
-                    return RedirectToAction("Login");
-                }
-            }
-            return View();
-        }
+       
         public IActionResult Index()
         {
             return View();

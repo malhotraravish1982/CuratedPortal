@@ -1,0 +1,51 @@
+﻿
+@{
+    ViewData["Title"] = "Users";
+}
+
+
+<div class="app-main__outer">
+    <div class="app-main__inner">
+        <div class="app-page-title">
+            <div class="page-title-wrapper">
+                <div class="page-title-heading">
+                    <div class="page-title-icon">
+                        <i class="pe-7s-graph text-success"></i>
+                    </div>
+                    <div>
+                        C S Customer
+                        <div class="page-title-subheading">All imported C S Sheets Records.</div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="tab-content">
+            <div class="tab-pane tabs-animation fade show active" id="tab-content-0" role="tabpanel">
+                <div class="main-card mb-3 card">
+                    <div class="card-body">
+                        <h5 class="card-title">C S Records</h5>
+                       
+                       <form asp-action="Project" class="" id="frmEGrid" >
+                            <ejs-grid id="Grid"  AllowSelection="true" ShowColumnChooser="true" allowPaging="true" allowSorting="true" allowFiltering="true" 
+                                        >                                           
+                                <e-grid-editSettings allowAdding="false" allowDeleting="true" allowResizing="true" allowEditing="false" mode="Normal" showDeleteConfirmDialog="true"></e-grid-editSettings>
+                                <e-grid-pagesettings pageSizes="@(new string[] { "20", "50", "100" , "All" })"></e-grid-pagesettings> 
+                                <e-data-manager url="/Customer/UrlDataSource" crudUrl="/Home/CrudUpdateProject" adaptor="UrlAdaptor"></e-data-manager>
+                                <e-grid-filterSettings type="Excel"></e-grid-filterSettings>
+                                <e-grid-columns>
+                                    <e-grid-column field="CustomerId" headerText="Customer Id" isPrimaryKey="true" width="100"></e-grid-column>
+                                    <e-grid-column field="CustomerName" headerText="Customer Name" width="100"></e-grid-column>                                    
+                                   
+                                </e-grid-columns>
+                            </ejs-grid>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -7,6 +7,7 @@ using MasterGenerator.Model.Model;
 using MasterGenerator.UI.Helper;
 using MasterGenerator.UI.Mapper;
 using MasterGenerator.UI.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Identity;
@@ -17,6 +18,7 @@ using Syncfusion.EJ2.Base;
 using System.Collections;
 using System.Diagnostics;
 using System.Net.Http.Headers;
+using System.Security.Claims;
 
 namespace MasterGenerator.UI.Controllers
 {
@@ -26,6 +28,7 @@ namespace MasterGenerator.UI.Controllers
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
         private IWebHostEnvironment _hostingEnv;
+        private readonly UserManager<AppUser> _userManager;
 
         #region google properties
         private const string SpreadsheetId = "1yJRNyvwJJr-QJaflsTLeMZdw6cUMEMNLsUf_501FTJk";
@@ -38,6 +41,7 @@ namespace MasterGenerator.UI.Controllers
         public HomeController(ILogger<HomeController> logger,
             IUnitOfWork unitOfWork,
             IMapper mapper,
+            UserManager<AppUser> userManager,
             IWebHostEnvironment env,
             GoogleSheetsHelper googleSheetsHelper)
         {
@@ -45,65 +49,85 @@ namespace MasterGenerator.UI.Controllers
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _hostingEnv = env;
+            _userManager = userManager;
             _googleSheetValues = googleSheetsHelper.Service.Spreadsheets.Values;
         }
 
         public async Task<IActionResult> Index()
-        
         {
-            ViewBag.DataSource = _unitOfWork.IDealDetailsRepository.GetDealDetails();
-            ViewBag.statusList = await _unitOfWork.IProjectRepository.GetProjectStatus();
-            ViewBag.Project =  _unitOfWork.IProjectRepository.GetProjects();
+            var userId = _userManager.GetUserId(User);
+            if (userId != null)
+            {
+                var customerNameList = await _unitOfWork.CustomerRepository.GetCustomerNamesByUserId(int.Parse(userId));
+                if (customerNameList != null)
+                {
+                    ViewBag.DataSource = _unitOfWork.IDealDetailsRepository.GetDealDetailsByCustomerNamess(customerNameList);
+                }
+                ViewBag.statusList = await _unitOfWork.IProjectRepository.GetProjectStatus();
+                ViewBag.Project = _unitOfWork.IProjectRepository.GetProjects();
+            }
             return View(); 
         }
 
-        
-        public IActionResult UrlDatasource([FromBody] Extensions.DataManagerRequestExtension dm)
+
+        public async Task<IActionResult> UrlDatasource([FromBody] Extensions.DataManagerRequestExtension dm)
         {
-            string? scfFileId = dm.Table;
-            IEnumerable<ProjectModel> projectRecords = null;
-            projectRecords = _unitOfWork.IProjectRepository.GetProjects();
-            if (!string.IsNullOrEmpty(scfFileId))
+          
+            var userId = _userManager.GetUserId(User);
+            if (userId != null)
             {
-                projectRecords = projectRecords.Where(x => x.ProjectId == Convert.ToDecimal(scfFileId));
-            }
+                string? scfFileId = dm.Table;
+                IEnumerable<ProjectModel> projectRecords = null;
+                var  customerNameList = await _unitOfWork.CustomerRepository.GetCustomerNamesByUserId(int.Parse(userId));
+                if (customerNameList != null)
+                {
+                    projectRecords = _unitOfWork.IProjectRepository.GetProjectsByCustomerNamess(customerNameList);
+                   // projectRecords = projectRecordst;
+                    //projectRecords= _unitOfWork.IProjectRepository.GetProjects();
+                }
+                if (!string.IsNullOrEmpty(scfFileId))
+                {
+                    projectRecords = projectRecords.Where(x => x.ProjectId == Convert.ToDecimal(scfFileId));
+                }
 
-            if (!string.IsNullOrEmpty(dm.ProjectName))
-            {
-                System.Text.RegularExpressions.Regex regEx = new System.Text.RegularExpressions.Regex(dm.ProjectName.ToLower());
-                projectRecords = projectRecords.Where(x => x.ProjectName != null && regEx.IsMatch(x.ProjectName.ToLower()));
-            }
-            if (!string.IsNullOrEmpty(dm.PODate))
-            {
-                System.Text.RegularExpressions.Regex regEx = new System.Text.RegularExpressions.Regex(dm.PODate.ToLower());
-                projectRecords = projectRecords.Where(x => x.PODate != null && regEx.IsMatch(x.PODate.ToLower()));
-            }
+                if (!string.IsNullOrEmpty(dm.ProjectName))
+                {
+                    System.Text.RegularExpressions.Regex regEx = new System.Text.RegularExpressions.Regex(dm.ProjectName.ToLower());
+                    projectRecords = projectRecords.Where(x => x.ProjectName != null && regEx.IsMatch(x.ProjectName.ToLower()));
+                }
+                if (!string.IsNullOrEmpty(dm.PODate))
+                {
+                    System.Text.RegularExpressions.Regex regEx = new System.Text.RegularExpressions.Regex(dm.PODate.ToLower());
+                    projectRecords = projectRecords.Where(x => x.PODate != null && regEx.IsMatch(x.PODate.ToLower()));
+                }
 
 
-            IEnumerable DataSource = projectRecords;
-            DataOperations operation = new DataOperations();
-            if (dm.Sorted != null && dm.Sorted.Count > 0) //Sorting   
-            {
-                DataSource = operation.PerformSorting(DataSource, dm.Sorted);
-            }
-            else
-            {
+                IEnumerable DataSource = projectRecords;
+                DataOperations operation = new DataOperations();
+                if (dm.Sorted != null && dm.Sorted.Count > 0) //Sorting   
+                {
+                    DataSource = operation.PerformSorting(DataSource, dm.Sorted);
+                }
+                else
+                {
 
+                }
+                if (dm.Where != null && dm.Where.Count > 0) //Filtering   
+                {
+                    DataSource = operation.PerformFiltering(DataSource, dm.Where, dm.Where[0].Operator);
+                }
+                int count = DataSource.Cast<ProjectModel>().Count();
+                if (dm.Skip != 0)
+                {
+                    DataSource = operation.PerformSkip(DataSource, dm.Skip);   //Paging
+                }
+                if (dm.Take != 0)
+                {
+                    DataSource = operation.PerformTake(DataSource, dm.Take);
+                }
+                return dm.RequiresCounts ? Json(new { result = DataSource, count = count }) : Json(DataSource);
             }
-            if (dm.Where != null && dm.Where.Count > 0) //Filtering   
-            {
-                DataSource = operation.PerformFiltering(DataSource, dm.Where, dm.Where[0].Operator);
-            }
-            int count = DataSource.Cast<ProjectModel>().Count();
-            if (dm.Skip != 0)
-            {
-                DataSource = operation.PerformSkip(DataSource, dm.Skip);   //Paging
-            }
-            if (dm.Take != 0)
-            {
-                DataSource = operation.PerformTake(DataSource, dm.Take);
-            }
-            return dm.RequiresCounts ? Json(new { result = DataSource, count = count }) : Json(DataSource);
+            return View(Error);
         }
         public IActionResult Privacy()
         {

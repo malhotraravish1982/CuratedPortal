@@ -13,6 +13,7 @@ namespace MasterGenerator.Data.Repository
         IUserRepository Userrepository { get; }
         ICustomerMapRepository ICustomerMapRepository { get; }
         ICustomerRepository CustomerRepository { get; }
+
         Task<bool> Complete();
         bool HasChanges();
 

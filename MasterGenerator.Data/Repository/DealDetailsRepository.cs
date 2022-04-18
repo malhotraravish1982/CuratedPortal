@@ -38,10 +38,11 @@ namespace MasterGenerator.Data.Repository
                 return false;
             }
         }
-        public IEnumerable<DealDetailsModel> GetDealDetails()
+        public async Task<List<DealDetails>> GetDealDetailsByCustomerNamess(List<string> name)
         {
-            return _context.DealDetails
-            .ProjectTo<DealDetailsModel>(_mapper.ConfigurationProvider).AsQueryable();
+            List<DealDetails> dealDetails = _context.DealDetails.Where(x => name.Contains(x.CustomerName)).ToList();
+            return dealDetails;
+
         }
     }
 }

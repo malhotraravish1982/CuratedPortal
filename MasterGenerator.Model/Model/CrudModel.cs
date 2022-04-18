@@ -1,0 +1,48 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace MasterGenerator.Model.Model
+{
+    public class CRUDModel<T> where T : class
+    {
+        public string action { get; set; }
+
+        public string table { get; set; }
+
+        public string keyColumn { get; set; }
+
+        public object key { get; set; }
+
+        public T value { get; set; }
+
+        public List<T> added { get; set; }
+
+        public List<T> changed { get; set; }
+
+        public List<T> deleted { get; set; }
+
+        public IDictionary<string, object> @params { get; set; }
+    }
+    public class Data
+    {
+        public int take { get; set; }
+        public List<Wheres> where { get; set; }
+    }
+
+    public class Wheres
+    {
+        public string field { get; set; }
+        public bool ignoreAccent { get; set; }
+
+        public bool ignoreCase { get; set; }
+
+        public bool isComplex { get; set; }
+
+        public string value { get; set; }
+        public string Operator { get; set; }
+
+    }
+}

@@ -29,17 +29,11 @@ namespace MasterGenerator.Data.Repository
         }
         public async Task AddCustomerMap(CustomerMap customerMap)
         {
-            try
-            {
                 await _context.CustomerMap.AddRangeAsync(customerMap);
                 await _context.SaveChangesAsync();
                 return;
-            }
-            catch (Exception ex)
-            {
-                return;
-            }
         }
+        
 
     }
 }

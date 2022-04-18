@@ -1,4 +1,5 @@
 ﻿using MasterGenerator.Data.Entity;
+using MasterGenerator.Model.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,8 @@ namespace MasterGenerator.Data.Repository
     public interface ICustomerRepository
     {
         Task<bool> AddCustomerRange(List<string> customers);
+        IEnumerable<CustomerModel> GetCustomer();
+        Task<List<string>> GetCustomerNamesByUserId(int id);
+        Task<List<Customer>> FindCustomerName(int Id);
     }
 }

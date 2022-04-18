@@ -11,5 +11,6 @@ namespace MasterGenerator.Model.Model
         public int Id { get; set; }
         public int UserId { get; set; }
         public int CustomerId { get; set; }
+        public string? CustomerName { get; set; }
     }
 }

@@ -1,0 +1,68 @@
+﻿
+@{
+    ViewData["Title"] = "GetUsers";
+}
+<div class="app-main__outer">
+
+    <div class="app-main__inner">
+        <div class="app-page-title">
+            <div class="page-title-wrapper">
+                <div class="page-title-heading">
+                    <div class="page-title-icon">
+                        <i class="pe-7s-graph text-success"></i>
+                    </div>
+                    <div>
+                        All Users
+                        <div class="page-title-subheading">All User List</div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="tab-content">
+            <div class="tab-pane tabs-animation fade show active" id="tab-content-0" role="tabpanel">
+                <div class="main-card mb-3 card">
+                    <div class="card-body">
+                        <h5 class="card-title">All Users</h5>
+                        <form asp-action="Index" id=frmEGrid class="">
+                           
+                            <ejs-grid id="Grid"  AllowSelection="true" ShowColumnChooser="false" allowPaging="true" load="load" allowSorting="true" allowFiltering="true" 
+                              query="new ej.data.Query().addParams('Table', '')"
+                                      toolbar="@(new List<string>() { "Edit", "Delete", "Cancel", "Update", })" class="add">
+                                <e-grid-editSettings allowAdding="false" allowDeleting="true" allowEditing="true" mode="Normal" showDeleteConfirmDialog="true"></e-grid-editSettings>
+                                <e-grid-pagesettings pageSizes="@(new string[] { "20", "50", "100" , "All" })"></e-grid-pagesettings>
+                                <e-data-manager url="/Admin/UrlDataSource" crudUrl="/Admin/CrudUpdate" adaptor="UrlAdaptor"></e-data-manager>
+                                <e-grid-filterSettings type="Excel"></e-grid-filterSettings>
+                                <e-grid-columns>
+                                    <e-grid-column field="Id" AllowEditing="false" isPrimaryKey="true"  headerText="Id" width="0"></e-grid-column>
+                                    <e-grid-column field="Username" AllowEditing="true"  headerText="User Name" width="100"></e-grid-column>
+                                    <e-grid-column field="FirstName" AllowEditing="true"  headerText="First Name" width="100"></e-grid-column>
+                                    <e-grid-column field="LastName" AllowEditing="true"  headerText="Last Name" width="100"></e-grid-column>
+                                    <e-grid-column field="PhoneNumber" AllowEditing="true" editType="numericedit" type="number"  headerText="Phone No." width="100"></e-grid-column>
+                                    <e-grid-column field="Email" AllowEditing="true"  headerText="Email Address" width="100"></e-grid-column>
+                                
+                                </e-grid-columns>
+                            </ejs-grid>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+<script>
+function load(args) { 
+        this.columns[4].validationRules = { required: true, minLength: [customFn, 'Need atleast 10 Digits'] }; 
+    } 
+ 
+    function customFn(args) { 
+        return args['value'].length >= 10; 
+    } 
+</script>
+<link rel="stylesheet" href="~/css\site.css" />
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/js/siteJs/users.js"></script>
+
