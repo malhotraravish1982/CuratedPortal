@@ -10,6 +10,7 @@ namespace MasterGenerator.Data.Repository
 {
     public interface ICustomerRepository
     {
+        public IEnumerable<Customer> GetAllCustomers();
         Task<bool> AddCustomerRange(List<string> customers);
         IEnumerable<CustomerModel> GetCustomer();
         Task<List<string>> GetCustomerNamesByUserId(int id);

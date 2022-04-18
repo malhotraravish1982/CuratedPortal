@@ -139,6 +139,7 @@ namespace MasterGenerator.UI.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+        [Authorize(Roles ="Admin")]
         public async Task<IActionResult> ReadFile()
         {
             //read data from Portal data sheet
@@ -160,7 +161,6 @@ namespace MasterGenerator.UI.Controllers
                     }
                 }
             }
-
             //read data from deal details sheet
             var dealDetailsResult = ReadDataFromGoogleSpreadSheet(ReadRangeForDealDetails);
             if (dealDetailsResult != null)
@@ -173,6 +173,7 @@ namespace MasterGenerator.UI.Controllers
             }
             return Ok();
         }
+        
         #region Read Data from google spreadsheet
         private IList<IList<object>> ReadDataFromGoogleSpreadSheet(string readRange)
         {
@@ -189,5 +190,9 @@ namespace MasterGenerator.UI.Controllers
             return null;
         }
         #endregion
+        public IActionResult MapedCustomer()
+        {
+            return View();
+        }
     }
 }

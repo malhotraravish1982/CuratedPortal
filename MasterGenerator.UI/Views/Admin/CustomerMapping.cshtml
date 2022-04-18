@@ -27,9 +27,9 @@
                                 <label asp-for="UserId"  class="col-sm-2 col-form-label">User</label>
                                 <div class="col-sm-10">
                                     <select asp-for="UserId"  class="form-control">
-                                        @if (ViewBag.users != null)
+                                        @if (ViewBag.user != null)
                                         {
-                                            @foreach (var user in ViewBag.users)
+                                            @foreach (var user in ViewBag.user)
                                             {
                                                 <option value="@user.Id"> @user.FirstName </option>
                                             }
@@ -46,7 +46,7 @@
                                         {
                                             @foreach (var customer in ViewBag.customers)
                                             {
-                                                <option value="1"> @customer </option>       
+                                                <option value="@customer.CustomerId"> @customer.CustomerName </option>       
                                             }
                                         }
                                     </select>
@@ -63,5 +63,26 @@
                 </div>
             </div>
         </div>
+        <!-- Start Customer Maped Grid-->
+                 <div class="main-card mb-3 card">
+                    <div class="card-body">
+                        <h5 class="card-title">@ViewData["Title"]</h5>     
+                        <form asp-action="Index" id=frmEGrid class="">
+                            <ejs-grid id="Grid"  AllowSelection="true" ShowColumnChooser="true" allowPaging="true" allowSorting="true" allowFiltering="true"                               
+                                      toolbar="@(new List<string>() { "Delete" })">
+                                <e-grid-editSettings allowDeleting="true" mode="Normal" showDeleteConfirmDialog="true"></e-grid-editSettings>
+                                <e-grid-pagesettings pageSizes="@(new string[] { "20", "50", "100" , "All" })"></e-grid-pagesettings>
+                                <e-grid-filterSettings type="Excel"></e-grid-filterSettings>
+                                <e-data-manager url="/Admin/CustomerMapDataSource" crudUrl="/Admin/DeleteCustomerMapping" adaptor="UrlAdaptor"></e-data-manager>
+                                <e-grid-columns>
+                                    <e-grid-column field="Id" isPrimaryKey="true" AllowEditing="true" headerText="Id" width="50"></e-grid-column>
+                                    <e-grid-column field="UserName" AllowEditing="true"  headerText="User Name" width="100"></e-grid-column>
+                                    <e-grid-column field="CustomerName" AllowEditing="true"  headerText="Customer Name" width="100"></e-grid-column>    
+                                </e-grid-columns>
+                            </ejs-grid>
+                        </form>
+                    </div>
+                </div>
+        <!-- End Grid-->
     </div>
 </div>

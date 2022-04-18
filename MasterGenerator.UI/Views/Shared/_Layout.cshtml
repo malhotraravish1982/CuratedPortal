@@ -112,8 +112,8 @@
                         {
                             <ul class="vertical-nav-menu">
                                 <li class="app-sidebar__heading">Admin</li>
-                                 <li>
-                                    <a href="\Customer\GetAllCustomers">
+                                <li>
+                                    <a href="\Account\Register">
                                         <i class="metismenu-icon pe-7s-browser"></i>
                                        View Customers
                                        
@@ -158,7 +158,7 @@
                                
                             </ul>
                         }
-                        else
+                        else if (User.IsInRole(MasterGenerator.Model.Model.AdminEnum.CS_User.ToString().Replace("_", " ")))
                         {
                             <ul class="vertical-nav-menu">
                             <li class="app-sidebar__heading">Customer User</li>
@@ -167,6 +167,19 @@
                                     <i class="metismenu-icon pe-7s-rocket"></i>
                                     Dashboard
                                     
+                                </a>
+                            </li>
+                            </ul>
+                        }
+                        else if (User.IsInRole(MasterGenerator.Model.Model.AdminEnum.Customer_User.ToString().Replace("_", " ")))
+                        {
+                            <ul class="vertical-nav-menu">
+                            <li class="app-sidebar__heading"></li>
+                            <li>
+                                <a href="\Home\MapedCustomer">
+                                    <i class="metismenu-icon pe-7s-rocket"></i>
+                                    Dashboard
+                                    <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
                                 </a>
                             </li>
                             </ul>

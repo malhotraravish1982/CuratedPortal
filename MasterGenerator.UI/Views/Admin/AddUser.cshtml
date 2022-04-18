@@ -23,20 +23,20 @@
                 <div class="main-card mb-3 card">
                     <div class="card-body">
                         <h5 class="card-title">Add User</h5>
-                        <form asp-action="Register">
+                        <form asp-action="AddUser">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             <div class="position-relative row form-group">
                                 <label asp-for="UserType" class="col-sm-2 col-form-label">User Type</label>
-                                <div class="col-sm-10">                                     
+                                <div class="col-sm-10">
                                     <select asp-for="UserType" class="form-control">
-                                       <option disabled selected>Select User Type</option>
-                                       @if(ViewBag.Roles!=null)
-                                       {
-                                          foreach(var user in ViewBag.Roles)
-                                           {
-                                            <option> @user </option>
-                                           }
-                                       }
+                                        <option disabled selected>Select User Type</option>
+                                        @if (ViewBag.Roles != null)
+                                        {
+                                            foreach (var user in ViewBag.Roles)
+                                            {
+                                                <option> @user </option>
+                                            }
+                                        }
                                     </select>
                                     <span asp-validation-for="UserType" class="text-danger"></span>
                                 </div>
@@ -49,7 +49,7 @@
                                     <span asp-validation-for="FirstName" class="text-danger"></span>
                                 </div>
                             </div>
-                             <div class="position-relative row form-group">
+                            <div class="position-relative row form-group">
                                 <label asp-for="LastName" class="col-sm-2 col-form-label">Last Name</label>
                                 <div class="col-sm-10">
                                     <input asp-for="LastName" type="text" id="txtLastName" autocomplete="off" class="form-control"
@@ -60,17 +60,17 @@
                             <div class="position-relative row form-group">
                                 <label asp-for="Username" class="col-sm-2 col-form-label">User Name</label>
                                 <div class="col-sm-10">
-                                    <input asp-for="Username" type="text"  id="txtUserName" autocomplete="off" class="form-control"
+                                    <input asp-for="Username" type="text" id="txtUserName" autocomplete="off" class="form-control"
                                            placeholder="Enter User Name" />
                                     <span asp-validation-for="Username" class="text-danger"></span>
                                     <span id="UserStatus"></span>
                                 </div>
                             </div>
-                             <div class="position-relative row form-group">
+                            <div class="position-relative row form-group">
                                 <label asp-for="PhoneNumber" class="col-sm-2 col-form-label">Phone Number</label>
                                 <div class="col-sm-10">
                                     <input asp-for="PhoneNumber" type="tel" maxlength=10 id="txtUserName" autocomplete="off" class="form-control"
-                                          placeholder="Enter Phone Number" />
+                                           placeholder="Enter Phone Number" />
                                     <span asp-validation-for="PhoneNumber" class="text-danger"></span>
                                 </div>
                             </div>
@@ -98,11 +98,11 @@
                                     <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
                                 </div>
                             </div>
-                           <div class="position-relative row form-group">
+                            <div class="position-relative row form-group">
                                 <label asp-for="Address" class="col-sm-2 col-form-label">Address</label>
                                 <div class="col-sm-10">
                                     <textarea asp-for="Address" type="text" id="txtAddress" autocomplete="off" class="form-control"
-                                           placeholder="Enter Address" ></textarea>
+                                              placeholder="Enter Address"></textarea>
                                     <span asp-validation-for="Address" class="text-danger"></span>
                                 </div>
                             </div>

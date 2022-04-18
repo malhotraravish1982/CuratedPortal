@@ -18,29 +18,21 @@ namespace MasterGenerator.UI.Controllers
     public class AccountController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly IMapper _mapper;
-        private readonly IUnitOfWork _unitOfWork;
         private readonly UserManager<AppUser> _userManager;
-        private readonly RoleManager<AppRole> _roleManager;
         private readonly SignInManager<AppUser> _signInManager;
-        public AccountController(UserManager<AppUser> userManager, 
-            SignInManager<AppUser> signInManager,ILogger<HomeController> logger, 
-            IUnitOfWork unitOfWork, IMapper mapper,
-            RoleManager<AppRole> roleManager)
+        public AccountController(ILogger<HomeController> logger,UserManager<AppUser> userManager, 
+            SignInManager<AppUser> signInManager )
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _logger = logger;
-            _unitOfWork = unitOfWork;
-            _mapper = mapper;
-            _roleManager = roleManager;
         }
 
         public IActionResult Login()
         {
             if (_signInManager.IsSignedIn(User))
             {
-                return RedirectToAction("Import", "Home");
+                return RedirectToAction("Index", "Home");
             }
             return View();
         }
@@ -95,16 +87,6 @@ namespace MasterGenerator.UI.Controllers
         public IActionResult Index()
         {
             return View();
-        }
-        #region "private Methods"
-        private async Task<bool> UserExists(string email)
-        {
-            return await _userManager.Users.AnyAsync(x => x.Email == email.ToLower());
-        }
-        private async Task<bool> UserNameExists(string username)
-        {
-            return await _userManager.Users.AnyAsync(x => x.UserName == username.ToLower());
-        }
-        #endregion
+        }   
     }
 }
