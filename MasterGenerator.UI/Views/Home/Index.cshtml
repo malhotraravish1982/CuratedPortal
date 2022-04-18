@@ -33,7 +33,7 @@
                     <span>Status View</span>
                 </a>
             </li>
-             <li class="nav-item " style="margin-left:60%">
+             <li class="nav-item " style="margin-left:0%">
                 <a asp-action="ReadFile" asp-controller="Home">
                   <i  class="pe-7s-refresh-2 refresh_icon"></i>
                 </a>
@@ -102,7 +102,7 @@
                                                                                     <div class="card-body">
                                                                                         <div id="exampleAccordion" data-children=".item">
                                                                                             <div class="item">
-                                                                                                <span> @project.ProjectName</span>
+                                                                                                <span> @project.ProjectName</span><br>
                                                                                                 <button type="button" id="btnicon" onclick="ChangeIcon(this)" aria-expanded="true" aria-controls="exampleAccordion1" data-toggle="collapse" href="#colapse_@project.ProjectId" class="m-0 p-0 btn btn-link">
 
                                                                                                     <i id="icon_@project.ProjectId" class="metismenu-state-icon pe-7s-angle-up caret-left"></i>
