@@ -52,6 +52,8 @@ namespace MasterGenerator.Data.Repository
         }
         public async Task AddCustomerMap(CustomerMap customerMap)
         {
+            try
+            {
                 await _context.CustomerMap.AddRangeAsync(customerMap);
                 await _context.SaveChangesAsync();
                 return;
@@ -61,6 +63,13 @@ namespace MasterGenerator.Data.Repository
                 return;
             }
         }
-
+        public async Task<CustomerMap> GetCustomerMappingById(int Id)
+        {
+            return await _context.CustomerMap.Where(x => x.Id == Id).FirstAsync();
+        }
+        public void DeleteCustomerMapping(CustomerMap customerMap)
+        {
+            _context.CustomerMap.Remove(customerMap);
+        }
     }
 }

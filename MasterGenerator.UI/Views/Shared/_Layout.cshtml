@@ -113,35 +113,37 @@
                             <ul class="vertical-nav-menu">
                                 <li class="app-sidebar__heading">Admin</li>
                                 <li>
-                                    <a href="\Account\Register">
+                                    <a href="\Admin\AddUser">
                                         <i class="metismenu-icon pe-7s-browser"></i>
-                                       View Customers
-                                       
+                                       View Customers                                       
                                     </a>
                                 </li>
                                 <li>
                                     <a href="\Admin\Register">
                                         <i class="metismenu-icon pe-7s-browser"></i>
-                                        Add User
-                                       
+                                        Add User                                       
                                     </a>
                                 </li>
                                  <li>
                                     <a href="\Admin\GetUsers">
                                         <i class="metismenu-icon pe-7s-browser"></i>
-                                        View Users
-                                       
+                                        View Users                                       
                                     </a>
                                 </li>
                                 
                                 <li>
                                     <a href="\Admin\CustomerMapping">
                                         <i class="metismenu-icon pe-7s-plugin"></i>
-                                        Map Customer
-                                      
+                                        Map Customer                                      
                                     </a>
                                 </li>
-                                
+                                 <li>
+                                    <a href="\Admin\ReadFile">
+                                        <i class="metismenu-icon pe-7s-plugin"></i>
+                                        Read File
+                                        <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                                    </a>
+                                </li>
                             </ul>
                         }
                         else if  (User.IsInRole(MasterGenerator.Model.Model.AdminEnum.CS_User.ToString().Replace("_", " ")))
@@ -156,19 +158,6 @@
                                     </a>
                                 </li>
                                
-                            </ul>
-                        }
-                        else if (User.IsInRole(MasterGenerator.Model.Model.AdminEnum.CS_User.ToString().Replace("_", " ")))
-                        {
-                            <ul class="vertical-nav-menu">
-                            <li class="app-sidebar__heading">Customer User</li>
-                            <li>
-                                <a href="\Home\Index">
-                                    <i class="metismenu-icon pe-7s-rocket"></i>
-                                    Dashboard
-                                    
-                                </a>
-                            </li>
                             </ul>
                         }
                         else if (User.IsInRole(MasterGenerator.Model.Model.AdminEnum.Customer_User.ToString().Replace("_", " ")))

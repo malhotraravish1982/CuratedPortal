@@ -16,5 +16,6 @@ namespace MasterGenerator.Data.Repository
         Task<int> AddUser(AppUser user);
         void Delete(AppUser user);
         Task<AppUserRole> FindUserRoleById(int Id);
+        IEnumerable<UserModel> GetUsersByRole(string roleName);
     }
 }

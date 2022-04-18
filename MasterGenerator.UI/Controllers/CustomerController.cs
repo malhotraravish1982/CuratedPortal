@@ -34,14 +34,14 @@ namespace MasterGenerator.UI.Controllers
        
         public IActionResult GetAllCustomers()
         {
-            ViewBag.DataSource = _unitOfWork.CustomerRepository.GetCustomer();
+            ViewBag.DataSource = _unitOfWork.ICustomerRepository.GetCustomer();
             return View(); 
         }
         public IActionResult UrlDatasource([FromBody] Extensions.DataManagerRequestExtension dm)
         {
             string? scfFileId = dm.Table;
             IEnumerable<CustomerModel> projectRecords = null;
-            projectRecords = _unitOfWork.CustomerRepository.GetCustomer();
+            projectRecords = _unitOfWork.ICustomerRepository.GetCustomer();
             if (!string.IsNullOrEmpty(scfFileId))
             {
                 projectRecords = projectRecords.Where(x => x.CustomerId == Convert.ToDecimal(scfFileId));
@@ -51,9 +51,7 @@ namespace MasterGenerator.UI.Controllers
             {
                 System.Text.RegularExpressions.Regex regEx = new System.Text.RegularExpressions.Regex(dm.ProjectName.ToLower());
                 projectRecords = projectRecords.Where(x => x.CustomerName != null && regEx.IsMatch(x.CustomerName.ToLower()));
-            }
-           
-
+            }       
 
             IEnumerable DataSource = projectRecords;
             DataOperations operation = new DataOperations();
@@ -63,7 +61,6 @@ namespace MasterGenerator.UI.Controllers
             }
             else
             {
-
             }
             if (dm.Where != null && dm.Where.Count > 0) //Filtering   
             {

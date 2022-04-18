@@ -58,7 +58,7 @@ namespace MasterGenerator.UI.Controllers
             var userId = _userManager.GetUserId(User);
             if (userId != null)
             {
-                var customerNameList = await _unitOfWork.CustomerRepository.GetCustomerNamesByUserId(int.Parse(userId));
+                var customerNameList = await _unitOfWork.ICustomerRepository.GetCustomerNamesByUserId(int.Parse(userId));
                 if (customerNameList != null)
                 {
                     ViewBag.DataSource = _unitOfWork.IDealDetailsRepository.GetDealDetailsByCustomerNamess(customerNameList);
@@ -78,7 +78,7 @@ namespace MasterGenerator.UI.Controllers
             {
                 string? scfFileId = dm.Table;
                 IEnumerable<ProjectModel> projectRecords = null;
-                var  customerNameList = await _unitOfWork.CustomerRepository.GetCustomerNamesByUserId(int.Parse(userId));
+                var  customerNameList = await _unitOfWork.ICustomerRepository.GetCustomerNamesByUserId(int.Parse(userId));
                 if (customerNameList != null)
                 {
                     projectRecords = _unitOfWork.IProjectRepository.GetProjectsByCustomerNamess(customerNameList);
@@ -156,7 +156,7 @@ namespace MasterGenerator.UI.Controllers
                         var customers = projects.Where(x => !string.IsNullOrEmpty(x.CustomerName)).Select(x => x.CustomerName).Distinct().ToList();
                         if (customers.Count > 0)
                         {
-                            await _unitOfWork.CustomerRepository.AddCustomerRange(customers);
+                            await _unitOfWork.ICustomerRepository.AddCustomerRange(customers);
                         }
                     }
                 }

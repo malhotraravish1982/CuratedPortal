@@ -59,21 +59,21 @@ namespace MasterGenerator.UI.Controllers
 
             //Signin successfull
             await _signInManager.SignInAsync(user, isPersistent: false);
-
-            var res = _unitOfWork.Userrepository.FindUserRoleById(user.Id);
-            if (res.Result != null)
+            var userRoles = await _userManager.GetRolesAsync(user);
+            if ((userRoles != null) && userRoles.Count > 0)
             {
-                int i = res.Result.RoleId;
-                if (i == 1)
-                    return RedirectToAction("GetAllCustomers", "Customer");
-                else if (i == 2)
-                    return RedirectToAction("GetAllCustomers", "Customer");
-                else
+                if (userRoles[0] == AdminEnum.Admin.ToString())
+                {
+                    return RedirectToAction("AddUser", "Admin");
+                }
+                else if (userRoles[0] == AdminEnum.CS_User.ToString().Replace("_", " "))
+                {
                     return RedirectToAction("Index", "Home");
-            }
-            else
-            {
-                return RedirectToAction("Index", "Home");
+                }
+                else if (userRoles[0] == AdminEnum.Customer_User.ToString().Replace("_", " "))
+                {
+                    return RedirectToAction("MapedCustomer", "Home");
+                }
             }
             return View(userModel);
         }
@@ -82,8 +82,7 @@ namespace MasterGenerator.UI.Controllers
         {
            _signInManager.SignOutAsync();
             return RedirectToAction("Login", "Account");
-        }
-       
+        }       
         public IActionResult Index()
         {
             return View();

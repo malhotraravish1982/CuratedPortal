@@ -10,10 +10,9 @@ namespace MasterGenerator.Data.Repository
     {
         IProjectRepository IProjectRepository { get; }
         IDealDetailsRepository IDealDetailsRepository { get; }
-        IUserRepository Userrepository { get; }
-        ICustomerMapRepository CustomerMapRepository { get; }
-        ICustomerRepository CustomerRepository { get; }
-
+        IUserRepository IUserrepository { get; }
+        ICustomerMapRepository ICustomerMapRepository { get; }
+        ICustomerRepository ICustomerRepository { get; }
         Task<bool> Complete();
         bool HasChanges();
 
