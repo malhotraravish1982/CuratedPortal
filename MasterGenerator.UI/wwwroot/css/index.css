@@ -30,3 +30,12 @@ p {
 .hilite{
     display:block;
 }
+.refresh_icon{
+    font-size:x-large;
+}
+.refresh_icon:hover{
+    color:#fff;
+    background:#2393d4;    
+    border-radius:5px;
+
+}

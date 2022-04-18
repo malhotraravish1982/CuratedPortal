@@ -12,7 +12,7 @@ using System.Collections;
 
 namespace MasterGenerator.UI.Controllers
 {
-    
+    [Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -36,14 +36,13 @@ namespace MasterGenerator.UI.Controllers
             _hostingEnv = env;
             _roleManager = roleManager;
         }
-        [Authorize(Roles = "Admin")]
+       
         public async Task<IActionResult> AddUser()
         {
-            ViewBag.Roles = await _roleManager.Roles.Select(x => x.Name).ToListAsync();
+            ViewBag.Roles = await _roleManager.Roles.Where(x => x.Name!="Admin").ToListAsync();
             return View();
         }
         [HttpPost]
-        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> AddUser(UserModel userModel)
         {
             ViewBag.Roles = await _roleManager.Roles.Select(x => x.Name).ToListAsync();
@@ -97,7 +96,6 @@ namespace MasterGenerator.UI.Controllers
             }
             return RedirectToAction("AddUser", "Admin");
         }
-        [Authorize(Roles = "Admin")]
         public IActionResult CustomerMapping()
         {
             ViewBag.user = _unitOfWork.IUserrepository.GetUsersByRole(AdminEnum.Customer_User.ToString().Replace("_", " "));
@@ -105,7 +103,6 @@ namespace MasterGenerator.UI.Controllers
             return View();
         }
         [HttpPost]
-        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> CustomerMappingAsync(CustomerModel customerModel)
         {
             ViewBag.user = _unitOfWork.IUserrepository.GetUsersByRole(AdminEnum.Customer_User.ToString().Replace("_", " "));
@@ -118,12 +115,14 @@ namespace MasterGenerator.UI.Controllers
                 await _unitOfWork.ICustomerMapRepository.AddCustomerMap(result);
                 
             }
+
             return View();
         }
         public async Task<IActionResult> GetUsers()
         {
             return View();
         }
+
         public IActionResult UrlDatasource([FromBody] Extensions.DataManagerRequestExtension dm)
         {
             string? FileId = dm.Table;
@@ -195,6 +194,70 @@ namespace MasterGenerator.UI.Controllers
             }
             return Json(value.value);
         }
+        public IActionResult CustomerMapDataSource([FromBody] Extensions.DataManagerUserExtention dm)
+        {
+            string? costomerId = dm.Table;
+            IEnumerable<CustomerModel> customerMap = null;
+            customerMap = _unitOfWork.ICustomerMapRepository.GetCutomerMaped();
+            if (!string.IsNullOrEmpty(costomerId))
+            {
+                customerMap = customerMap.Where(x => x.CustomerId == Convert.ToInt32(costomerId));
+            }
+
+            if (!string.IsNullOrEmpty(dm.FirstName))
+            {
+                System.Text.RegularExpressions.Regex regEx = new System.Text.RegularExpressions.Regex(dm.FirstName.ToLower());
+                customerMap = customerMap.Where(x => x.UserName != null && regEx.IsMatch(x.UserName.ToLower()));
+            }
+
+            IEnumerable DataSource = customerMap;
+            DataOperations operation = new DataOperations();
+            if (dm.Sorted != null && dm.Sorted.Count > 0) //Sorting   
+            {
+                DataSource = operation.PerformSorting(DataSource, dm.Sorted);
+            }
+            else
+            {
+                Sort sort = new Sort();
+                List<Sort> sorts = new List<Sort>();
+                sort.Name = "Id";
+                sort.Direction = "descending";
+                sorts.Add(sort);
+                DataSource = operation.PerformSorting(DataSource, sorts);
+            }
+            if (dm.Where != null && dm.Where.Count > 0) //Filtering   
+            {
+                DataSource = operation.PerformFiltering(DataSource, dm.Where, dm.Where[0].Operator);
+            }
+            int count = DataSource.Cast<CustomerModel>().Count();
+            if (dm.Skip != 0)
+            {
+                DataSource = operation.PerformSkip(DataSource, dm.Skip);   //Paging
+            }
+            if (dm.Take != 0)
+            {
+                DataSource = operation.PerformTake(DataSource, dm.Take);
+            }
+            return dm.RequiresCounts ? Json(new { result = DataSource, count = count }) : Json(DataSource);
+        }
+        public async Task<IActionResult> DeleteCustomerMapping([FromBody] Model.Model.CRUDModel<CustomerModel> value)
+        {
+            if (value.action == "remove")
+            {
+                if (value.key != null)
+                {
+                    int key = Convert.ToInt32(value.key);
+                    var customerMap = await _unitOfWork.ICustomerMapRepository.GetCustomerMappingById(key);
+                    if (customerMap != null)
+                    {
+                        _unitOfWork.ICustomerMapRepository.DeleteCustomerMapping(customerMap);
+                        await _unitOfWork.Complete();
+                        return RedirectToAction("CustomerMapping", "Admin");
+                    }
+                }
+            }
+            return Json(value.value);
+        }
 
         #region "private Methods"
         private async Task<bool> UserExists(string email)
@@ -206,5 +269,6 @@ namespace MasterGenerator.UI.Controllers
             return await _userManager.Users.AnyAsync(x => x.UserName == username.ToLower());
         }
         #endregion
+
     }
 }

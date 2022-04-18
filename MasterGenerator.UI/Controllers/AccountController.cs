@@ -30,9 +30,23 @@ namespace MasterGenerator.UI.Controllers
 
         public IActionResult Login()
         {
+           // var userRoles = _userManager.GetRolesAsync(user);
             if (_signInManager.IsSignedIn(User))
             {
-                return RedirectToAction("Index", "Home");
+                //if (userRoles[0] == AdminEnum.Admin.ToString())
+                //{
+                //    return RedirectToAction("GetAllCustomers", "Customer");
+                //}
+                //else if (userRoles[0] == AdminEnum.CS_User.ToString().Replace("_", " "))
+                //{
+                //    return RedirectToAction("GetAllCustomers", "Customer");
+                //}
+                //else if (userRoles[0] == AdminEnum.Customer_User.ToString().Replace("_", " "))
+                //{
+                //    return RedirectToAction("Index", "Home");
+                //}
+                // return RedirectToAction("Index", "Home");
+                return View();
             }
             return View();
         }
@@ -64,15 +78,15 @@ namespace MasterGenerator.UI.Controllers
             {
                 if (userRoles[0] == AdminEnum.Admin.ToString())
                 {
-                    return RedirectToAction("AddUser", "Admin");
+                    return RedirectToAction("GetAllCustomers", "Customer");
                 }
                 else if (userRoles[0] == AdminEnum.CS_User.ToString().Replace("_", " "))
                 {
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("GetAllCustomers", "Customer");
                 }
                 else if (userRoles[0] == AdminEnum.Customer_User.ToString().Replace("_", " "))
                 {
-                    return RedirectToAction("MapedCustomer", "Home");
+                    return RedirectToAction("Index", "Home");
                 }
             }
             return View(userModel);

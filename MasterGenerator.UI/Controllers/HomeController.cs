@@ -34,7 +34,7 @@ namespace MasterGenerator.UI.Controllers
         private const string SpreadsheetId = "1yJRNyvwJJr-QJaflsTLeMZdw6cUMEMNLsUf_501FTJk";
         private const string GoogleCredentialsFileName = "google-credentials.json";
         private const string ReadRangeForPortalData = "Portal Data!A:R";
-        private const string ReadRangeForDealDetails = "Deal Details!A:R";
+        private const string ReadRangeForDealDetails = "Deal Details!A:J";
         SpreadsheetsResource.ValuesResource _googleSheetValues;
         #endregion
 
@@ -52,7 +52,7 @@ namespace MasterGenerator.UI.Controllers
             _userManager = userManager;
             _googleSheetValues = googleSheetsHelper.Service.Spreadsheets.Values;
         }
-
+        [Authorize(Roles = "Customer User")]
         public async Task<IActionResult> Index()
         {
             var userId = _userManager.GetUserId(User);
@@ -64,7 +64,7 @@ namespace MasterGenerator.UI.Controllers
                     ViewBag.DataSource = _unitOfWork.IDealDetailsRepository.GetDealDetailsByCustomerNamess(customerNameList);
                 }
                 ViewBag.statusList = await _unitOfWork.IProjectRepository.GetProjectStatus();
-                ViewBag.Project = _unitOfWork.IProjectRepository.GetProjects();
+                ViewBag.Project = _unitOfWork.IProjectRepository.GetProjectsByCustomerNamess(customerNameList);
             }
             return View(); 
         }
@@ -81,9 +81,7 @@ namespace MasterGenerator.UI.Controllers
                 var  customerNameList = await _unitOfWork.ICustomerRepository.GetCustomerNamesByUserId(int.Parse(userId));
                 if (customerNameList != null)
                 {
-                    projectRecords = _unitOfWork.IProjectRepository.GetProjectsByCustomerNamess(customerNameList);
-                   // projectRecords = projectRecordst;
-                    //projectRecords= _unitOfWork.IProjectRepository.GetProjects();
+                    projectRecords = _unitOfWork.IProjectRepository.GetProjectsByCustomerNamess(customerNameList);               
                 }
                 if (!string.IsNullOrEmpty(scfFileId))
                 {
@@ -139,14 +137,15 @@ namespace MasterGenerator.UI.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-        [Authorize(Roles ="Admin")]
+        //[Authorize(Roles ="Admin")]
         public async Task<IActionResult> ReadFile()
         {
             //read data from Portal data sheet
             var portalDataResult = ReadDataFromGoogleSpreadSheet(ReadRangeForPortalData);
             if (portalDataResult != null)
             {
-                var projects = ProjectMapper.MapFromRangeData(portalDataResult);
+                ProjectMapper projectMapper = new ProjectMapper(_unitOfWork);
+                var projects =await projectMapper.MapFromRangeData(portalDataResult);
                 if (projects.Count > 0)
                 {
                     var result=await _unitOfWork.IProjectRepository.AddProjectRange(projects);
@@ -159,21 +158,76 @@ namespace MasterGenerator.UI.Controllers
                             await _unitOfWork.ICustomerRepository.AddCustomerRange(customers);
                         }
                     }
+
+                    //read data from deal details sheet
+                    var dealDetailsResult = ReadDataFromGoogleSpreadSheet(ReadRangeForDealDetails);
+                    if (dealDetailsResult != null)
+                    {
+                        var dealDetails = DealDetailsMapper.MapFromRangeData(dealDetailsResult, projects);
+                        if (dealDetails.Count > 0)
+                        {
+                            await _unitOfWork.IDealDetailsRepository.AddDealDetailsRange(dealDetails);
+                        }
+                    }
                 }
             }
-            //read data from deal details sheet
-            var dealDetailsResult = ReadDataFromGoogleSpreadSheet(ReadRangeForDealDetails);
-            if (dealDetailsResult != null)
-            {
-                var dealDetails = DealDetailsMapper.MapFromRangeData(dealDetailsResult);
-                if (dealDetails.Count > 0)
-                {
-                    await _unitOfWork.IDealDetailsRepository.AddDealDetailsRange(dealDetails);
-                }
-            }
-            return Ok();
+           
+            return RedirectToAction("Index");
         }
-        
+
+        [Authorize(Roles = "Customer User")]
+        public IActionResult MapedCustomer()
+        {
+
+            return View();
+        }
+        public IActionResult CustomerMapDataSource([FromBody] Extensions.DataManagerUserExtention dm)
+        {
+            string? costomerId = dm.Table;
+            IEnumerable<CustomerModel> customerMap = null;
+            customerMap = _unitOfWork.ICustomerMapRepository.GetCutomerMaped();
+            if (!string.IsNullOrEmpty(costomerId))
+            {
+                customerMap = customerMap.Where(x => x.CustomerId == Convert.ToInt32(costomerId));
+            }
+
+            if (!string.IsNullOrEmpty(dm.FirstName))
+            {
+                System.Text.RegularExpressions.Regex regEx = new System.Text.RegularExpressions.Regex(dm.FirstName.ToLower());
+                customerMap = customerMap.Where(x => x.UserName != null && regEx.IsMatch(x.UserName.ToLower()));
+            }
+
+            IEnumerable DataSource = customerMap;
+            DataOperations operation = new DataOperations();
+            if (dm.Sorted != null && dm.Sorted.Count > 0) //Sorting   
+            {
+                DataSource = operation.PerformSorting(DataSource, dm.Sorted);
+            }
+            else
+            {
+                Sort sort = new Sort();
+                List<Sort> sorts = new List<Sort>();
+                sort.Name = "Id";
+                sort.Direction = "descending";
+                sorts.Add(sort);
+                DataSource = operation.PerformSorting(DataSource, sorts);
+            }
+            if (dm.Where != null && dm.Where.Count > 0) //Filtering   
+            {
+                DataSource = operation.PerformFiltering(DataSource, dm.Where, dm.Where[0].Operator);
+            }
+            int count = DataSource.Cast<CustomerModel>().Count();
+            if (dm.Skip != 0)
+            {
+                DataSource = operation.PerformSkip(DataSource, dm.Skip);   //Paging
+            }
+            if (dm.Take != 0)
+            {
+                DataSource = operation.PerformTake(DataSource, dm.Take);
+            }
+            return dm.RequiresCounts ? Json(new { result = DataSource, count = count }) : Json(DataSource);
+        }
+
         #region Read Data from google spreadsheet
         private IList<IList<object>> ReadDataFromGoogleSpreadSheet(string readRange)
         {
@@ -189,10 +243,6 @@ namespace MasterGenerator.UI.Controllers
             }
             return null;
         }
-        #endregion
-        public IActionResult MapedCustomer()
-        {
-            return View();
-        }
+        #endregion  
     }
 }

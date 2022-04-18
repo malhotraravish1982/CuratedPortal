@@ -31,7 +31,7 @@ namespace MasterGenerator.UI.Controllers
             _mapper = mapper;
             _roleManager = roleManager;
         }
-       
+        [Authorize(Roles = "Admin,CS User")]
         public IActionResult GetAllCustomers()
         {
             ViewBag.DataSource = _unitOfWork.ICustomerRepository.GetCustomer();
