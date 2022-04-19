@@ -13,6 +13,8 @@ namespace MasterGenerator.Data.Repository
         Task AddCustomerMap(CustomerMap customerMap);
         IEnumerable<CustomerModel> GetCutomerMaped();
         Task<CustomerMap> GetCustomerMappingById(int Id);
+        //List<string> GetMappingRecordById(CustomerModel customerModel);
+        CustomerModel GetMappingRecordById(CustomerModel customerModel);
         void DeleteCustomerMapping(CustomerMap customerMap);
     }
 }

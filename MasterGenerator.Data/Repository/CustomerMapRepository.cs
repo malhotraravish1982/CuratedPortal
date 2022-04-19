@@ -50,6 +50,11 @@ namespace MasterGenerator.Data.Repository
                 throw;
             }
         }
+        public CustomerModel GetMappingRecordById(CustomerModel customerModel)
+        {          
+           var query= _context.CustomerMap.Where(x => x.CustomerId == customerModel.CustomerId && x.UserId==customerModel.UserId).ProjectTo<CustomerModel>(_mapper.ConfigurationProvider).FirstOrDefault();
+            return query;
+        }
         public async Task AddCustomerMap(CustomerMap customerMap)
         {
             try

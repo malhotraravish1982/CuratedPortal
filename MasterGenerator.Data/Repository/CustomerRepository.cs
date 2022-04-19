@@ -25,7 +25,7 @@ namespace MasterGenerator.Data.Repository
         public IEnumerable<Customer> GetAllCustomers()
         {
             return _context.Customers
-                .ProjectTo<Customer>(_mapper.ConfigurationProvider).AsQueryable();
+                .ProjectTo<Customer>(_mapper.ConfigurationProvider).OrderByDescending(d=>d.CustomerId).AsQueryable();
         }
         public async Task<bool> AddCustomerRange(List<string> customers)
         {

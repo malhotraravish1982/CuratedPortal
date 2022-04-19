@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Syncfusion.EJ2.Base;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace MasterGenerator.UI.Controllers
 {
@@ -45,7 +46,7 @@ namespace MasterGenerator.UI.Controllers
         [HttpPost]
         public async Task<IActionResult> AddUser(UserModel userModel)
         {
-            ViewBag.Roles = await _roleManager.Roles.Select(x => x.Name).ToListAsync();
+            ViewBag.Roles = await _roleManager.Roles.Where(x => x.Name != "Admin").ToListAsync();
             
             if (ModelState.IsValid)
             {
@@ -54,19 +55,12 @@ namespace MasterGenerator.UI.Controllers
                     ModelState.AddModelError("", "Email already taken.");
                     return View(userModel);
                 }
-
-                if (await UserNameExists(userModel.Username))
-                {
-                    ModelState.AddModelError("", "User Name already taken.");
-                    return View(userModel);
-                }
-
                 var user = new AppUser();
                 user.FirstName = userModel.FirstName;
                 user.LastName = userModel.LastName;
                 user.Address = userModel.Address;
                 user.Email = userModel.Email.ToLower();
-                user.UserName = userModel.Username.ToLower();
+                user.UserName = userModel.FirstName.ToLower();
                 user.PhoneNumber = userModel.PhoneNumber;
 
                 var result = await _userManager.CreateAsync(user, userModel.Password);
@@ -93,8 +87,9 @@ namespace MasterGenerator.UI.Controllers
                     ModelState.AddModelError("", errors);
                     return View(userModel);
                 }
+                return RedirectToAction("AddUser","Admin");
             }
-            return RedirectToAction("AddUser", "Admin");
+            return View();
         }
         public IActionResult CustomerMapping()
         {
@@ -104,16 +99,24 @@ namespace MasterGenerator.UI.Controllers
         }
         [HttpPost]
         public async Task<IActionResult> CustomerMappingAsync(CustomerModel customerModel)
-        {
+        { 
             ViewBag.user = _unitOfWork.IUserrepository.GetUsersByRole(AdminEnum.Customer_User.ToString().Replace("_", " "));
             ViewBag.customers = _unitOfWork.ICustomerRepository.GetAllCustomers();
+            if (ModelState.IsValid)
+            {
+                 var mapCustomer = _unitOfWork.ICustomerMapRepository.GetMappingRecordById(customerModel);
+                if (mapCustomer != null)
+                {
+                    ModelState.AddModelError("", "Customer already maped");
+                    return View(customerModel);
+                }
+                var result = _mapper
+                        .Map<CustomerMap>(customerModel);
+                if (result != null)
+                {
+                    await _unitOfWork.ICustomerMapRepository.AddCustomerMap(result);
 
-            var result = _mapper
-                    .Map<CustomerMap>(customerModel);
-            if (result != null)
-            { 
-                await _unitOfWork.ICustomerMapRepository.AddCustomerMap(result);
-                
+                }
             }
 
             return View();
