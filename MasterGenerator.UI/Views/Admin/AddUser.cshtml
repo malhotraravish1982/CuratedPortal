@@ -28,8 +28,8 @@
                             <div class="position-relative row form-group">
                                 <label asp-for="UserType" class="col-sm-2 col-form-label">User Type</label>
                                 <div class="col-sm-10">
-                                    <select asp-for="UserType" class="form-control">
-                                        <option disabled selected>Select User Type</option>
+                                    <select asp-for="UserType" class="form-control" required>
+                                        <option disabled selected value="">Select User Type</option>
                                         @if (ViewBag.Roles != null)
                                         {
                                             foreach (var user in ViewBag.Roles)
@@ -44,9 +44,9 @@
                             <div class="position-relative row form-group">
                                 <label asp-for="FirstName" class="col-sm-2 col-form-label">First Name</label>
                                 <div class="col-sm-10">
-                                    <input asp-for="FirstName" type="text" id="txtFirstName" autocomplete="off" class="form-control"
+                                    <input asp-for="FirstName" type="text" required id="txtFirstName" autocomplete="off" class="form-control"
                                            placeholder="Enter First Name" />
-                                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                                    <span asp-validation-for="FirstName"  class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="position-relative row form-group">
@@ -69,7 +69,7 @@
                             <div class="position-relative row form-group">
                                 <label asp-for="PhoneNumber" class="col-sm-2 col-form-label">Phone Number</label>
                                 <div class="col-sm-10">
-                                    <input asp-for="PhoneNumber" type="tel" maxlength=10 id="txtUserName" autocomplete="off" class="form-control"
+                                    <input asp-for="PhoneNumber" type="tel" required maxlength=10 id="txtUserName" autocomplete="off" class="form-control"
                                            placeholder="Enter Phone Number" />
                                     <span asp-validation-for="PhoneNumber" class="text-danger"></span>
                                 </div>
@@ -77,7 +77,7 @@
                             <div class="position-relative row form-group">
                                 <label asp-for="Email" class="col-sm-2 col-form-label">Email</label>
                                 <div class="col-sm-10">
-                                    <input asp-for="Email" type="email" autocomplete="off" id="txtEmail" class="form-control"
+                                    <input asp-for="Email" type="email" required autocomplete="off" id="txtEmail" class="form-control"
                                            placeholder="Enter Email Address" />
                                     <span asp-validation-for="Email" class="text-danger"></span>
                                 </div>
@@ -85,7 +85,7 @@
                             <div class="position-relative row form-group">
                                 <label asp-for="Password" class="col-sm-2 col-form-label">Password</label>
                                 <div class="col-sm-10">
-                                    <input asp-for="Password" type="password" autocomplete="off" id="txtPassword" class="form-control"
+                                    <input asp-for="Password" type="password" required autocomplete="off" id="txtPassword" class="form-control"
                                            placeholder="Enter Password " />
                                     <span asp-validation-for="Password" class="text-danger"></span>
                                 </div>
@@ -93,7 +93,7 @@
                             <div class="position-relative row form-group">
                                 <label asp-for="ConfirmPassword" class="col-sm-2 col-form-label">Confirm Password</label>
                                 <div class="col-sm-10">
-                                    <input asp-for="ConfirmPassword" type="password" id="txtConfirmPassword" autocomplete="off" class="form-control"
+                                    <input asp-for="ConfirmPassword" type="password" required id="txtConfirmPassword" autocomplete="on" class="form-control"
                                            placeholder="Enter Confirm Password " />
                                     <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
                                 </div>
@@ -101,7 +101,7 @@
                             <div class="position-relative row form-group">
                                 <label asp-for="Address" class="col-sm-2 col-form-label">Address</label>
                                 <div class="col-sm-10">
-                                    <textarea asp-for="Address" type="text" id="txtAddress" autocomplete="off" class="form-control"
+                                    <textarea asp-for="Address" type="text" required id="txtAddress" autocomplete="off" class="form-control"
                                               placeholder="Enter Address"></textarea>
                                     <span asp-validation-for="Address" class="text-danger"></span>
                                 </div>
