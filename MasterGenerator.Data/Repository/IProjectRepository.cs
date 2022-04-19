@@ -15,7 +15,7 @@ namespace MasterGenerator.Data.Repository
         Task<bool> AddProjectRange(List<Project> projects);
         Task<List<string?>> GetProjectStatus();
         Task<Project?> GetProjectByProjectId(int projectId);
-        IEnumerable<ProjectModel> GetProjectsByCustomerNamess(List<string> name);
+        IEnumerable<ProjectModel> GetProjectsByCustomerNames(List<string> name);
        // IEnumerable<ProjectModel>? GetProjectsByCustomerNamess(Task<List<string>> customerNameList);
     }
 }

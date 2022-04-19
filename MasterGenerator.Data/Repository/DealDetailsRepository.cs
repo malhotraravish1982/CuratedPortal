@@ -3,6 +3,7 @@ using AutoMapper.QueryableExtensions;
 using MasterGenerator.Data.Context;
 using MasterGenerator.Data.Entity;
 using MasterGenerator.Model.Model;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,11 +39,10 @@ namespace MasterGenerator.Data.Repository
                 return false;
             }
         }
-        public async Task<List<DealDetails>> GetDealDetailsByCustomerNamess(List<string> name)
+        public async Task<List<DealDetails>> GetDealDetailsByCustomerNames(List<string> name)
         {
-            List<DealDetails> dealDetails = _context.DealDetails.Where(x => name.Contains(x.CustomerName)).ToList();
+            List<DealDetails> dealDetails =await _context.DealDetails.Where(x => name.Contains(x.CustomerName)).ToListAsync();
             return dealDetails;
-
         }
     }
 }
