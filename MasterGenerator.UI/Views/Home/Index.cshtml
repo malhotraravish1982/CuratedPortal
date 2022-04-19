@@ -33,9 +33,10 @@
                     <span>Status View</span>
                 </a>
             </li>
-             <li class="nav-item " style="margin-left:0%">
-                <a asp-action="ReadFile" asp-controller="Home">
-                  <i  class="pe-7s-refresh-2 refresh_icon"></i>
+            <li class="nav-item refresh_li">
+                <a class="btn btn-primary a_Refresh"
+                   asp-action="ReadFile" asp-controller="Home">
+                    Refresh<i class="pe-7s-refresh-2"></i>
                 </a>
             </li>
         </ul>
@@ -45,7 +46,7 @@
                     <div class="card-body">
                         <h5 class="card-title">Scs Records</h5>
                         <form class="">
-                            <ejs-grid id="Grid"  width="800" childGrid="ChildGrid" allowPaging="true" allowTextWrap="false" hierarchyPrintMode="All" allowSorting="true" allowFiltering="true">
+                            <ejs-grid id="Grid" width="800" childGrid="ChildGrid" allowPaging="true" allowTextWrap="false" hierarchyPrintMode="All" allowSorting="true" allowFiltering="true">
                                 <e-grid-editSettings allowAdding="false" allowDeleting="false" allowEditing="false" mode="Normal"></e-grid-editSettings>
                                 <e-grid-filterSettings type="Excel"></e-grid-filterSettings>
                                 <e-data-manager url="/Home/UrlDataSource" crudUrl="/Home/CrudUpdate" adaptor="UrlAdaptor"></e-data-manager>

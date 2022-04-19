@@ -13,7 +13,7 @@
     <div class="app-container app-theme-white body-tabs-shadow fixed-header fixed-sidebar">
         <div class="app-header header-shadow">
             <div class="app-header__logo">
-                <div class="logo-src"></div>
+                <h3>Curated Portal</h3>
                 <div class="header__pane ml-auto">
                     <div>
                         <button type="button" class="hamburger close-sidebar-btn hamburger--elastic" data-class="closed-sidebar">
@@ -44,7 +44,7 @@
             </div>
             <div class="app-header__content">
                 <div class="app-header-right">
-                    
+
 
                     <ul class="header-megamenu nav">
                         <li class="dropdown nav-item">
@@ -115,54 +115,54 @@
                                 <li>
                                     <a href="\Customer\GetAllCustomers">
                                         <i class="metismenu-icon pe-7s-users"></i>
-                                       View Customers                                       
+                                        View Customers
                                     </a>
                                 </li>
                                 <li>
                                     <a href="\Admin\AddUser">
                                         <i class="metismenu-icon pe-7s-add-user"></i>
-                                        Add User                                       
+                                        Add User
                                     </a>
                                 </li>
-                                 <li>
+                                <li>
                                     <a href="\Admin\GetUsers">
                                         <i class="metismenu-icon pe-7s-users"></i>
-                                        View Users                                       
+                                        View Users
                                     </a>
                                 </li>
-                                
+
                                 <li>
                                     <a href="\Admin\CustomerMapping">
                                         <i class="metismenu-icon pe-7s-display1"></i>
-                                        Map Customer                                      
+                                        Map Customer
                                     </a>
                                 </li>
                             </ul>
                         }
-                        else if  (User.IsInRole(MasterGenerator.Model.Model.AdminEnum.CS_User.ToString().Replace("_", " ")))
+                        else if (User.IsInRole(MasterGenerator.Model.Model.AdminEnum.CS_User.ToString().Replace("_", " ")))
                         {
                             <ul class="vertical-nav-menu">
                                 <li class="app-sidebar__heading">CS User</li>
-                                 <li>
+                                <li>
                                     <a href="\Customer\GetAllCustomers">
                                         <i class="metismenu-icon pe-7s-browser"></i>
-                                       View Customers
-                                       
+                                        View Customers
+
                                     </a>
                                 </li>
-                               
+
                             </ul>
                         }
                         else if (User.IsInRole(MasterGenerator.Model.Model.AdminEnum.Customer_User.ToString().Replace("_", " ")))
                         {
                             <ul class="vertical-nav-menu">
-                            <li class="app-sidebar__heading"></li>
-                            <li>
-                                <a href="\Home\Index">
-                                    <i class="metismenu-icon pe-7s-rocket"></i>
-                                    Dashboard
-                                </a>
-                            </li>
+                                <li class="app-sidebar__heading"></li>
+                                <li>
+                                    <a href="\Home\Index">
+                                        <i class="metismenu-icon pe-7s-rocket"></i>
+                                        Dashboard
+                                    </a>
+                                </li>
                             </ul>
                         }
                     </div>

@@ -30,19 +30,21 @@ p {
 .hilite{
     display:block;
 }
-.refresh_icon{
-    position:fixed;
-    top:19.5%;
-    left:80%;
-    font-size:x-large;
-}
-    .refresh_icon:hover {
-        color: #fff;
-        background: #2b2bed;
-        border-radius: 5px;
-    }
+
 .card-body {
     flex: 1 1 auto;
     padding:0px;
     padding-left: 0.6rem;
+}
+.refresh_li {
+    margin-left: 300px;
+}
+@media (max-width: 767.98px) {
+    .refresh_li {
+        margin-left: 0px;
+    }
+}
+.a_Refresh {
+    position: relative;
+    padding: 0.65rem;
 }
