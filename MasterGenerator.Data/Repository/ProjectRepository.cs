@@ -29,7 +29,7 @@ namespace MasterGenerator.Data.Repository
             .ProjectTo<ProjectModel>(_mapper.ConfigurationProvider).AsQueryable();
 
         }
-        public  IEnumerable<ProjectModel> GetProjectsByCustomerNamess(List<string> name)
+        public  IEnumerable<ProjectModel> GetProjectsByCustomerNames(List<string> name)
         {
             //   var projects= _context.Project.Where(x => name.Contains(x.CustomerName)).ToList();
             //return (IEnumerable<ProjectModel>)projects;

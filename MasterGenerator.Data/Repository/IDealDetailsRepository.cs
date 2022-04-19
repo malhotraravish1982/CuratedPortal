@@ -12,6 +12,6 @@ namespace MasterGenerator.Data.Repository
     {
         IEnumerable<string> GetAllCustomerMap();
         Task<bool> AddDealDetailsRange(List<DealDetails> dealDetails);
-        Task<List<DealDetails>> GetDealDetailsByCustomerNamess(List<string> name);
+        Task<List<DealDetails>> GetDealDetailsByCustomerNames(List<string> name);
     }
 }

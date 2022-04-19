@@ -31,8 +31,8 @@ namespace MasterGenerator.Data.Context
 
             var admin = new AppUser
             {
-                UserName = "kunal",
-                Email = "kunal@curatedsourcing.com"
+                UserName = "admin",
+                Email = "admin@curatedsourcing.com"
             };
 
             await userManager.CreateAsync(admin, "Pa$$w0rd");

@@ -46,13 +46,13 @@
                     <div class="card-body">
                         <h5 class="card-title">Scs Records</h5>
                         <form class="">
-                            <ejs-grid id="Grid" width="800" childGrid="ChildGrid" allowPaging="true" allowTextWrap="false" hierarchyPrintMode="All" allowSorting="true" allowFiltering="true">
+                            <ejs-grid id="Grid" width="860" childGrid="ChildGrid" allowPaging="true" allowTextWrap="false" hierarchyPrintMode="All" allowSorting="true" allowFiltering="true">
                                 <e-grid-editSettings allowAdding="false" allowDeleting="false" allowEditing="false" mode="Normal"></e-grid-editSettings>
                                 <e-grid-filterSettings type="Excel"></e-grid-filterSettings>
                                 <e-data-manager url="/Home/UrlDataSource" crudUrl="/Home/CrudUpdate" adaptor="UrlAdaptor"></e-data-manager>
                                 <e-grid-columns>
-                                    <e-grid-column field="ProjectId" headerText="CS Deal Id" valueAccessor="valueAccessor" width="100"></e-grid-column>
-                                    <e-grid-column field="CustomerName" headerText="Customer Name" width="150"></e-grid-column>
+                                    <e-grid-column field="ProjectId" headerText="CS Deal Id" valueAccessor="valueAccessor" width="120"></e-grid-column>
+                                    <e-grid-column field="CustomerName" headerText="Customer Name" width="160"></e-grid-column>
                                     <e-grid-column field="ProjectName" headerText="Project Name" width="150"></e-grid-column>
                                     <e-grid-column field="PONumber" headerText="PO Number" width="150"></e-grid-column>
                                     <e-grid-column field="PODate" headerText="PO Date" width="150"></e-grid-column>
@@ -61,13 +61,13 @@
                                     <e-grid-column field="POAmount" headerText="PO Amount" width="150"></e-grid-column>
                                     <e-grid-column field="CSStatus" headerText="CS Status" width="150"></e-grid-column>
                                     <e-grid-column field="DisplayStatus" headerText="Display Status" width="150"></e-grid-column>
-                                    <e-grid-column field="ShipmentMethod" headerText="Shipment Method" width="150"></e-grid-column>
-                                    <e-grid-column field="ProductionCompletion" headerText="Production Completion" width="150"></e-grid-column>
+                                    <e-grid-column field="ShipmentMethod" headerText="Shipment Method" width="170"></e-grid-column>
+                                    <e-grid-column field="ProductionCompletion" headerText="Production Completion" width="200"></e-grid-column>
                                     <e-grid-column field="VesselETA" headerText="Vessel ETA" width="150"></e-grid-column>
                                     <e-grid-column field="VesselETD" headerText="Vessel ETD" width="150"></e-grid-column>
-                                    <e-grid-column field="EstimatedDeliveryDate" headerText="Estimated Delivery Date" width="150"></e-grid-column>
-                                    <e-grid-column field="ActualDeliveryDate" headerText="Actual Delivery Date" width="150"></e-grid-column>
-                                    <e-grid-column field="PreProductionManager" headerText="Pre Production Manager" width="150"></e-grid-column>
+                                    <e-grid-column field="EstimatedDeliveryDate" headerText="Estimated Delivery Date" width="210"></e-grid-column>
+                                    <e-grid-column field="ActualDeliveryDate" headerText="Actual Delivery Date" width="180"></e-grid-column>
+                                    <e-grid-column field="PreProductionManager" headerText="Pre Production Manager" width="200"></e-grid-column>
                                 </e-grid-columns>
                             </ejs-grid>
                         </form>
@@ -100,7 +100,7 @@
                                                                             if (item == project.DisplayStatus)
                                                                             {
                                                                                 <div class="mb-3 card">
-                                                                                    <div class="card-body">
+                                                                                    <div class="card-body card-body_status">
                                                                                         <div id="exampleAccordion" data-children=".item">
                                                                                             <div class="item">
                                                                                                 <span> @project.ProjectName</span><br>

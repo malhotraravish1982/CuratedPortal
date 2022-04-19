@@ -31,9 +31,9 @@ p {
     display:block;
 }
 
-.card-body {
+.card-body_status {
     flex: 1 1 auto;
-    padding:0px;
+    padding: 0px;
     padding-left: 0.6rem;
 }
 .refresh_li {
