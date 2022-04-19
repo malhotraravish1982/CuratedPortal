@@ -52,6 +52,10 @@ namespace MasterGenerator.UI.Controllers
             _userManager = userManager;
             _googleSheetValues = googleSheetsHelper.Service.Spreadsheets.Values;
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         [Authorize(Roles = "Customer User")]
         public async Task<IActionResult> Index()
         {
@@ -61,15 +65,19 @@ namespace MasterGenerator.UI.Controllers
                 var customerNameList = await _unitOfWork.ICustomerRepository.GetCustomerNamesByUserId(int.Parse(userId));
                 if (customerNameList != null)
                 {
-                    ViewBag.DataSource = _unitOfWork.IDealDetailsRepository.GetDealDetailsByCustomerNamess(customerNameList);
+                    ViewBag.DataSource =await _unitOfWork.IDealDetailsRepository.GetDealDetailsByCustomerNames(customerNameList);
                 }
                 ViewBag.statusList = await _unitOfWork.IProjectRepository.GetProjectStatus();
-                ViewBag.Project = _unitOfWork.IProjectRepository.GetProjectsByCustomerNamess(customerNameList);
+                ViewBag.Project = _unitOfWork.IProjectRepository.GetProjectsByCustomerNames(customerNameList);
             }
             return View(); 
         }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="dm"></param>
+        /// <returns></returns>
         public async Task<IActionResult> UrlDatasource([FromBody] Extensions.DataManagerRequestExtension dm)
         {
           
@@ -81,7 +89,7 @@ namespace MasterGenerator.UI.Controllers
                 var  customerNameList = await _unitOfWork.ICustomerRepository.GetCustomerNamesByUserId(int.Parse(userId));
                 if (customerNameList != null)
                 {
-                    projectRecords = _unitOfWork.IProjectRepository.GetProjectsByCustomerNamess(customerNameList);               
+                    projectRecords = _unitOfWork.IProjectRepository.GetProjectsByCustomerNames(customerNameList);               
                 }
                 if (!string.IsNullOrEmpty(scfFileId))
                 {
