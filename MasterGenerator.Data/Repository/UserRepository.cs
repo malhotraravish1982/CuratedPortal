@@ -36,7 +36,7 @@ namespace MasterGenerator.Data.Repository
                              join userRole in _context.UserRoles on usr.Id equals userRole.UserId
                              join role in _context.Roles on userRole.RoleId equals role.Id //into roles
                              where role.Name == roleName
-                             select usr).ProjectTo<UserModel>(_mapper.ConfigurationProvider).AsQueryable();
+                             select usr).ProjectTo<UserModel>(_mapper.ConfigurationProvider).OrderByDescending(d=>d.Id).AsQueryable();
                 return users;
             }
             catch (Exception)
