@@ -14,7 +14,8 @@ namespace MasterGenerator.Data.Context
         public DbSet<Project> Project { get; set; }
         public DbSet<DealDetails> DealDetails { get; set; }
         public DbSet<CustomerMap> CustomerMap { get; set; }
-        public DbSet<Customer> Customers { get; set; }       
+        public DbSet<Customer> Customers { get; set; }  
+        public DbSet<FieldPermission> FieldPermissions { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

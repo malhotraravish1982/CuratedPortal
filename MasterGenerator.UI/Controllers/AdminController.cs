@@ -261,7 +261,23 @@ namespace MasterGenerator.UI.Controllers
             }
             return Json(value.value);
         }
-
+        public IActionResult UserPermission()
+        {
+            ViewBag.user = _unitOfWork.IUserrepository.GetUsersByRole(AdminEnum.Customer_User.ToString().Replace("_", " "));
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> UserPermissionAsync(PermissionModel permissionModel)
+        {
+            var result = _mapper
+                        .Map<FieldPermission>(permissionModel);
+            if (result != null)
+            {
+                await _unitOfWork.IUserPermissionRepository.AddUserPermission(result);
+                return RedirectToAction("UserPermission");
+            }
+           return View(permissionModel);
+        }
         #region "private Methods"
         private async Task<bool> UserExists(string email)
         {
