@@ -25,7 +25,7 @@ namespace MasterGenerator.Data.Repository
         public IEnumerable<Customer> GetAllCustomers()
         {
             return _context.Customers
-                .ProjectTo<Customer>(_mapper.ConfigurationProvider).OrderByDescending(d=>d.CustomerId).AsQueryable();
+                .ProjectTo<Customer>(_mapper.ConfigurationProvider).OrderBy(d=>d.CustomerName).AsQueryable();
         }
         public async Task<bool> AddCustomerRange(List<string> customers)
         {
@@ -51,7 +51,7 @@ namespace MasterGenerator.Data.Repository
         public IEnumerable<CustomerModel> GetCustomer()
         {
             List<CustomerModel> result = new List<CustomerModel>();
-            var query = _context.Customers.ToList();
+            var query = _context.Customers.OrderBy(x=>x.CustomerName).ToList();
 
             var q = (from i in query
                      select
