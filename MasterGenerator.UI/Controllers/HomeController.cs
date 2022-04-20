@@ -82,20 +82,23 @@ namespace MasterGenerator.UI.Controllers
         {
           
             var userId = _userManager.GetUserId(User);
+
             if (userId != null)
             {
                 string? scfFileId = dm.Table;
                 IEnumerable<ProjectModel> projectRecords = null;
+                IEnumerable<ProjectModel> projectRecordsGrantPermission = null;
                 var  customerNameList = await _unitOfWork.ICustomerRepository.GetCustomerNamesByUserId(int.Parse(userId));
+                var  customerFieldListByUserId = await _unitOfWork.IProjectRepository.GetCustomerFeildByUserId(int.Parse(userId));
                 if (customerNameList != null)
                 {
                     projectRecords = _unitOfWork.IProjectRepository.GetProjectsByCustomerNames(customerNameList);               
+                    projectRecordsGrantPermission = _unitOfWork.IProjectRepository.GetProjectsByVisibleFeildPermission(customerFieldListByUserId);
                 }
                 if (!string.IsNullOrEmpty(scfFileId))
                 {
                     projectRecords = projectRecords.Where(x => x.ProjectId == Convert.ToDecimal(scfFileId));
                 }
-
                 if (!string.IsNullOrEmpty(dm.ProjectName))
                 {
                     System.Text.RegularExpressions.Regex regEx = new System.Text.RegularExpressions.Regex(dm.ProjectName.ToLower());
@@ -106,8 +109,6 @@ namespace MasterGenerator.UI.Controllers
                     System.Text.RegularExpressions.Regex regEx = new System.Text.RegularExpressions.Regex(dm.PODate.ToLower());
                     projectRecords = projectRecords.Where(x => x.PODate != null && regEx.IsMatch(x.PODate.ToLower()));
                 }
-
-
                 IEnumerable DataSource = projectRecords;
                 DataOperations operation = new DataOperations();
                 if (dm.Sorted != null && dm.Sorted.Count > 0) //Sorting   
@@ -116,6 +117,13 @@ namespace MasterGenerator.UI.Controllers
                 }
                 else
                 {
+                    Sort sort = new Sort();
+                    List<Sort> sorts = new List<Sort>();
+                    sort.Name = "ProjectId";
+                    sort.Direction = "descending";
+                    sorts.Add(sort);
+                    DataSource = operation.PerformSorting(DataSource, sorts);
+
 
                 }
                 if (dm.Where != null && dm.Where.Count > 0) //Filtering   

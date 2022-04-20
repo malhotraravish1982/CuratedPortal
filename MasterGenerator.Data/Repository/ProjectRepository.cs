@@ -29,6 +29,7 @@ namespace MasterGenerator.Data.Repository
             .ProjectTo<ProjectModel>(_mapper.ConfigurationProvider).AsQueryable();
 
         }
+        
         public  IEnumerable<ProjectModel> GetProjectsByCustomerNames(List<string> name)
         {
             //   var projects= _context.Project.Where(x => name.Contains(x.CustomerName)).ToList();
@@ -36,6 +37,17 @@ namespace MasterGenerator.Data.Repository
             return _context.Project.Where(x => name.Contains(x.CustomerName))
                 .ProjectTo<ProjectModel>(_mapper.ConfigurationProvider).AsQueryable();
 
+        }
+        public IEnumerable<ProjectModel> GetProjectsByVisibleFeildPermission(List<string> name)
+        {
+            return _context.Project.Where(x => name.Contains(x.CustomerName))
+                .ProjectTo<ProjectModel>(_mapper.ConfigurationProvider).AsQueryable();
+
+        }
+        public async Task<List<string>> GetCustomerFeildByUserId(int userId)
+        {
+            var query = _context.Project.Where(x=>x.ProjectId== userId).AsQueryable();
+            return (List<string>)query;
         }
         public IEnumerable<DealDetailsModel> GetDealDetails()
         {

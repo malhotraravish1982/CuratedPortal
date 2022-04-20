@@ -125,7 +125,7 @@ namespace MasterGenerator.UI.Controllers
         {
             return View();
         }
-
+        
         public IActionResult UrlDatasource([FromBody] Extensions.DataManagerRequestExtension dm)
         {
             string? FileId = dm.Table;
@@ -166,6 +166,45 @@ namespace MasterGenerator.UI.Controllers
             return dm.RequiresCounts ? Json(new { result = DataSource, count = count }) : Json(DataSource);
         }
 
+        public IActionResult UrlVisibleFieldDataSource([FromBody] Extensions.DataManagerRequestExtension dm)
+        {
+            string? FileId = dm.Table;
+            IEnumerable<UserModel> UserRecords = null;
+            UserRecords = _unitOfWork.IUserrepository.GetUsers();
+            if (!string.IsNullOrEmpty(FileId))
+            {
+                UserRecords = UserRecords.Where(x => x.Id == Convert.ToDecimal(FileId));
+            }
+
+            if (!string.IsNullOrEmpty(dm.ProjectName))
+            {
+                System.Text.RegularExpressions.Regex regEx = new System.Text.RegularExpressions.Regex(dm.ProjectName.ToLower());
+                UserRecords = UserRecords.Where(x => x.Username != null && regEx.IsMatch(x.Username.ToLower()));
+            }
+            IEnumerable DataSource = UserRecords;
+            DataOperations operation = new DataOperations();
+            if (dm.Sorted != null && dm.Sorted.Count > 0) //Sorting   
+            {
+                DataSource = operation.PerformSorting(DataSource, dm.Sorted);
+            }
+            else
+            {
+            }
+            if (dm.Where != null && dm.Where.Count > 0) //Filtering   
+            {
+                DataSource = operation.PerformFiltering(DataSource, dm.Where, dm.Where[0].Operator);
+            }
+            int count = DataSource.Cast<UserModel>().Count();
+            if (dm.Skip != 0)
+            {
+                DataSource = operation.PerformSkip(DataSource, dm.Skip);   //Paging
+            }
+            if (dm.Take != 0)
+            {
+                DataSource = operation.PerformTake(DataSource, dm.Take);
+            }
+            return dm.RequiresCounts ? Json(new { result = DataSource, count = count }) : Json(DataSource);
+        }
         public async Task<IActionResult> CrudUpdate([FromBody] Model.Model.CRUDModel<UserModel> value, string action)
         {
             if (value.action == "update")

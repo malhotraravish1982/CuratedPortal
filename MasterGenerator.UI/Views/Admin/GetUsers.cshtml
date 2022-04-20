@@ -2,6 +2,10 @@
 @{
     ViewData["Title"] = "GetUsers";
 }
+@{
+    List<object> commands = new List<object>(); 
+    commands.Add(new { type = "permission", buttonOption = new { content = "Grant All Feild Permission", cssClass = "e-flat e-primary" } }); 
+}
 <div class="app-main__outer">
 
     <div class="app-main__inner">
@@ -27,7 +31,7 @@
                         <h5 class="card-title">All Users</h5>
                         <form asp-action="Index" id=frmEGrid class="">
                            
-                            <ejs-grid id="Grid"  AllowSelection="true" ShowColumnChooser="false" allowPaging="true" load="load" allowSorting="true" allowFiltering="true" 
+                            <ejs-grid id="Grid"   AllowSelection="true" ShowColumnChooser="false" allowPaging="true" load="load" allowSorting="true" allowFiltering="true" 
                               query="new ej.data.Query().addParams('Table', '')"
                                       toolbar="@(new List<string>() { "Edit", "Delete", "Cancel", "Update", })" class="add">
                                 <e-grid-editSettings allowAdding="false" allowDeleting="true" allowEditing="true" mode="Normal" showDeleteConfirmDialog="true"></e-grid-editSettings>
@@ -36,12 +40,13 @@
                                 <e-grid-filterSettings type="Excel"></e-grid-filterSettings>
                                 <e-grid-columns>
                                     <e-grid-column field="Id" AllowEditing="false" isPrimaryKey="true"  headerText="Id" width="0"></e-grid-column>
-                                    <e-grid-column field="Username" AllowEditing="true"  headerText="User Name" width="100"></e-grid-column>
-                                    <e-grid-column field="FirstName" AllowEditing="true"  headerText="First Name" width="100"></e-grid-column>
-                                    <e-grid-column field="LastName" AllowEditing="true"  headerText="Last Name" width="100"></e-grid-column>
-                                    <e-grid-column field="PhoneNumber" AllowEditing="true" editType="numericedit" type="number"  headerText="Phone No." width="100"></e-grid-column>
-                                    <e-grid-column field="Email" AllowEditing="true"  headerText="Email Address" width="100"></e-grid-column>
-                                    <e-grid-column field="UserType" AllowEditing="true"  headerText="User Type" width="100"></e-grid-column>
+                                    <e-grid-column field="Username" AllowEditing="true"  headerText="User Name" width="120"></e-grid-column>
+                                    <e-grid-column field="FirstName" AllowEditing="true"  headerText="First Name" width="120"></e-grid-column>
+                                    <e-grid-column field="LastName" AllowEditing="true"  headerText="Last Name" width="120"></e-grid-column>
+                                    <e-grid-column field="PhoneNumber" AllowEditing="true" editType="numericedit" type="number"  headerText="Phone No." width="120"></e-grid-column>
+                                    <e-grid-column field="Email" AllowEditing="true"  headerText="Email Address" width="130"></e-grid-column>
+                                    <e-grid-column field="UserType" AllowEditing="true"  headerText="User Type" width="120"></e-grid-column>
+                                     <e-grid-column headerText="Grant Permission" width="130" commands="commands"></e-grid-column>
                                 </e-grid-columns>
                             </ejs-grid>
                         </form>
