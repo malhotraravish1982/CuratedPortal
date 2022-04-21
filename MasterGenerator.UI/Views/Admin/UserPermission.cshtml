@@ -1,0 +1,137 @@
+﻿@model MasterGenerator.Model.Model.PermissionModel
+@{
+    ViewData["Title"] = "UserPermission";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="app-main__outer">
+    <div class="app-main__inner">
+        <div class="app-page-title">
+            <div class="page-title-wrapper">
+                <div class="page-title-heading">
+                    <div class="page-title-icon">
+                        <i class="pe-7s-graph text-success"></i>
+                    </div>
+                    <div>
+                        User Permissions
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-content">
+            <div class="tab-pane tabs-animation fade active show" id="tab-content-1" role="tabpanel">
+                <div class="main-card mb-3 card">
+                    <div class="card-body">
+                        <h5 class="card-title">User Permissions</h5>
+                        <form asp-action="UserPermission">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="position-relative row form-group">
+                                <label asp-for="UserId" class="col-sm-2 col-form-label">User</label>
+                                <div class="col-sm-10">
+                                    <select asp-for="UserId" required class="form-control">
+                                        <option disabled selected value=""> --Select User --</option>
+                                        @if (ViewBag.user != null)
+                                        {
+                                            @foreach (var user in ViewBag.user)
+                                            {
+                                                <option value="@user.Id"> @user.FirstName </option>
+                                            }
+                                        }
+                                    </select>
+                                    <span asp-validation-for="UserId" class="text-danger"></span>
+                                </div>
+                                
+                            </div>
+                            <div class="col-sm-12">
+                        <table class="table table-bordered">
+                            <tr>
+                                <th>Fields</th>
+                                <th>Grant Permission</th>
+                            </tr> 
+                            <tr>
+                                <td>Project Id</td>
+                                <td><input asp-for="ProjectId" type="checkbox" checked/></td>
+                            </tr>
+                            <tr>
+                                <td>Customer Name</td>
+                                <td><input asp-for="CustomerName" type="checkbox" checked/></td>
+                            </tr>
+                            <tr>
+                                <td>Project Name</td>
+                                <td><input asp-for="ProjectName" type="checkbox" checked/></td>
+                            </tr>
+                            <tr>
+                                <td>PO Number</td>
+                                <td><input asp-for="PONumber" type="checkbox" checked/></td>
+                            </tr>
+                            <tr>
+                                <td>PO Date</td>
+                                <td><input asp-for="PODate" type="checkbox" checked/></td>
+                            </tr>
+                            <tr>
+                                <td>Total Quantity</td>
+                                <td><input asp-for="TotalQuantity" type="checkbox" checked/></td>
+                            </tr>
+                            <tr>
+                                <td>Currency</td>
+                                <td><input asp-for="Currency"type="checkbox" checked/></td>
+                            </tr>
+                            <tr>
+                                <td>PO Amount</td>
+                                <td><input asp-for="POAmount" type="checkbox" checked/></td>
+                            </tr>
+                            <tr>
+                                <td>CSS tatus</td>
+                                <td><input asp-for="CSStatus" type="checkbox" checked/></td>
+                            </tr>
+                            <tr>
+                                <td>Display Status</td>
+                                <td><input asp-for="DisplayStatus" type="checkbox" checked/></td>
+                            </tr>
+                            <tr>
+                                <td>Shipment Method</td>
+                                <td><input asp-for="ShipmentMethod" type="checkbox" checked/></td>
+                            </tr>
+                            <tr>
+                                <td>Production Completion</td>
+                                <td><input asp-for="ProductionCompletion"type="checkbox" checked/></td>
+                            </tr>
+                            <tr>
+                                <td>Vessel ETA</td>
+                                <td><input asp-for="VesselETA" type="checkbox" checked/></td>
+                            </tr>
+                            <tr>
+                                <td>Vessel ETD</td>
+                                <td><input asp-for="VesselETD" type="checkbox" checked/></td>
+                            </tr>
+                            <tr>
+                                <td>Estimated Delivery Date</td>
+                                <td><input asp-for="EstimatedDeliveryDate" type="checkbox" checked/></td>
+                            </tr>
+                            <tr>
+                                <td>Actual Delivery Date</td>
+                                <td><input asp-for="ActualDeliveryDate" type="checkbox" checked/></td>
+                            </tr>
+                            <tr>
+                                <td>Pre Production Manager</td>
+                                <td><input asp-for="PreProductionManager" type="checkbox" checked/></td>
+                            </tr>
+                            <tr>
+                                <td>OnTime Status</td>
+                                <td><input asp-for="OnTimeStatus" type="checkbox" checked/></td>
+                            </tr>
+                        </table>
+                        </div>
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                    <button type='submit' class="btn btn-primary mr-3">Save</button>
+                                </div>
+                        </form>
+                       
+                    </div>
+                </div>
+            </div>
+        </div>
+     
+    </div>
+</div>
+
+
