@@ -12,7 +12,7 @@ namespace MasterGenerator.Data.Entity
     public class FieldPermission
     {
         [Key]
-        public int Id { get; set; }
+        public int Id { get; set; } 
         public int UserId { get; set; }
         public string? ProjectId { get; set; }
         public string CustomerName { get; set; }

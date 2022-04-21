@@ -269,7 +269,7 @@ namespace MasterGenerator.UI.Controllers
         [HttpPost]
         public async Task<IActionResult> UserPermissionAsync(PermissionModel permissionModel)
         {
-            var result = _mapper
+            var result = _mapper 
                         .Map<FieldPermission>(permissionModel);
             if (result != null)
             {

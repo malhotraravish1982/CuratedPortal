@@ -18,7 +18,7 @@ namespace MasterGenerator.Data.Helper
             CreateMap<UserModel, AppUser>().ReverseMap();
             CreateMap<CustomerMap, CustomerModel>().ReverseMap();
             CreateMap<Customer, Customer>().ReverseMap();
-            CreateMap<FieldPermission, PermissionModel>().ReverseMap();
+            CreateMap<FieldPermission, PermissionModel>().ReverseMap(); 
 
         }
     }

@@ -24,7 +24,7 @@ namespace MasterGenerator.Data.Repository
         public IUserPermissionRepository IUserPermissionRepository => new UserPermissionRepository(_context, _mapper);
         public ICustomerRepository ICustomerRepository => new CustomerRepository(_context, _mapper);
         public async Task<bool> Complete()
-        {
+        { 
             return await _context.SaveChangesAsync() > 0;
         }
         

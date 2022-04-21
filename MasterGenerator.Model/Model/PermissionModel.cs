@@ -20,7 +20,7 @@ namespace MasterGenerator.Model.Model
         public string? POAmount { get; set; }
         public string? CSStatus { get; set; }
         public string? DisplayStatus { get; set; }
-        public string? ShipmentMethod { get; set; }
+        public string? ShipmentMethod { get; set; } 
         public string? ProductionCompletion { get; set; }
         public string? VesselETA { get; set; }
         public string? VesselETD { get; set; }

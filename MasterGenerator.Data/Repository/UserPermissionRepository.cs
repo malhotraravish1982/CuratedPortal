@@ -27,7 +27,7 @@ namespace MasterGenerator.Data.Repository
                 await _context.SaveChangesAsync();
                 return;
             }
-            catch (Exception ex)
+            catch (Exception ex) 
             {
                 return;
             }

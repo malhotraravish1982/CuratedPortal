@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace MasterGenerator.Data.Repository
 {
     public interface IUserPermissionRepository
-    {
+    { 
         Task AddUserPermission(FieldPermission fieldPermission);
     }
 }
