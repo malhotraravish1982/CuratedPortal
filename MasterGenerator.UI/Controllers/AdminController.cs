@@ -165,23 +165,23 @@ namespace MasterGenerator.UI.Controllers
             }
             return dm.RequiresCounts ? Json(new { result = DataSource, count = count }) : Json(DataSource);
         }
-
+        
         public IActionResult UrlVisibleFieldDataSource([FromBody] Extensions.DataManagerRequestExtension dm)
         {
             string? FileId = dm.Table;
-            IEnumerable<UserModel> UserRecords = null;
-            UserRecords = _unitOfWork.IUserrepository.GetUsers();
+            IEnumerable<PermissionModel> UserPermissionRecords = null;
+            UserPermissionRecords = _unitOfWork.IUserPermissionRepository.GetUserPermissionRecord();
             if (!string.IsNullOrEmpty(FileId))
             {
-                UserRecords = UserRecords.Where(x => x.Id == Convert.ToDecimal(FileId));
+                UserPermissionRecords = UserPermissionRecords.Where(x => x.Id == Convert.ToDecimal(FileId));
             }
 
             if (!string.IsNullOrEmpty(dm.ProjectName))
             {
                 System.Text.RegularExpressions.Regex regEx = new System.Text.RegularExpressions.Regex(dm.ProjectName.ToLower());
-                UserRecords = UserRecords.Where(x => x.Username != null && regEx.IsMatch(x.Username.ToLower()));
+                UserPermissionRecords = UserPermissionRecords.Where(x => x.ProjectName != null && regEx.IsMatch(x.ProjectName.ToLower()));
             }
-            IEnumerable DataSource = UserRecords;
+            IEnumerable DataSource = UserPermissionRecords;
             DataOperations operation = new DataOperations();
             if (dm.Sorted != null && dm.Sorted.Count > 0) //Sorting   
             {
@@ -194,7 +194,7 @@ namespace MasterGenerator.UI.Controllers
             {
                 DataSource = operation.PerformFiltering(DataSource, dm.Where, dm.Where[0].Operator);
             }
-            int count = DataSource.Cast<UserModel>().Count();
+            int count = DataSource.Cast<PermissionModel>().Count();
             if (dm.Skip != 0)
             {
                 DataSource = operation.PerformSkip(DataSource, dm.Skip);   //Paging
@@ -204,6 +204,26 @@ namespace MasterGenerator.UI.Controllers
                 DataSource = operation.PerformTake(DataSource, dm.Take);
             }
             return dm.RequiresCounts ? Json(new { result = DataSource, count = count }) : Json(DataSource);
+        }
+        public async Task<IActionResult> CrudUpdateVisibleField([FromBody] Model.Model.CRUDModel<PermissionModel> value, string action)
+        {
+            if (value.action == "update")
+            {
+                if (value.value != null)
+                {
+                    var User = await _unitOfWork.IUserPermissionRepository.GetVisibleFieldByUserId(Convert.ToInt32(value.key));
+                    _mapper.Map(value.value, User, typeof(PermissionModel), typeof(FieldPermission));
+                    try
+                    {
+                        _unitOfWork.IUserPermissionRepository.Update(User);
+                        await _unitOfWork.Complete();
+                    }
+                    catch (Exception ex)
+                    {
+                    }
+                }
+            }
+            return Json(value.value);
         }
         public async Task<IActionResult> CrudUpdate([FromBody] Model.Model.CRUDModel<UserModel> value, string action)
         {

@@ -87,13 +87,13 @@ namespace MasterGenerator.UI.Controllers
             {
                 string? scfFileId = dm.Table;
                 IEnumerable<ProjectModel> projectRecords = null;
-                IEnumerable<ProjectModel> projectRecordsGrantPermission = null;
+                IEnumerable<PermissionModel> projectRecordsGrantPermission = null;
                 var  customerNameList = await _unitOfWork.ICustomerRepository.GetCustomerNamesByUserId(int.Parse(userId));
-                var  customerFieldListByUserId = await _unitOfWork.IProjectRepository.GetCustomerFeildByUserId(int.Parse(userId));
+                //var  customerFieldListByUserId = await _unitOfWork.IProjectRepository.GetCustomerFeildByUserId(int.Parse(userId));
                 if (customerNameList != null)
                 {
                     projectRecords = _unitOfWork.IProjectRepository.GetProjectsByCustomerNames(customerNameList);               
-                    projectRecordsGrantPermission = _unitOfWork.IProjectRepository.GetProjectsByVisibleFeildPermission(customerFieldListByUserId);
+                   // projectRecordsGrantPermission =  _unitOfWork.IProjectRepository.GetProjectsByVisibleFeildPermission(customerFieldListByUserId);
                 }
                 if (!string.IsNullOrEmpty(scfFileId))
                 {

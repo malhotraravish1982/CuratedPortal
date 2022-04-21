@@ -16,7 +16,7 @@ namespace MasterGenerator.Data.Repository
         Task<List<string?>> GetProjectStatus();
         Task<Project?> GetProjectByProjectId(int projectId);
         IEnumerable<ProjectModel> GetProjectsByCustomerNames(List<string> name);
-        IEnumerable<ProjectModel> GetProjectsByVisibleFeildPermission(List<string> name);
+        IEnumerable<PermissionModel> GetProjectsByVisibleFeildPermission(List<string> name);
         Task<List<string>> GetCustomerFeildByUserId(int id);
        // IEnumerable<ProjectModel>? GetProjectsByCustomerNamess(Task<List<string>> customerNameList);
     }

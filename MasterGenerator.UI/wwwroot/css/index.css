@@ -1,6 +1,13 @@
 ﻿body {
 }
-.table th, .table td {
+.app-main {
+    flex: 1;
+    display: flex;
+    z-index: 8;
+    position: relative;
+    background: #fff;
+}
+    .table th, .table td {
     border-top: 0px !important;
     padding: 0.55rem;
     vertical-align: top;

@@ -130,7 +130,45 @@
                 </div>
             </div>
         </div>
-     
+       <div class="tab-content">
+            <div class="tab-pane tabs-animation fade show active" id="tab-content-0" role="tabpanel">
+                <div class="main-card mb-3 card">
+                    <div class="card-body">
+                        <h5 class="card-title">User Records</h5>
+                        <form class="">
+                            <ejs-grid id="Grid" width="860"  AllowSelection="true" ShowColumnChooser="false" allowPaging="true" allowSorting="true" allowFiltering="true" 
+                                      toolbar="@(new List<string>() { "Edit", "Cancel", "Update", })" class="add">
+                                <e-grid-editSettings allowAdding="false" allowDeleting="true" allowEditing="true" mode="Normal" showDeleteConfirmDialog="true"></e-grid-editSettings>
+                                <e-grid-pagesettings pageSizes="@(new string[] { "20", "50", "100" , "All" })"></e-grid-pagesettings>
+                                <e-grid-filterSettings type="Excel"></e-grid-filterSettings>
+                                <e-data-manager url="/Admin/UrlVisibleFieldDataSource" crudUrl="/Admin/CrudUpdateVisibleField" adaptor="UrlAdaptor" ></e-data-manager>
+                                <e-grid-columns>
+                                    <e-grid-column id="" field="UserId" isPrimaryKey="true" headerText="User Id"  width="110"></e-grid-column>
+                                    <e-grid-column id="" field="ProjectId" headerText="Project Id"  width="120"></e-grid-column>
+                                    <e-grid-column field="CustomerName" headerText="Customer Name"  width="160"></e-grid-column>
+                                    <e-grid-column field="ProjectName" headerText="Project Name" width="160"></e-grid-column>
+                                    <e-grid-column field="PONumber" headerText="PO Number" width="130"></e-grid-column>
+                                    <e-grid-column field="PODate" headerText="PO Date" width="120"></e-grid-column>
+                                    <e-grid-column field="TotalQuantity" headerText="Total Quantity" width="150"></e-grid-column>
+                                    <e-grid-column field="Currency" headerText="Currency" width="120"></e-grid-column>
+                                    <e-grid-column field="POAmount" headerText="PO Amount" width="130"></e-grid-column>
+                                    <e-grid-column field="CSStatus" headerText="CS Status" width="130"></e-grid-column>
+                                    <e-grid-column field="DisplayStatus" headerText="Display Status" width="140"></e-grid-column>
+                                    <e-grid-column field="ShipmentMethod" headerText="Shipment Method" width="180"></e-grid-column>
+                                    <e-grid-column field="ProductionCompletion" headerText="Production Completion" width="200"></e-grid-column>
+                                    <e-grid-column field="VesselETA" headerText="Vessel ETA" width="130"></e-grid-column>
+                                    <e-grid-column field="VesselETD" headerText="Vessel ETD" width="130"></e-grid-column>
+                                    <e-grid-column field="EstimatedDeliveryDate" headerText="Estimated Delivery Date" width="210"></e-grid-column>
+                                    <e-grid-column field="ActualDeliveryDate" headerText="Actual Delivery Date" width="200"></e-grid-column>
+                                    <e-grid-column field="PreProductionManager" headerText="Pre Production Manager" width="210"></e-grid-column>
+                                    <e-grid-column field="OnTimeStatus" headerText="On Time Status" width="160"></e-grid-column>
+                                </e-grid-columns>
+                            </ejs-grid>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
     </div>
 </div>
 

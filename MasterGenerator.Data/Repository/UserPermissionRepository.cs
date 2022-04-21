@@ -1,6 +1,9 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using MasterGenerator.Data.Context;
 using MasterGenerator.Data.Entity;
+using MasterGenerator.Model.Model;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +20,22 @@ namespace MasterGenerator.Data.Repository
         public UserPermissionRepository(DataContext context, IMapper mapper)
         {
             _mapper = mapper;
-            _context = context;
+            _context = context; 
+        }
+        public async Task<FieldPermission> GetVisibleFieldByUserId(int csId)
+        {
+
+            return await _context.FieldPermissions.Where(x => x.UserId == csId).FirstOrDefaultAsync();
+
+        }
+        public void Update(FieldPermission user)
+        {
+            _context.Entry(user).State = EntityState.Modified;
+        }
+        public IEnumerable<PermissionModel> GetUserPermissionRecord()
+        {
+            return _context.FieldPermissions
+            .ProjectTo<PermissionModel>(_mapper.ConfigurationProvider).AsQueryable();
         }
         public async Task AddUserPermission(FieldPermission fieldPermission)
         {

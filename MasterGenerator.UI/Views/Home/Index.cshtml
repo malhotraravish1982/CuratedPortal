@@ -46,7 +46,8 @@
                     <div class="card-body">
                         <h5 class="card-title">Scs Records</h5>
                         <form class="">
-                            <ejs-grid id="Grid" width="860" childGrid="ChildGrid" allowPaging="true" allowTextWrap="false" hierarchyPrintMode="All" allowSorting="true" allowFiltering="true">
+                            <ejs-grid id="Grid" width="860" childGrid="ChildGrid"  dataBound="dataBound"  allowPaging="true" hierarchyPrintMode="All" allowSorting="true" allowFiltering="true">
+
                                 <e-grid-editSettings allowAdding="false" allowDeleting="false" allowEditing="false" mode="Normal"></e-grid-editSettings>
                                 <e-grid-filterSettings type="Excel"></e-grid-filterSettings>
                                 <e-data-manager url="/Home/UrlDataSource" crudUrl="/Home/CrudUpdate" adaptor="UrlAdaptor"></e-data-manager>
@@ -145,29 +146,5 @@
         </div>
     </div>
 </div>
-@section Scripts{
-<script>
-    function valueAccessorFn(field, data, column) {
-        var value = data[field];
-        value =  'CS ID- ' + value ;
-        return value;
-    }
-    function ChangeIcon(e)
-    {
-        var i = e.children[0];
-        var c = i.attributes['1']
-        var id= i.attributes['0'];
-        var btnid = "#"+id.ownerElement.id;
-        var className=c.ownerElement.className;
-        if(className == 'metismenu-state-icon pe-7s-angle-up caret-left')
-        {
-            $(btnid).removeClass("metismenu-state-icon pe-7s-angle-up caret-left").addClass("metismenu-state-icon pe-7s-angle-down caret-left");
-        }
-        else{
-             $(btnid).removeClass("metismenu-state-icon pe-7s-angle-down caret-left").addClass("metismenu-state-icon pe-7s-angle-up caret-left");
-        }
-
-    }
-
-</script>
-}
+<script type="text/javascript" src="~/js/siteJs/index.js">
+    </script>

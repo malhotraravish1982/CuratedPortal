@@ -2,10 +2,6 @@
 @{
     ViewData["Title"] = "GetUsers";
 }
-@{
-    List<object> commands = new List<object>(); 
-    commands.Add(new { type = "permission", buttonOption = new { content = "Grant All Feild Permission", cssClass = "e-flat e-primary" } }); 
-}
 <div class="app-main__outer">
 
     <div class="app-main__inner">
@@ -46,7 +42,6 @@
                                     <e-grid-column field="PhoneNumber" AllowEditing="true" editType="numericedit" type="number"  headerText="Phone No." width="120"></e-grid-column>
                                     <e-grid-column field="Email" AllowEditing="true"  headerText="Email Address" width="130"></e-grid-column>
                                     <e-grid-column field="UserType" AllowEditing="true"  headerText="User Type" width="120"></e-grid-column>
-                                     <e-grid-column headerText="Grant Permission" width="130" commands="commands"></e-grid-column>
                                 </e-grid-columns>
                             </ejs-grid>
                         </form>
@@ -60,6 +55,7 @@
 </div>
 <script>
 function load(args) { 
+
         this.columns[4].validationRules = { required: true, minLength: [customFn, 'Need atleast 10 Digits'] }; 
     } 
  
