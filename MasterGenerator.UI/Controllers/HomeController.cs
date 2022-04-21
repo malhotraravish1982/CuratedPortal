@@ -80,7 +80,6 @@ namespace MasterGenerator.UI.Controllers
         /// <returns></returns>
         public async Task<IActionResult> UrlDatasource([FromBody] Extensions.DataManagerRequestExtension dm)
         {
-          
             var userId = _userManager.GetUserId(User);
             if (userId != null)
             {
@@ -106,8 +105,6 @@ namespace MasterGenerator.UI.Controllers
                     System.Text.RegularExpressions.Regex regEx = new System.Text.RegularExpressions.Regex(dm.PODate.ToLower());
                     projectRecords = projectRecords.Where(x => x.PODate != null && regEx.IsMatch(x.PODate.ToLower()));
                 }
-
-
                 IEnumerable DataSource = projectRecords;
                 DataOperations operation = new DataOperations();
                 if (dm.Sorted != null && dm.Sorted.Count > 0) //Sorting   
@@ -139,7 +136,6 @@ namespace MasterGenerator.UI.Controllers
         {
             return View();
         }
-
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
@@ -186,7 +182,6 @@ namespace MasterGenerator.UI.Controllers
         [Authorize(Roles = "Customer User")]
         public IActionResult MapedCustomer()
         {
-
             return View();
         }
         public IActionResult CustomerMapDataSource([FromBody] Extensions.DataManagerUserExtention dm)

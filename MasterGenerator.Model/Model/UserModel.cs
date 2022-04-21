@@ -12,6 +12,8 @@ namespace MasterGenerator.Model.Model
     {
         public int Id { get; set; }       
         [Required]
+        [MinLength(3, ErrorMessage = "Minimum length is 3 character")]
+        [MaxLength(15)]
         public string? FirstName { get; set; }      
         public string? LastName { get; set; }
         [Required]

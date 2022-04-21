@@ -30,22 +30,21 @@ namespace MasterGenerator.UI.Controllers
 
         public IActionResult Login()
         {
-           // var userRoles = _userManager.GetRolesAsync(user);
             if (_signInManager.IsSignedIn(User))
             {
-                //if (userRoles[0] == AdminEnum.Admin.ToString())
-                //{
-                //    return RedirectToAction("GetAllCustomers", "Customer");
-                //}
-                //else if (userRoles[0] == AdminEnum.CS_User.ToString().Replace("_", " "))
-                //{
-                //    return RedirectToAction("GetAllCustomers", "Customer");
-                //}
-                //else if (userRoles[0] == AdminEnum.Customer_User.ToString().Replace("_", " "))
-                //{
-                //    return RedirectToAction("Index", "Home");
-                //}
-                // return RedirectToAction("Index", "Home");
+            //    if (userRoles[0] == AdminEnum.Admin.ToString())
+            //    {
+            //        return RedirectToAction("GetAllCustomers", "Customer");
+            //    }
+            //    else if (userRoles[0] == AdminEnum.CS_User.ToString().Replace("_", " "))
+            //    {
+            //        return RedirectToAction("GetAllCustomers", "Customer");
+            //    }
+            //    else if (userRoles[0] == AdminEnum.Customer_User.ToString().Replace("_", " "))
+            //    {
+            //        return RedirectToAction("Index", "Home");
+            //    }
+            //    return RedirectToAction("Index", "Home");
                 return View();
             }
             return View();

@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using MasterGenerator.Data.Context;
 using MasterGenerator.Data.Entity;
+using MasterGenerator.Model.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,6 +33,11 @@ namespace MasterGenerator.Data.Repository
             {
                 return;
             }
+        }
+        public PermissionModel GetPermisedRecordById(PermissionModel permissionModel)
+        {
+            var query = _context.FieldPermissions.Where(x =>x.UserId ==permissionModel.UserId).ProjectTo<PermissionModel>(_mapper.ConfigurationProvider).FirstOrDefault();
+            return query;
         }
     }
 }
