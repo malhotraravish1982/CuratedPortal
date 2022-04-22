@@ -55,3 +55,7 @@ p {
     position: relative;
     padding: 0.65rem;
 }
+.loader_wrap {
+    background: rgba(0,0,0,.0);
+    margin-top:200px;
+}

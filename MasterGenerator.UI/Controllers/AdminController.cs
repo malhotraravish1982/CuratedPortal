@@ -99,7 +99,9 @@ namespace MasterGenerator.UI.Controllers
         }
         [HttpPost]
         public async Task<IActionResult> CustomerMappingAsync(CustomerModel customerModel)
-        { 
+        {
+            ViewBag.user = _unitOfWork.IUserrepository.GetUsersByRole(AdminEnum.Customer_User.ToString().Replace("_", " "));
+            ViewBag.customers = _unitOfWork.ICustomerRepository.GetAllCustomers();
             if (ModelState.IsValid)
             {
                  var mapCustomer = _unitOfWork.ICustomerMapRepository.GetMappingRecordById(customerModel);
@@ -117,7 +119,6 @@ namespace MasterGenerator.UI.Controllers
                 }
                 return RedirectToAction("CustomerMapping");
             }
-
             return View();
         }
         public async Task<IActionResult> GetUsers()
@@ -327,6 +328,7 @@ namespace MasterGenerator.UI.Controllers
         [HttpPost]
         public async Task<IActionResult> UserPermissionAsync(PermissionModel permissionModel)
         {
+            ViewBag.user = _unitOfWork.IUserrepository.GetUsersByRole(AdminEnum.Customer_User.ToString().Replace("_", " "));
             if (ModelState.IsValid)
             {
                 var userPermission = _unitOfWork.IUserPermissionRepository.GetPermisedRecordById(permissionModel);

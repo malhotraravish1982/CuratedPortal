@@ -67,7 +67,7 @@ namespace MasterGenerator.UI.Controllers
                 {
                     ViewBag.DataSource =await _unitOfWork.IDealDetailsRepository.GetDealDetailsByCustomerNames(customerNameList);
                 }
-                ViewBag.statusList = await _unitOfWork.IProjectRepository.GetProjectStatus();
+                 ViewBag.statusList = await _unitOfWork.IProjectRepository.GetProjectStatus();
                 ViewBag.Project = _unitOfWork.IProjectRepository.GetProjectsByCustomerNames(customerNameList);
             }
             return View(); 
@@ -122,8 +122,6 @@ namespace MasterGenerator.UI.Controllers
                     sort.Direction = "descending";
                     sorts.Add(sort);
                     DataSource = operation.PerformSorting(DataSource, sorts);
-
-
                 }
                 if (dm.Where != null && dm.Where.Count > 0) //Filtering   
                 {
@@ -172,7 +170,6 @@ namespace MasterGenerator.UI.Controllers
                             await _unitOfWork.ICustomerRepository.AddCustomerRange(customers);
                         }
                     }
-
                     //read data from deal details sheet
                     var dealDetailsResult = ReadDataFromGoogleSpreadSheet(ReadRangeForDealDetails);
                     if (dealDetailsResult != null)
@@ -185,7 +182,6 @@ namespace MasterGenerator.UI.Controllers
                     }
                 }
             }
-           
             return RedirectToAction("Index");
         }
 
