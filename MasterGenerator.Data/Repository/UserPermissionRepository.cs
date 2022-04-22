@@ -50,5 +50,10 @@ namespace MasterGenerator.Data.Repository
                 return;
             }
         }
+        public PermissionModel GetPermisedRecordById(PermissionModel permissionModel)
+        {
+            var query = _context.FieldPermissions.Where(x =>x.UserId ==permissionModel.UserId).ProjectTo<PermissionModel>(_mapper.ConfigurationProvider).FirstOrDefault();
+            return query;
+        }
     }
 }

@@ -100,8 +100,6 @@ namespace MasterGenerator.UI.Controllers
         [HttpPost]
         public async Task<IActionResult> CustomerMappingAsync(CustomerModel customerModel)
         { 
-            ViewBag.user = _unitOfWork.IUserrepository.GetUsersByRole(AdminEnum.Customer_User.ToString().Replace("_", " "));
-            ViewBag.customers = _unitOfWork.ICustomerRepository.GetAllCustomers();
             if (ModelState.IsValid)
             {
                  var mapCustomer = _unitOfWork.ICustomerMapRepository.GetMappingRecordById(customerModel);
@@ -117,6 +115,7 @@ namespace MasterGenerator.UI.Controllers
                     await _unitOfWork.ICustomerMapRepository.AddCustomerMap(result);
 
                 }
+                return RedirectToAction("CustomerMapping");
             }
 
             return View();
@@ -328,11 +327,21 @@ namespace MasterGenerator.UI.Controllers
         [HttpPost]
         public async Task<IActionResult> UserPermissionAsync(PermissionModel permissionModel)
         {
-            var result = _mapper 
-                        .Map<FieldPermission>(permissionModel);
-            if (result != null)
+            if (ModelState.IsValid)
             {
-                await _unitOfWork.IUserPermissionRepository.AddUserPermission(result);
+                var userPermission = _unitOfWork.IUserPermissionRepository.GetPermisedRecordById(permissionModel);
+                if (userPermission != null)
+                {
+                    ModelState.AddModelError("", "User already permissed");
+                    return View(permissionModel);
+                }
+                var result = _mapper
+                        .Map<FieldPermission>(permissionModel);
+                if (result != null)
+                {
+                    await _unitOfWork.IUserPermissionRepository.AddUserPermission(result);
+                    return RedirectToAction("UserPermission");
+                }
                 return RedirectToAction("UserPermission");
             }
            return View(permissionModel);
@@ -347,6 +356,5 @@ namespace MasterGenerator.UI.Controllers
             return await _userManager.Users.AnyAsync(x => x.UserName == username.ToLower());
         }
         #endregion
-
     }
 }
