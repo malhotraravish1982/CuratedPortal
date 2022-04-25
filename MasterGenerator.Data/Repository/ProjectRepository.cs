@@ -38,17 +38,7 @@ namespace MasterGenerator.Data.Repository
                 .ProjectTo<ProjectModel>(_mapper.ConfigurationProvider).AsQueryable();
 
         }
-        public IEnumerable<PermissionModel> GetProjectsByVisibleFeildPermission(List<string> name)
-        {
-            return _context.FieldPermissions.Where(x => name.Contains(x.CustomerName))
-                .ProjectTo<PermissionModel>(_mapper.ConfigurationProvider).AsQueryable();
-
-        }
-        public async Task<List<string>> GetCustomerFeildByUserId(int userId)
-        {
-            var query = _context.FieldPermissions.Where(x=>x.UserId== userId).AsEnumerable();
-            return (List<string>)query;
-        }
+        
         public IEnumerable<DealDetailsModel> GetDealDetails()
         {
             return _context.DealDetails

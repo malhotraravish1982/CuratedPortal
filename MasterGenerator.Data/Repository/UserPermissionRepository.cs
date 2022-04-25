@@ -37,6 +37,11 @@ namespace MasterGenerator.Data.Repository
             return _context.FieldPermissions
             .ProjectTo<PermissionModel>(_mapper.ConfigurationProvider).AsQueryable();
         }
+        public PermissionModel GetUserPermissionByUserId(int id)
+        {
+            var query = _context.FieldPermissions.Where(x => x.UserId == id).ProjectTo<PermissionModel>(_mapper.ConfigurationProvider).FirstOrDefaultAsync();
+            return query.Result;
+        }
         public async Task AddUserPermission(FieldPermission fieldPermission)
         {
             try
