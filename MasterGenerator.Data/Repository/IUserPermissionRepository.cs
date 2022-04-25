@@ -13,6 +13,7 @@ namespace MasterGenerator.Data.Repository
         Task AddUserPermission(FieldPermission fieldPermission);
         IEnumerable<PermissionModel> GetUserPermissionRecord();
         Task<FieldPermission> GetVisibleFieldByUserId(int csId);
+        PermissionModel GetUserPermissionByUserId(int id);
         void Update(FieldPermission user);
     }
 }
