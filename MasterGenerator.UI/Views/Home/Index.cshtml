@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Home";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -20,7 +19,12 @@
                     new Syncfusion.EJ2.Grids.GridColumn(){ Field="ApproxSellPriceExVAT", HeaderText="Unit Price", Width="120" },
                 }
             };
-}
+}<style>
+     .loader_wrap {
+         background: rgba(0,0,0,.0);
+         padding: 210px 0px;
+     }
+</style>
 <div class="app-main__outer">
     <div class="app-main__inner">
         <ul class="body-tabs body-tabs-layout tabs-animated body-tabs-animated nav">
@@ -63,12 +67,13 @@
                     <div class="card-body">
                         <h5 class="card-title">Scs Records</h5>
                         <form class="">
-                            <ejs-grid id="Grid" width="825" childGrid="ChildGrid" allowPaging="true" hierarchyPrintMode="All" allowSorting="true" allowFiltering="true">
+                            <ejs-grid id="Grid" width="825" childGrid="ChildGrid"   allowPaging="true" hierarchyPrintMode="All" allowSorting="true" allowFiltering="true">
+
                                 <e-grid-editSettings allowAdding="false" allowDeleting="false" allowEditing="false" mode="Normal"></e-grid-editSettings>
                                 <e-grid-filterSettings type="Excel"></e-grid-filterSettings>
                                 <e-data-manager url="/Home/UrlDataSource" crudUrl="/Home/CrudUpdate" adaptor="UrlAdaptor"></e-data-manager>
                                 <e-grid-columns>
-                                    <e-grid-column field="ProjectId" headerText="CS Deal Id" visible="false" valueAccessor="valueAccessor" width="120"></e-grid-column>
+                                    <e-grid-column field="ProjectId" headerText="CS Deal Id" valueAccessor="valueAccessor" width="120"></e-grid-column>
                                     <e-grid-column field="CustomerName" headerText="Customer Name" width="160"></e-grid-column>
                                     <e-grid-column field="ProjectName" headerText="Project Name" width="150"></e-grid-column>
                                     <e-grid-column field="PONumber" headerText="PO Number" width="150"></e-grid-column>
@@ -76,17 +81,48 @@
                                     <e-grid-column field="TotalQuantity" headerText="Total Quantity" width="150"></e-grid-column>
                                     <e-grid-column field="Currency" headerText="Currency" width="150"></e-grid-column>
                                     <e-grid-column field="POAmount" headerText="PO Amount" width="150"></e-grid-column>
-                                    <e-grid-column field="CSStatus" headerText="CS Status" width="150"></e-grid-column>
-                                    <e-grid-column field="DisplayStatus" headerText="Display Status" width="150"></e-grid-column>
+                                    }
+                                    @if (ViewBag.VisibleField.CSStatus == "true")
+                                    {
+                                        <e-grid-column field="CSStatus" headerText="CS Status" width="150"></e-grid-column>
+                                    }
+                                    @if (ViewBag.VisibleField.DisplayStatus == "true")
+                                    {
+                                        <e-grid-column field="DisplayStatus" headerText="Display Status" width="150"></e-grid-column>
+                                    }
+                                    @if (ViewBag.VisibleField.ShipmentMethod == "true")
+                                    {
                                     <e-grid-column field="ShipmentMethod" headerText="Shipment Method" width="170"></e-grid-column>
-                                    <e-grid-column field="ProductionCompletion" headerText="Production Completion" width="200"></e-grid-column>
-                                    <e-grid-column field="VesselETA" headerText="Vessel ETA" width="150"></e-grid-column>
+                                    }
+                                    @if (ViewBag.VisibleField.ProductionCompletion == "true")
+                                    {
+                                        <e-grid-column field="ProductionCompletion" headerText="Production Completion" width="200"></e-grid-column>
+                                    }
+                                    @if (ViewBag.VisibleField.VesselETA == "true")
+                                    {
+                                        <e-grid-column field="VesselETA" headerText="Vessel ETA" width="150"></e-grid-column>
+                                    }
+                                    @if (ViewBag.VisibleField.VesselETD == "true")
+                                    {
                                     <e-grid-column field="VesselETD" headerText="Vessel ETD" width="150"></e-grid-column>
-                                    <e-grid-column field="EstimatedDeliveryDate" headerText="Estimated Delivery Date" width="210"></e-grid-column>
-                                    <e-grid-column field="ActualDeliveryDate" headerText="Actual Delivery Date" width="180"></e-grid-column>
-                                    <e-grid-column field="PreProductionManager" headerText="Pre Production Manager" width="200"></e-grid-column>
+                                    }
+                                    @if (ViewBag.VisibleField.EstimatedDeliveryDate == "true")
+                                    {
+                                        <e-grid-column field="EstimatedDeliveryDate" headerText="Estimated Delivery Date" width="210"></e-grid-column>
+
+                                    }
+                                    @if (ViewBag.VisibleField.ActualDeliveryDate == "true")
+                                    {
+                                        <e-grid-column field="ActualDeliveryDate" headerText="Actual Delivery Date" width="180"></e-grid-column>
+
+                                    }
+                                    @if (ViewBag.VisibleField.PreProductionManager == "true")
+                                    {
+                                        <e-grid-column field="PreProductionManager" headerText="Pre Production Manager" width="200"></e-grid-column>
+                                    }
                                 </e-grid-columns>
                             </ejs-grid>
+
                         </form>
                     </div>
                 </div>
@@ -94,7 +130,7 @@
             <div class="tab-pane tabs-animation fade container-fluid" id="tab-content-1" role="tabpanel">
                 <div class="row">
                     <div class="col-lg-12">
-                        <div class="main-card mb-3 card" id="statusview"style="background-color: transparent;box-shadow: none;">
+                        <div class="main-card mb-3 card" id="HViewList" style="background-color: transparent;box-shadow: none;">
                             <div class="card-body">
                                 <div class="table-responsive">
                                     <table class="mb-0 table">
@@ -162,41 +198,10 @@
         </div>
     </div>
 </div>
+        
 <script type="text/javascript" src="~/js/siteJs/index.js">
 </script>
+
 @section Scripts{
-<script>
-    function valueAccessorFn(field, data, column) {
-        var value = data[field];
-        value =  'CS ID- ' + value ;
-        return value;
-    }
-    function ChangeIcon(e)
-    {
-        var i = e.children[0];
-        var c = i.attributes['1']
-        var id= i.attributes['0'];
-        var btnid = "#"+id.ownerElement.id;
-        var className=c.ownerElement.className;
-        if(className == 'metismenu-state-icon pe-7s-angle-up caret-left')
-        {
-            $(btnid).removeClass("metismenu-state-icon pe-7s-angle-up caret-left").addClass("metismenu-state-icon pe-7s-angle-down caret-left");
-        }
-        else{
-             $(btnid).removeClass("metismenu-state-icon pe-7s-angle-down caret-left").addClass("metismenu-state-icon pe-7s-angle-up caret-left");
-        }
 
-    }
-
-</script>
 }
-<script>
-   
-    function loadpage()
-    {
-        $("#refreshgred").hide();
-        $("#statusview").hide();
-        $("#loader").show();
-    }
-    
-</script>

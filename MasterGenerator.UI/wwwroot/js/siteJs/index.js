@@ -1,10 +1,12 @@
-﻿function dataBound(args) {
-    debugger
-    appendElement('Grid <b>dataBound</b> event called<hr>');
-}   
+﻿
+function loadpage() {
+    $("#refreshgred").hide();
+    $("#HViewList").hide();
+    $("#loader").show();
+}
 
 function valueAccessorFn(field, data, column) {
-   // debugger
+    // debugger
 
     var value = data[field];
     value = 'CS ID- ' + value;

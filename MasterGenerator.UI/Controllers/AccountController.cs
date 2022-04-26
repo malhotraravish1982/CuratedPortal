@@ -28,23 +28,24 @@ namespace MasterGenerator.UI.Controllers
             _logger = logger;
         }
 
-        public IActionResult Login()
+        public async Task<IActionResult> Login()
         {
             if (_signInManager.IsSignedIn(User))
             {
-            //    if (userRoles[0] == AdminEnum.Admin.ToString())
-            //    {
-            //        return RedirectToAction("GetAllCustomers", "Customer");
-            //    }
-            //    else if (userRoles[0] == AdminEnum.CS_User.ToString().Replace("_", " "))
-            //    {
-            //        return RedirectToAction("GetAllCustomers", "Customer");
-            //    }
-            //    else if (userRoles[0] == AdminEnum.Customer_User.ToString().Replace("_", " "))
-            //    {
-            //        return RedirectToAction("Index", "Home");
-            //    }
-            //    return RedirectToAction("Index", "Home");
+                //var user = await _userManager.Users.Where(x => x.UserRoles==User).FirstOrDefaultAsync();
+                //if (user.ToString() == AdminEnum.Admin.ToString())
+                //{
+                //    return RedirectToAction("GetAllCustomers", "Customer");
+                //}
+                //if (user.ToString() == AdminEnum.CS_User.ToString().Replace("_", " "))
+                //{
+                //    return RedirectToAction("GetAllCustomers", "Customer");
+                //}
+                //if (user.ToString() == AdminEnum.Customer_User.ToString().Replace("_", " "))
+                //{
+                //    return RedirectToAction("Index", "Home");
+                //}
+
                 return View();
             }
             return View();

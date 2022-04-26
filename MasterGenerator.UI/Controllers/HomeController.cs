@@ -69,6 +69,7 @@ namespace MasterGenerator.UI.Controllers
                 }
                  ViewBag.statusList = await _unitOfWork.IProjectRepository.GetProjectStatus();
                 ViewBag.Project = _unitOfWork.IProjectRepository.GetProjectsByCustomerNames(customerNameList);
+                ViewBag.VisibleField = _unitOfWork.IUserPermissionRepository.GetUserPermissionByUserId(int.Parse(userId));
             }
             return View(); 
         }
@@ -86,13 +87,11 @@ namespace MasterGenerator.UI.Controllers
             {
                 string? scfFileId = dm.Table;
                 IEnumerable<ProjectModel> projectRecords = null;
-                IEnumerable<PermissionModel> projectRecordsGrantPermission = null;
                 var  customerNameList = await _unitOfWork.ICustomerRepository.GetCustomerNamesByUserId(int.Parse(userId));
-                //var  customerFieldListByUserId = await _unitOfWork.IProjectRepository.GetCustomerFeildByUserId(int.Parse(userId));
+                
                 if (customerNameList != null)
                 {
-                    projectRecords = _unitOfWork.IProjectRepository.GetProjectsByCustomerNames(customerNameList);               
-                   // projectRecordsGrantPermission =  _unitOfWork.IProjectRepository.GetProjectsByVisibleFeildPermission(customerFieldListByUserId);
+                    projectRecords = _unitOfWork.IProjectRepository.GetProjectsByCustomerNames(customerNameList);     
                 }
                 if (!string.IsNullOrEmpty(scfFileId))
                 {
@@ -149,9 +148,10 @@ namespace MasterGenerator.UI.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-        //[Authorize(Roles ="Admin")]
         public async Task<IActionResult> ReadFile()
         {
+            try
+            {
             //read data from Portal data sheet
             var portalDataResult = ReadDataFromGoogleSpreadSheet(ReadRangeForPortalData);
             if (portalDataResult != null)
@@ -181,8 +181,14 @@ namespace MasterGenerator.UI.Controllers
                         }
                     }
                 }
+                    return RedirectToAction("Index", "Home");
+                } 
             }
-            return RedirectToAction("Index");
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+            }
+            return null;
         }
 
         [Authorize(Roles = "Customer User")]
