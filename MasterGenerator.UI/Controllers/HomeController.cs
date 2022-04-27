@@ -65,13 +65,13 @@ namespace MasterGenerator.UI.Controllers
                 var customerNameList = await _unitOfWork.ICustomerRepository.GetCustomerNamesByUserId(int.Parse(userId));
                 if (customerNameList != null)
                 {
-                    ViewBag.DataSource =await _unitOfWork.IDealDetailsRepository.GetDealDetailsByCustomerNames(customerNameList);
+                    ViewBag.DataSource = await _unitOfWork.IDealDetailsRepository.GetDealDetailsByCustomerNames(customerNameList);
                 }
-                 ViewBag.statusList = await _unitOfWork.IProjectRepository.GetProjectStatus();
+                ViewBag.statusList = await _unitOfWork.IProjectRepository.GetProjectStatus();
                 ViewBag.Project = _unitOfWork.IProjectRepository.GetProjectsByCustomerNames(customerNameList);
                 ViewBag.VisibleField = _unitOfWork.IUserPermissionRepository.GetUserPermissionByUserId(int.Parse(userId));
             }
-            return View(); 
+            return View();
         }
 
         /// <summary>
@@ -87,11 +87,11 @@ namespace MasterGenerator.UI.Controllers
             {
                 string? scfFileId = dm.Table;
                 IEnumerable<ProjectModel> projectRecords = null;
-                var  customerNameList = await _unitOfWork.ICustomerRepository.GetCustomerNamesByUserId(int.Parse(userId));
-                
+                var customerNameList = await _unitOfWork.ICustomerRepository.GetCustomerNamesByUserId(int.Parse(userId));
+
                 if (customerNameList != null)
                 {
-                    projectRecords = _unitOfWork.IProjectRepository.GetProjectsByCustomerNames(customerNameList);     
+                    projectRecords = _unitOfWork.IProjectRepository.GetProjectsByCustomerNames(customerNameList);
                 }
                 if (!string.IsNullOrEmpty(scfFileId))
                 {
@@ -152,43 +152,44 @@ namespace MasterGenerator.UI.Controllers
         {
             try
             {
-            //read data from Portal data sheet
-            var portalDataResult = ReadDataFromGoogleSpreadSheet(ReadRangeForPortalData);
-            if (portalDataResult != null)
-            {
-                ProjectMapper projectMapper = new ProjectMapper(_unitOfWork);
-                var projects =await projectMapper.MapFromRangeData(portalDataResult);
-                if (projects.Count > 0)
+                //read data from Portal data sheet
+                var portalDataResult = ReadDataFromGoogleSpreadSheet(ReadRangeForPortalData);
+                if (portalDataResult != null)
                 {
-                    var result=await _unitOfWork.IProjectRepository.AddProjectRange(projects);
-                    if (result == true)
+                    ProjectMapper projectMapper = new ProjectMapper(_unitOfWork);
+                    var projects = await projectMapper.MapFromRangeData(portalDataResult);
+                    if (projects.Count > 0)
                     {
-                        //get all customers
-                        var customers = projects.Where(x => !string.IsNullOrEmpty(x.CustomerName)).Select(x => x.CustomerName).Distinct().ToList();
-                        if (customers.Count > 0)
+                        var result = await _unitOfWork.IProjectRepository.AddProjectRange(projects);
+                        if (result == true)
                         {
-                            await _unitOfWork.ICustomerRepository.AddCustomerRange(customers);
+                            //get all customers
+                            var customers = projects.Where(x => !string.IsNullOrEmpty(x.CustomerName)).Select(x => x.CustomerName).Distinct().ToList();
+                            if (customers.Count > 0)
+                            {
+                                await _unitOfWork.ICustomerRepository.AddCustomerRange(customers);
+                            }
                         }
-                    }
-                    //read data from deal details sheet
-                    var dealDetailsResult = ReadDataFromGoogleSpreadSheet(ReadRangeForDealDetails);
-                    if (dealDetailsResult != null)
-                    {
-                        var dealDetails = DealDetailsMapper.MapFromRangeData(dealDetailsResult, projects);
-                        if (dealDetails.Count > 0)
+                        //read data from deal details sheet
+                        var dealDetailsResult = ReadDataFromGoogleSpreadSheet(ReadRangeForDealDetails);
+                        if (dealDetailsResult != null)
                         {
-                            await _unitOfWork.IDealDetailsRepository.AddDealDetailsRange(dealDetails);
+                            var dealDetails = DealDetailsMapper.MapFromRangeData(dealDetailsResult, projects);
+                            if (dealDetails.Count > 0)
+                            {
+                                await _unitOfWork.IDealDetailsRepository.AddDealDetailsRange(dealDetails);
+                            }
                         }
-                    }
+                        return RedirectToAction("Index", "Home");
+                    } 
                 }
-                    return RedirectToAction("Index", "Home");
-                } 
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
             }
-            return null;
+            return RedirectToAction("Index");
+           // return Ok("projects is empty");
         }
 
         [Authorize(Roles = "Customer User")]
